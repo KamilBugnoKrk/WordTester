@@ -1,0 +1,73 @@
+﻿@* Copyright (C) 2021  Kamil Bugno
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.*@
+
+@inject IWordApi wordApi
+
+@if (model != null)
+{
+    <EditForm Model="model" OnValidSubmit="@SaveWord">
+        <div class="course-form">
+            <DataAnnotationsValidator />
+
+            <InputText id="originalWord" class="form-control" @bind-Value="model.OriginalWord" autofocus placeholder="Original Word" />
+            <ValidationMessage For="@(() => model.OriginalWord)" />
+
+            <InputText id="pronunciation" class="form-control" @bind-Value="model.Pronunciation" autofocus placeholder="Pronunciation" />
+            <ValidationMessage For="@(() => model.Pronunciation)" />
+
+            <InputText id="translatedWord" class="form-control" @bind-Value="model.TranslatedWord" autofocus placeholder="Translated Word" />
+            <ValidationMessage For="@(() => model.TranslatedWord)" />
+
+            <InputTextArea id="definition" class="form-control" rows="2" @bind-Value="model.Definition" autofocus placeholder="Definition" />
+            <ValidationMessage For="@(() => model.Definition)" />
+
+            <InputTextArea id="exampleUse" class="form-control" rows="2" @bind-Value="model.ExampleUse" autofocus placeholder="Example Use" />
+            <ValidationMessage For="@(() => model.ExampleUse)" />
+
+            <button class="btn" type="submit">Save</button>
+        </div>
+    </EditForm>
+}
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    [Parameter] public WordDto Word { get; set; }
+    [Parameter] public int CourseId { get; set; }
+    private WordDto model;
+
+    protected override Task OnInitializedAsync()
+    {
+        if (Word != null)
+            model = Word;
+        else
+            model = new WordDto();
+
+        return Task.CompletedTask;
+    }
+
+    protected override void OnInitialized()
+    {
+        if (Word != null)
+            model = Word;
+        else
+            model = new WordDto();
+    }
+
+    async Task SaveWord()
+    {
+        await wordApi.PostWord(model, CourseId);
+        await ModalInstance.CloseAsync(ModalResult.Ok(true));
+    }
+
+}

@@ -1,0 +1,33 @@
+﻿.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.login-title {
+    align-self: center;
+    padding-bottom: 20px;
+}
+
+.login-body {
+    background: #d0af84;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 270px;
+    min-height: 246px;
+    padding: 10px;
+}
+
+.login-image {
+    width: 270px;
+    height: 246px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-image img {
+    width: 100%;
+    height: auto;
+}

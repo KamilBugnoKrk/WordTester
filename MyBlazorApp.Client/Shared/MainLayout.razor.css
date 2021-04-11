@@ -1,0 +1,29 @@
+﻿.main-container {
+  min-height: calc(100vh - 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.cookies {
+  background: #ffe6ca;
+  position: absolute;
+  top: 80vh;
+  left: 30vw;
+  padding: 10px;
+  z-index: 1000; }
+
+.top-panel {
+  background-color: #e3d18a;
+  justify-content: flex-end;
+  display: flex;
+  align-items: center; }
+
+footer {
+  background-color: #e3d18a !important;
+  text-align: center;
+  line-height: 24px;
+  font-size: 15px; }
+
+@media (max-width: 400px) {
+  .cookies {
+    left: 0; } }

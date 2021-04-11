@@ -1,0 +1,86 @@
+﻿.grid-container {
+  display: grid;
+  grid-template-columns: 30vw 70vw;
+  background-color: #85603f;
+  top: 56px;
+  min-height: calc(100vh - 101px); }
+
+.details {
+  grid-row: 1;
+  grid-column: 1;
+  margin: 20px 10px 20px 20px; }
+  .details .info {
+    background: #ffe6ca;
+    padding: 10px; }
+    .details .info p {
+      margin: 0px; }
+
+.main {
+  grid-row: 1;
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start; }
+  .main .course-tile {
+    background-color: #e3d18a;
+    width: 200px;
+    height: 300px;
+    margin: 20px 10px 20px 10px; }
+  .main .course-tile:hover {
+    -webkit-transform: scale(1.05, 1.05);
+    transform: scale(1.05, 1.05);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); }
+  .main .course-tile-content {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100px 170px 20px; }
+    .main .course-tile-content h2 {
+      font-size: 30px;
+      margin: 10px;
+      border-style: solid;
+      border-color: wheat;
+      text-align: center;
+      overflow: hidden; }
+    .main .course-tile-content p {
+      margin: 10px; }
+    .main .course-tile-content .actions {
+      display: flex;
+      justify-content: space-between; }
+      .main .course-tile-content .actions div {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin-left: 10px; }
+        .main .course-tile-content .actions div p {
+          margin-left: 5px; }
+        .main .course-tile-content .actions div i {
+          font-size: 15px; }
+      .main .course-tile-content .actions div:hover p, .main .course-tile-content .actions div:hover i {
+        color: white; }
+  .main .add-new {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer; }
+  .main .image-add-new {
+    width: 150px;
+    margin-right: 15px; }
+
+@media (max-width: 600px) {
+  .details {
+    grid-row: 2;
+    grid-column: 1; }
+  .main {
+    grid-row: 1;
+    grid-column: 1;
+    justify-content: center; }
+  .grid-container {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto; }
+  .details {
+    margin: 20px 10px 20px 10px; } }

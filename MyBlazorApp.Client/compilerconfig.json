@@ -1,0 +1,34 @@
+﻿[
+  {
+    "outputFile": "Pages/Welcome.razor.css",
+    "inputFile": "Pages/Welcome.razor.scss"
+  },
+  {
+    "outputFile": "Shared/MainLayout.razor.css",
+    "inputFile": "Shared/MainLayout.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Dashboard.razor.css",
+    "inputFile": "Pages/Dashboard.razor.scss"
+  },
+  {
+    "outputFile": "Pages/TermsConditions.razor.css",
+    "inputFile": "Pages/TermsConditions.razor.scss"
+  },
+  {
+    "outputFile": "Shared/LoginLayout.razor.css",
+    "inputFile": "Shared/LoginLayout.razor.scss"
+  },
+  {
+    "outputFile": "Pages/CourseDetails.razor.css",
+    "inputFile": "Pages/CourseDetails.razor.scss"
+  },
+  {
+    "outputFile": "Shared/EditWord.razor.css",
+    "inputFile": "Shared/EditWord.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Privacy.razor.css",
+    "inputFile": "Pages/Privacy.razor.scss"
+  }
+]

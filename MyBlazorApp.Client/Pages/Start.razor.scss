@@ -1,0 +1,14 @@
+﻿.support-us {
+    background: #d0af84;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-row: 1;
+    grid-column: 1;
+}
+
+@media (max-width: 400px) {
+    .cookies {
+        left: 0;
+    }
+}

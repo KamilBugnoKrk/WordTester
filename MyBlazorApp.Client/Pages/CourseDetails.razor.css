@@ -1,0 +1,74 @@
+﻿.course-grid-container {
+  display: grid;
+  grid-template-columns: 30vw 70vw;
+  background-color: #85603f;
+  top: 56px;
+  min-height: calc(100vh - 71px); }
+  .course-grid-container .course-details {
+    grid-row: 1;
+    grid-column: 1;
+    margin: 20px 10px 20px 20px; }
+    .course-grid-container .course-details .course-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #ffe6ca; }
+      .course-grid-container .course-details .course-form ::deep input {
+        width: 80%;
+        margin: 5px; }
+      .course-grid-container .course-details .course-form ::deep textarea {
+        width: 80%;
+        margin: 5px; }
+      .course-grid-container .course-details .course-form button {
+        margin: 10px;
+        width: 60%; }
+  .course-grid-container .course-main {
+    grid-row: 1;
+    grid-column: 2;
+    margin: 20px; }
+    .course-grid-container .course-main .panel {
+      display: flex;
+      justify-content: space-between; }
+      .course-grid-container .course-main .panel .word-title {
+        color: white; }
+      .course-grid-container .course-main .panel #search {
+        padding: 10px;
+        width: 170px;
+        margin-bottom: 15px;
+        font-size: 15px; }
+    .course-grid-container .course-main .course-words {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      align-content: flex-start;
+      background: #e3d18a;
+      width: auto;
+      height: auto;
+      padding: 10px; }
+      .course-grid-container .course-main .course-words .course-word {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+        background: #ffe6ca;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 20px;
+        cursor: pointer; }
+
+@media (max-width: 600px) {
+  .course-grid-container {
+    display: grid;
+    grid-template-rows: 280px auto;
+    grid-template-columns: auto; }
+    .course-grid-container .course-details {
+      grid-row: 1;
+      grid-column: 1;
+      margin: 20px 10px 20px 10px; }
+    .course-grid-container .course-main {
+      grid-row: 2;
+      grid-column: 1;
+      justify-content: center; }
+      .course-grid-container .course-main .panel {
+        flex-direction: column;
+        align-items: center; } }

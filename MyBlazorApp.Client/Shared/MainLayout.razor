@@ -1,0 +1,77 @@
+﻿@* Copyright (C) 2021  Kamil Bugno
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.*@
+
+@inherits LayoutComponentBase
+@inject NavigationManager navigationManager
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+@inject IdentityAuthenticationStateProvider authStateProvider
+
+
+<AuthorizeView>
+    <Authorizing>
+        Authorizing...
+    </Authorizing>
+    <Authorized>
+        @*Show the menu and the rest of the body*@
+        <div class="top-panel">
+            <a class="btn" href="/">Dashboard</a>
+            <button type="button" class="btn" @onclick="@LogoutClick">Logout</button>
+        </div>
+        @Body
+    <footer>
+        Copyright © 2021 Kamil Bugno | <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a> | Licensed GNU GPLv3 | Source code | Credits | Made with ♥️ in Poland
+    </footer>
+    </Authorized>
+    <NotAuthorized>
+        <div class="main-container">
+            @Body
+            @if (!isAccepted)
+            {
+                <div class="cookies">
+                    This website uses cookies 🍪. By using this Site you accept <a href="/privacy" target="_blank">the use of cookies</a>.
+                    <button @onclick="SaveToLocalData">OK</button>
+                </div>
+            }
+        </div>
+        <footer>
+            Copyright © 2021 Kamil Bugno | <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a> | Licensed GNU GPLv3 | Source code | Credits | Made with ♥️ in Poland
+        </footer>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code{
+
+    const string key = "cookies";
+    bool isAccepted = true;
+
+    public async void SaveToLocalData()
+    {
+        await localStore.SetItemAsync(key, true);
+        isAccepted = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isAccepted = await localStore.ContainKeyAsync(key);
+            StateHasChanged();
+        }
+    }
+
+    async Task LogoutClick()
+    {
+        await authStateProvider.Logout();
+        navigationManager.NavigateTo("/login");
+    }
+}

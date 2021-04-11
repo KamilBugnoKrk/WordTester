@@ -1,0 +1,25 @@
+﻿.layout {
+  display: grid;
+  grid-template-rows: 50px auto 24px;
+  grid-template-columns: 100vw;
+  overflow-x: hidden; }
+
+.cookies {
+  background: #ffe6ca;
+  position: absolute;
+  top: 80vh;
+  left: 30vw;
+  padding: 10px;
+  z-index: 1000; }
+
+.support-us {
+  background: #d0af84;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-row: 1;
+  grid-column: 1; }
+
+@media (max-width: 400px) {
+  .cookies {
+    left: 0; } }

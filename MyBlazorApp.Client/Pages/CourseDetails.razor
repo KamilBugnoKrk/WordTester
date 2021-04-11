@@ -1,0 +1,68 @@
+﻿@* Copyright (C) 2021  Kamil Bugno
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.*@
+
+@page "/details/{courseId}"
+@page "/details"
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject ICourseApi courseApi
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+<div class="course-grid-container">
+    <div class="course-details">
+        @if (course != null)
+        {
+            <EditForm Model="course" OnValidSubmit="@OnSubmit">
+                <div class="course-form">
+                    <DataAnnotationsValidator />
+                    @if (string.IsNullOrEmpty(CourseId))
+                    {
+                        <h4 class="font-weight-normal">Create a new course </h4>
+                    }
+                    else
+                    {
+                        <h4 class="font-weight-normal">Modify your course </h4>
+                    }
+
+                    <InputText id="courseName" class="form-control" @bind-Value="course.Name" autofocus placeholder="Course Name" />
+                    <ValidationMessage For="@(() => course.Name)" />
+
+                    <InputTextArea id="courseDescription" rows="2" class="form-control" @bind-Value="course.Description" autofocus placeholder="Course description" />
+                    <ValidationMessage For="@(() => course.Description)" />
+
+                    <button class="btn" type="submit">Save</button>
+                </div>
+            </EditForm>
+        }
+    </div>
+    <div class="course-main">
+        @if (words != null)
+        {
+            <div class="panel">
+                <h4 class="font-weight-normal word-title">Your words:</h4>
+                <input id="search"
+                       @bind-value="searchTerm"
+                       @bind-value:event="oninput"
+                       @onkeyup="@HandleKeyUp"
+                       class="form-control"
+                       autofocus
+                       placeholder="Search" />
+            </div>
+            <div class="course-words">
+                <div class="course-word" @onclick="@(() => ShowEditWord(null))"><i class="fas fa-plus"></i></div>
+                @foreach (var word in words)
+                {
+                    <div class="course-word" @onclick="@(() => ShowEditWord(word))">@word.OriginalWord</div>
+                }
+            </div>
+        }
+    </div>
+</div>
