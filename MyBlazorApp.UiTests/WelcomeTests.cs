@@ -30,10 +30,10 @@ namespace MyBlazorApp.UiTests
                     .Where(a => a.Name == "href")
                     .Select(a => a.Value));
 
-            links.Count.Should().Be(5);
+            links.Count.Should().Be(7);
             hrefs
                 .Should()
-                .BeEquivalentTo(new string[] { "/login", "/register", "/about", "/terms", "/privacy" });
+                .Contain(new string[] { "/login", "/register", "/about", "/terms", "/privacy" });
         }
     }
 }
