@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2021  Kamil Bugno
+// Copyright (C) 2021  Kamil Bugno
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -10,6 +10,34 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-$main-color: #e3d18a;
-$main-color-bg: #85603f;
-$second-color: #ffe6ca;
+@import "../../Variables.scss";
+
+.informational-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $main-color;
+    padding: 1em 3em;
+
+    h4, h2 {
+        margin-bottom: -5px;
+    }
+
+    h4, h2, p {
+        text-align: center;
+    }
+
+    input {
+        font-size: 25px;
+        text-align: center;
+        width: 250px;
+    }
+
+    button {
+        width: 250px;
+    }
+
+    button:hover {
+        background-color: $main-color !important;
+    }
+}

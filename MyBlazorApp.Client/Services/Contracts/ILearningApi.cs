@@ -10,6 +10,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-$main-color: #e3d18a;
-$main-color-bg: #85603f;
-$second-color: #ffe6ca;
+using MyBlazorApp.Shared.ResponseModels;
+using System.Threading.Tasks;
+
+namespace MyBlazorApp.Client.Services.Contracts
+{
+    public interface ILearningApi
+    {
+        Task<GetLearningRepetitionResponseModel> GetLearningData(int courseId);
+    }
+}

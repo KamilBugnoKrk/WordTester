@@ -34,7 +34,7 @@
                 <div class="course-tile course-tile-content">
                     <h2>@course.Name</h2>
                     <p>@course.Description</p>
-                    <div @onclick=@(() => NagivateToLearning()) class="actions">
+                    <div @onclick=@(() => NagivateToLearning(course.Id)) class="actions">
                         <div>
                             <i class="fas fa-graduation-cap"></i>
                             <p>Learn</p>
@@ -85,8 +85,8 @@
 
     }
 
-    void NagivateToLearning()
+    void NagivateToLearning(int courseId)
     {
-        navigationManager.NavigateTo("/learning");
+        navigationManager.NavigateTo("/learning/" + courseId);
     }
 }

@@ -1,0 +1,57 @@
+﻿@* Copyright (C) 2021  Kamil Bugno
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.*@
+
+@page "/learning/{courseId}"
+@inject ILearningApi learningApi
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+<div class="learning-container">
+    @if (!isLoading && learningModel != null)
+    {
+        if (learningModel.ResponseType == ResponseType.NothingToLearnResponse)
+        {
+            <h4>Nothing to learn, please try again later.</h4>
+        }
+        else if (learningModel.ResponseType == ResponseType.InformationalResponse)
+        {
+         <Informational WordDto="@learningModel.InformationalWord"/>
+        }
+        else if (learningModel.ResponseType == ResponseType.ErrorResponse)
+        {
+            <h4>Something went wrong!</h4>
+        }
+        else if (learningModel.ResponseType == ResponseType.PracticeResponse)
+        {
+            <h4>@learningModel.Question</h4>
+        }
+    }
+    else
+    {
+        <h4>Loading...</h4>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string CourseId { get; set; }
+    private GetLearningRepetitionResponseModel learningModel = null;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (int.TryParse(CourseId, out int courseIdNumber))
+        {
+            learningModel = await learningApi.GetLearningData(courseIdNumber);
+        }
+        isLoading = false;
+    }
+}

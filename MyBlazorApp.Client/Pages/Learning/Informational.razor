@@ -1,0 +1,40 @@
+﻿@* Copyright (C) 2021  Kamil Bugno
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.*@
+
+<div class="informational-container">
+    <h2>@WordDto.OriginalWord</h2>
+    @if (!string.IsNullOrEmpty(WordDto.Pronunciation))
+    {
+        <p>[@WordDto.Pronunciation]</p>
+    }
+    <h4>@WordDto.TranslatedWord</h4>
+    <p>Translated word</p>
+    <h4>@WordDto.Definition</h4>
+    <p>Definition</p>
+    <h4>@WordDto.ExampleUse</h4>
+    <p>Example use</p>
+    <input @bind-value="writtenWord"
+           @bind-value:event="oninput"
+           placeholder="@WordDto.OriginalWord"
+           autofocus />
+    <p>Write the original word</p>
+    @if (writtenWord.Trim() == WordDto.OriginalWord.Trim())
+    {
+        <button class="btn btn-lg btn-primary">Next</button>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public WordDto WordDto { get; set; }
+    private string writtenWord = string.Empty;
+}

@@ -10,6 +10,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-$main-color: #e3d18a;
-$main-color-bg: #85603f;
-$second-color: #ffe6ca;
+using MyBlazorApp.Client.Services.Contracts;
+using MyBlazorApp.Shared;
+using System.Threading.Tasks;
+using MyBlazorApp.Shared.ResponseModels;
+using Flurl.Http;
+using MyBlazorApp.Shared.RequestModels;
+
+namespace MyBlazorApp.Client.Services.Implementations
+{
+    public class LearningApi : ILearningApi
+    {
+        public async Task<GetLearningRepetitionResponseModel> GetLearningData(int courseId)
+          => await $"https://localhost:44370/api/Learning/GetLearningRepetition?CourseId={courseId}"
+                .GetJsonAsync<GetLearningRepetitionResponseModel>();
+        
+    }
+}

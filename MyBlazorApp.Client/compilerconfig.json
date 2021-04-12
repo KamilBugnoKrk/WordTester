@@ -30,5 +30,13 @@
   {
     "outputFile": "Pages/Privacy.razor.css",
     "inputFile": "Pages/Privacy.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Learning/Informational.razor.css",
+    "inputFile": "Pages/Learning/Informational.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Learning/Learning.razor.css",
+    "inputFile": "Pages/Learning/Learning.razor.scss"
   }
 ]

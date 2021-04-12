@@ -38,6 +38,7 @@ namespace MyBlazorApp.Client
             builder.Services.AddScoped<IAuthorizeApi, AuthorizeApi>();
             builder.Services.AddScoped<ICourseApi, CourseApi>();
             builder.Services.AddScoped<IWordApi, WordApi>();
+            builder.Services.AddScoped<ILearningApi, LearningApi>();
             builder.Services.AddBlazoredModal();
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
