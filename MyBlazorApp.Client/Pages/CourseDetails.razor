@@ -31,13 +31,11 @@
                     {
                         <h4 class="font-weight-normal">Modify your course </h4>
                     }
-
-                    <InputText id="courseName" class="form-control" @bind-Value="course.Name" autofocus placeholder="Course Name" />
+                    <MatTextField @bind-Value="course.Name" Label="Name"/>
                     <ValidationMessage For="@(() => course.Name)" />
 
-                    <InputTextArea id="courseDescription" rows="2" class="form-control" @bind-Value="course.Description" autofocus placeholder="Course description" />
+                    <MatTextField TextArea="true" @bind-Value="course.Description" Label="Description"/>
                     <ValidationMessage For="@(() => course.Description)" />
-
                     <button class="btn" type="submit">Save</button>
                 </div>
             </EditForm>
@@ -48,13 +46,12 @@
         {
             <div class="panel">
                 <h4 class="font-weight-normal word-title">Your words:</h4>
-                <input id="search"
-                       @bind-value="searchTerm"
-                       @bind-value:event="oninput"
-                       @onkeyup="@HandleKeyUp"
-                       class="form-control"
-                       autofocus
-                       placeholder="Search" />
+                <MatTextField 
+                    Id="search"
+                    @bind-Value="searchTerm" 
+                    Label="Search"
+                    OnKeyUp="@HandleKeyUp" 
+                    OnInput="@OnInputHandler"/>
             </div>
             <div class="course-words">
                 <div class="course-word" @onclick="@(() => ShowEditWord(null))"><i class="fas fa-plus"></i></div>

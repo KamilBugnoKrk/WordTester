@@ -8,16 +8,15 @@
     <h4 class="font-weight-normal text-center">Login</h4>
 
     <label for="inputUsername" class="sr-only">User Name</label>
-    <InputText id="inputUsername" class="form-control" @bind-Value="loginParameters.UserName" autofocus placeholder="Username" />
+    <MatTextField id="inputUsername" @bind-Value="loginParameters.UserName" autofocus Label="Username" />
     <ValidationMessage For="@(() => loginParameters.UserName)" />
 
     <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="loginParameters.Password" />
+    <MatTextField Type="password" id="inputPassword" Label="Password" @bind-Value="loginParameters.Password" />
     <ValidationMessage For="@(() => loginParameters.Password)" />
 
     <div class="form-check m-3">
-        <InputCheckbox id="inputRememberMe" class="form-check-input" @bind-Value="@loginParameters.RememberMe" />
-        <label class="form-check-label" for="inputRememberMe">Remember Me</label>
+        <MatCheckbox id="inputRememberMe" Label="Remember Me" @bind-Value="@loginParameters.RememberMe" />
     </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

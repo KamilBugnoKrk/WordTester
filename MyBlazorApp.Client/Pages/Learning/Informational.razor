@@ -14,7 +14,11 @@
     <h2>@WordDto.OriginalWord</h2>
     @if (!string.IsNullOrEmpty(WordDto.Pronunciation))
     {
-        <p>[@WordDto.Pronunciation]</p>
+        <p>[@WordDto.Pronunciation]</p>      
+    }
+    else
+    {
+        <p></p>
     }
     <h4>@WordDto.TranslatedWord</h4>
     <p>Translated word</p>

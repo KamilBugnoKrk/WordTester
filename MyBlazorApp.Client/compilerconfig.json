@@ -38,5 +38,9 @@
   {
     "outputFile": "Pages/Learning/Learning.razor.css",
     "inputFile": "Pages/Learning/Learning.razor.scss"
+  },
+  {
+    "outputFile": "Modals/EditWord.razor.css",
+    "inputFile": "Modals/EditWord.razor.scss"
   }
 ]

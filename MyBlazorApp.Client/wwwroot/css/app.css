@@ -39,6 +39,7 @@ a {
     color: red;
     font-size: 17px;
     margin-bottom: 15px;
+    margin-top: -10px;
 }
 
 .blazored-modal-header {
@@ -193,6 +194,8 @@ a {
     max-width: 330px;
     padding: 15px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-signin .checkbox {
@@ -220,4 +223,34 @@ a {
 .form-signin input[type="password"] {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+.m-3 {
+    margin: 0.5rem !important;
+}
+
+/*MatBlazor*/
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: white;
+}
+.mdc-text-field--filled .mdc-line-ripple::after {
+    border-bottom-color: #85603f;
+}
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: #85603f;
+}
+.mdc-theme--primary {
+    color: #85603f !important;
+    color: var(--mdc-theme-primary, #6200ee) !important
+}
+.mat-text-field-input {
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+.mdc-floating-label {
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+.mdc-form-field {
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+.mdc-checkbox {
+    margin-top: -7px;
 }

@@ -15,22 +15,22 @@
 @if (model != null)
 {
     <EditForm Model="model" OnValidSubmit="@SaveWord">
-        <div class="course-form">
+        <div class="edit-word-container">
             <DataAnnotationsValidator />
 
-            <InputText id="originalWord" class="form-control" @bind-Value="model.OriginalWord" autofocus placeholder="Original Word" />
+            <MatTextField @bind-Value="model.OriginalWord" Label="Original Word" autofocus />
             <ValidationMessage For="@(() => model.OriginalWord)" />
 
-            <InputText id="pronunciation" class="form-control" @bind-Value="model.Pronunciation" autofocus placeholder="Pronunciation" />
+            <MatTextField @bind-Value="model.Pronunciation" Label="Pronunciation" autofocus />
             <ValidationMessage For="@(() => model.Pronunciation)" />
 
-            <InputText id="translatedWord" class="form-control" @bind-Value="model.TranslatedWord" autofocus placeholder="Translated Word" />
+            <MatTextField @bind-Value="model.TranslatedWord" autofocus Label="Translated Word" />
             <ValidationMessage For="@(() => model.TranslatedWord)" />
 
-            <InputTextArea id="definition" class="form-control" rows="2" @bind-Value="model.Definition" autofocus placeholder="Definition" />
+            <MatTextField TextArea="true" @bind-Value="model.Definition" autofocus Label="Definition" />
             <ValidationMessage For="@(() => model.Definition)" />
 
-            <InputTextArea id="exampleUse" class="form-control" rows="2" @bind-Value="model.ExampleUse" autofocus placeholder="Example Use" />
+            <MatTextField TextArea="true" @bind-Value="model.ExampleUse" autofocus Label="Example Use" />
             <ValidationMessage For="@(() => model.ExampleUse)" />
 
             <button class="btn" type="submit">Save</button>

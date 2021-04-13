@@ -81,6 +81,11 @@ namespace MyBlazorApp.Client.Pages
             timer.Start();
         }
 
+        void OnInputHandler(ChangeEventArgs e)
+        {
+            searchTerm = e.Value.ToString();
+        }
+
         private void OnUserFinish(object source, ElapsedEventArgs e)
         {
             InvokeAsync(() =>
