@@ -16,7 +16,7 @@
 
 <div class="learning-container">
     @if (!isLoading && learningModel != null)
-    {
+     {
         if (learningModel.ResponseType == ResponseType.NothingToLearnResponse)
         {
             <h4>Nothing to learn, please try again later.</h4>
@@ -31,7 +31,20 @@
         }
         else if (learningModel.ResponseType == ResponseType.PracticeResponse)
         {
-            <h4>@learningModel.Question</h4>
+            if(learningModel.RepetitionType == RepetitionType.FromDefinitionToOriginalClose ||
+               learningModel.RepetitionType == RepetitionType.FromExampleToTranslatedClose ||
+               learningModel.RepetitionType == RepetitionType.FromOriginalToTranslatedClose ||
+               learningModel.RepetitionType == RepetitionType.FromTranslatedToOriginalClose)
+            {
+                <MultipleOption 
+                   Question="@learningModel.Question" 
+                   CorrectResponse="@learningModel.CorrectResponse" 
+                   IncorrectResponses="@learningModel.IncorrectResponses"/>
+            }
+            else
+            {
+                <Open Question="@learningModel.Question" RepetitionType="@learningModel.RepetitionType"/>
+            }
         }
     }
     else

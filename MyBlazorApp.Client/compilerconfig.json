@@ -42,5 +42,13 @@
   {
     "outputFile": "Modals/EditWord.razor.css",
     "inputFile": "Modals/EditWord.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Learning/MultipleOption.razor.css",
+    "inputFile": "Pages/Learning/MultipleOption.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Learning/Open.razor.css",
+    "inputFile": "Pages/Learning/Open.razor.scss"
   }
 ]

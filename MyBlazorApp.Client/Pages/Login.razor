@@ -7,12 +7,10 @@
     <DataAnnotationsValidator />
     <h4 class="font-weight-normal text-center">Login</h4>
 
-    <label for="inputUsername" class="sr-only">User Name</label>
-    <MatTextField id="inputUsername" @bind-Value="loginParameters.UserName" autofocus Label="Username" />
+    <MatTextField @bind-Value="loginParameters.UserName" autofocus Label="Username" />
     <ValidationMessage For="@(() => loginParameters.UserName)" />
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <MatTextField Type="password" id="inputPassword" Label="Password" @bind-Value="loginParameters.Password" />
+    <MatTextField Type="password" Label="Password" @bind-Value="loginParameters.Password" />
     <ValidationMessage For="@(() => loginParameters.Password)" />
 
     <div class="form-check m-3">

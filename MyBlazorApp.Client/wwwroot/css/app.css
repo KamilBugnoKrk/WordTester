@@ -254,3 +254,6 @@ a {
 .mdc-checkbox {
     margin-top: -7px;
 }
+.mdc-text-field__input:autofill + .mdc-floating-label {
+    transform: translateY(-106%) scale(0.75);
+}
