@@ -33,15 +33,16 @@ There are several tools for learning foreign words using flashcards and spaced r
 ### Built With
 
 * [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-* [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor
+* [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the GPL-3.0 License. See `LICENSE` for more information.
 
 ## Contact
 
-[Kamil Bugno](https://www.linkedin.com/in/kamil-bugno/)
+Kamil Bugno - [LinkedIn](https://www.linkedin.com/in/kamil-bugno/)
+
 Project Link: [https://github.com/KamilBugnoKrk/WordTester](https://github.com/KamilBugnoKrk/WordTester)
 
 ## Acknowledgements
@@ -60,7 +61,7 @@ This project would not be possible to start without the free great resources. I 
 * [Moq](https://github.com/moq/moq4) - mocking framework 
 
 ### Related to images
-* [unDraw] (https://undraw.co/) - open-source illustrations
+* [unDraw](https://undraw.co/) - open-source illustrations
 * Main photo by <a href="https://unsplash.com/@chuklanov?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Avel Chuklanov</a> on <a href="https://unsplash.com/s/photos/learning?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   
 ### Others
