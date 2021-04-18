@@ -21,6 +21,7 @@ namespace MyBlazorApp.Shared.ResponseModels
     public class GetLearningRepetitionResponseModel
     {
         public int WordStatsId { get; set; }
+        public int WordId { get; set; }
         public RepetitionType RepetitionType { get; set; }
         public string Question { get; set; }
         public string CorrectResponse { get; set; }

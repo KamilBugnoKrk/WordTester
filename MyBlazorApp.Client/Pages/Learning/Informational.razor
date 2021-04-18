@@ -26,6 +26,9 @@
     <p>Definition</p>
     <h4>@WordDto.ExampleUse</h4>
     <p>Example use</p>
+    @if (!string.IsNullOrEmpty(IncorrectResponse)) { 
+        <p>Your incorrect response: @IncorrectResponse</p>
+    }
     <input @bind-value="writtenWord"
            @bind-value:event="oninput"
            placeholder="@WordDto.OriginalWord"
@@ -33,12 +36,24 @@
     <p>Write the original word</p>
     @if (writtenWord.Trim() == WordDto.OriginalWord.Trim())
     {
-        <button class="btn btn-lg btn-primary">Next</button>
+        <button @onclick="SendResponse" class="btn btn-lg btn-primary">Next</button>
     }
 </div>
 
 @code {
     [Parameter]
     public WordDto WordDto { get; set; }
+    [Parameter]
+    public EventCallback<string> OnClick { get; set; }
+    [Parameter]
+    public string IncorrectResponse { get; set; }
+
     private string writtenWord = string.Empty;
+
+
+    private async Task SendResponse()
+    {
+        await OnClick.InvokeAsync(writtenWord);
+        writtenWord = string.Empty;
+    }
 }

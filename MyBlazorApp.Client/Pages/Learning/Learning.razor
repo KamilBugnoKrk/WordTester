@@ -12,18 +12,19 @@
 
 @page "/learning/{courseId}"
 @inject ILearningApi learningApi
+@inject NavigationManager navigationManager
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
 <div class="learning-container">
-    @if (!isLoading && learningModel != null)
-     {
+    @if (learningModel != null)
+    {
         if (learningModel.ResponseType == ResponseType.NothingToLearnResponse)
         {
-            <h4>Nothing to learn, please try again later.</h4>
+            <NothingToLearn/>
         }
         else if (learningModel.ResponseType == ResponseType.InformationalResponse)
         {
-         <Informational WordDto="@learningModel.InformationalWord"/>
+            <Informational WordDto="@learningModel.InformationalWord" OnClick="SendResponse" />
         }
         else if (learningModel.ResponseType == ResponseType.ErrorResponse)
         {
@@ -31,20 +32,12 @@
         }
         else if (learningModel.ResponseType == ResponseType.PracticeResponse)
         {
-            if(learningModel.RepetitionType == RepetitionType.FromDefinitionToOriginalClose ||
-               learningModel.RepetitionType == RepetitionType.FromExampleToTranslatedClose ||
-               learningModel.RepetitionType == RepetitionType.FromOriginalToTranslatedClose ||
-               learningModel.RepetitionType == RepetitionType.FromTranslatedToOriginalClose)
-            {
-                <MultipleOption 
-                   Question="@learningModel.Question" 
-                   CorrectResponse="@learningModel.CorrectResponse" 
-                   IncorrectResponses="@learningModel.IncorrectResponses"/>
-            }
-            else
-            {
-                <Open Question="@learningModel.Question" RepetitionType="@learningModel.RepetitionType"/>
-            }
+            <Practice 
+               LearningModel="@learningModel" 
+               OnClick="@SendResponse" 
+               CorrectWord="@correctWord" 
+               IsResponseSent="@isResponseSent" 
+               UserResponse="@userResponse"/>
         }
     }
     else
@@ -56,15 +49,40 @@
 @code {
     [Parameter]
     public string CourseId { get; set; }
+
     private GetLearningRepetitionResponseModel learningModel = null;
-    private bool isLoading = true;
+    private string userResponse = string.Empty;
+    private bool isResponseSent = false;
+    private WordDto correctWord;
 
     protected override async Task OnInitializedAsync()
+    {
+        await RetrieveData();
+    }
+
+    private async Task RetrieveData()
     {
         if (int.TryParse(CourseId, out int courseIdNumber))
         {
             learningModel = await learningApi.GetLearningData(courseIdNumber);
         }
-        isLoading = false;
+        isResponseSent = false;
+        userResponse = string.Empty;
+        correctWord = null;
+        StateHasChanged();
+    }
+
+    private async Task SendResponse(string response)
+    {
+        userResponse = response;
+        var result = await learningApi.PostLearningRepetition(learningModel.WordId, userResponse, learningModel.RepetitionType);
+        if (result.IsCorrectAnswer)
+        {
+            await RetrieveData();
+            return;
+        }
+
+        correctWord = result.CorrectWord;
+        isResponseSent = true;
     }
 }

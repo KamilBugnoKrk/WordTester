@@ -10,6 +10,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see https://www.gnu.org/licenses/.*@
 
+@inject ILearningApi learningApi
+
 <div class="open-container">
     <h2>@Question</h2>
     @if (RepetitionType == RepetitionType.FromOriginalToTranslatedOpen)
@@ -21,21 +23,30 @@
         <p></p>
     }
 
-    <input autofocus placeholder="@GetPlaceholder()" />
-
+    <input @bind="userResponse" autofocus placeholder="@GetPlaceholder()" />
+    <button @onclick="@SendResponse" class="btn btn-lg btn-primary">Next</button>
 </div>
 
 @code {
     [Parameter]
     public string Question { get; set; }
     [Parameter]
-    public string CorrectResponse { get; set; }
-    [Parameter]
     public RepetitionType RepetitionType { get; set; }
+    [Parameter]
+    public EventCallback<string> OnClick { get; set; }
+
+    private string userResponse = string.Empty;
+
+
+    private async Task SendResponse()
+    {
+        await OnClick.InvokeAsync(userResponse);
+        userResponse = string.Empty;
+    }
 
     private string GetPlaceholder()
     {
-        if(RepetitionType == RepetitionType.FromOriginalToTranslatedOpen ||
+        if (RepetitionType == RepetitionType.FromOriginalToTranslatedOpen ||
            RepetitionType == RepetitionType.FromExampleToTranslatedOpen)
         {
             return "Translated word";

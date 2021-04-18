@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using MyBlazorApp.Shared;
 using MyBlazorApp.Shared.ResponseModels;
 using System.Threading.Tasks;
 
@@ -18,5 +19,6 @@ namespace MyBlazorApp.Client.Services.Contracts
     public interface ILearningApi
     {
         Task<GetLearningRepetitionResponseModel> GetLearningData(int courseId);
+        Task<PostLearningRepetitionResponseModel> PostLearningRepetition(int wordId, string userResponse, RepetitionType repetitionType);
     }
 }

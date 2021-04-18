@@ -22,7 +22,9 @@ footer {
   background-color: #e3d18a !important;
   text-align: center;
   line-height: 24px;
-  font-size: 15px; }
+  font-size: 15px;
+  z-index: 100;
+  position: relative; }
 
 @media (max-width: 400px) {
   .cookies {

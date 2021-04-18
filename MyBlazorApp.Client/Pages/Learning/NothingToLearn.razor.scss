@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2021  Kamil Bugno
+// Copyright (C) 2021  Kamil Bugno
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -10,42 +10,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-@import "../Variables.scss";
+@import "../../Variables.scss";
 
-.main-container {
-    min-height: calc(100vh - 24px);
+.nothing-to-learn-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-}
+    color: $main-color;
+    padding: 1em 3em;
 
-.cookies {
-    background: #ffe6ca;
-    position: absolute;
-    top: 80vh;
-    left: 30vw;
-    padding: 10px;
-    z-index: 1000;
-}
+    h4 {
+        text-align: center;
+    }
 
-.top-panel {
-    background-color: $main-color;
-    justify-content: flex-end;
-    display: flex;
-    align-items: center
-}
+    .image {
+        width: 270px;
+        height: 246px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-footer {
-    background-color: $main-color !important;
-    text-align: center;
-    line-height: 24px;
-    font-size: 15px;
-    z-index: 100;
-    position: relative;
-}
-
-@media (max-width: 400px) {
-    .cookies {
-        left: 0;
+        img{
+            width: 100%;
+        }
     }
 }

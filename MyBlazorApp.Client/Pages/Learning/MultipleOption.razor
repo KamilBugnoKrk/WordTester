@@ -15,7 +15,7 @@
     <div class="response-container">
         @foreach (var response in GetAllResponses())
         {
-            <div class="response-tile">
+            <div @onclick="() => SendResponse(response)" class="response-tile">
                 <p>@response</p>
             </div>
         }
@@ -29,11 +29,18 @@
     public string CorrectResponse { get; set; }
     [Parameter]
     public IEnumerable<string> IncorrectResponses { get; set; }
-    
+    [Parameter]
+    public EventCallback<string> OnClick { get; set; }
+
     private IEnumerable<string> GetAllResponses()
     {
         var all = IncorrectResponses.ToList();
         all.Add(CorrectResponse);
         return all;
+    }
+
+    private async Task SendResponse(string userResponse)
+    {
+        await OnClick.InvokeAsync(userResponse);
     }
 }

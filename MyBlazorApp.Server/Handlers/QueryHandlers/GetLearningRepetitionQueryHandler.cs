@@ -100,8 +100,9 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         {
             var response = new GetLearningRepetitionResponseModel
             {
+                WordId = notLearnedWord.Id,
                 ResponseType = ResponseType.InformationalResponse,
-                InformationalWord = _mapper.Map<Word, WordDto>(notLearnedWord)
+                InformationalWord = _mapper.Map<Word, WordDto>(notLearnedWord)                
             };
             return Task.FromResult(response);
         }
@@ -114,6 +115,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             var response = new GetLearningRepetitionResponseModel
             {
                 WordStatsId = wordStats.Id,
+                WordId = wordStats.WordId,
                 ResponseType = ResponseType.PracticeResponse,
                 Question = question,
                 CorrectResponse = correctResponse,

@@ -18,7 +18,7 @@
 		<a href="#acknowledgements">Acknowledgements</a>
 		<ul>
 			<li><a href="#related-to-blazor">Related to Blazor</a></li>
-			<li><a href="#related-to-c#">Related to C#</a></li>
+			<li><a href="#related-to-c">Related to C#</a></li>
 			<li><a href="#related-to-images">Related to images</a></li>
 			<li><a href="#others">Others</a></li>
 		</ul>
@@ -46,7 +46,7 @@ Kamil Bugno - [LinkedIn](https://www.linkedin.com/in/kamil-bugno/)
 Project Link: [https://github.com/KamilBugnoKrk/WordTester](https://github.com/KamilBugnoKrk/WordTester)
 
 ## Acknowledgements
-This project would not be possible to start without the free great resources. I would like to say thanks to all people who dedicate their time to develop open-source projects:
+It would not be possible to start developing this project without the great free resources. I would like to say thanks to all people who dedicate their time to develop open-source projects:
 
 ### Related to Blazor
 * [BlazorWithIdentity](https://github.com/stavroskasidis/BlazorWithIdentity) - project template
@@ -59,6 +59,7 @@ This project would not be possible to start without the free great resources. I 
 * [xUnit.net](https://xunit.net/) - unit testing tool
 * [Fluent Assertions](https://fluentassertions.com/) - Fluent API for asserting the results of unit tests 
 * [Moq](https://github.com/moq/moq4) - mocking framework 
+* [MediatR](https://github.com/jbogard/MediatR) - mediator implementation
 
 ### Related to images
 * [unDraw](https://undraw.co/) - open-source illustrations

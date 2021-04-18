@@ -18,7 +18,15 @@
     align-items: center;
     color: $main-color;
     padding: 5em 3em;
-    text-align: center
+    text-align: center;
+
+    h2 {
+        margin-bottom: 0;
+    }
+
+    input {
+        margin-bottom: 1rem;
+    }
 }
 
 @media (max-width: 680px) {

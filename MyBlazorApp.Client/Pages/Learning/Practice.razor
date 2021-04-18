@@ -1,0 +1,64 @@
+﻿@* Copyright (C) 2021  Kamil Bugno
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.*@
+
+@if (!IsResponseSent)
+{
+    if (IsMultipleOption(LearningModel.RepetitionType))
+    {
+        <MultipleOption Question="@LearningModel.Question"
+            CorrectResponse="@LearningModel.CorrectResponse"
+            IncorrectResponses="@LearningModel.IncorrectResponses"
+            OnClick="SendResponse" />
+    }
+    else
+    {
+        <Open Question="@LearningModel.Question"
+        RepetitionType="@LearningModel.RepetitionType"
+        OnClick="SendResponse" />
+    }
+}
+else
+{
+    <Informational WordDto="@CorrectWord" OnClick="SendInformationalResponse" IncorrectResponse="@UserResponse" />
+}
+
+@code {
+
+    [Parameter]
+    public GetLearningRepetitionResponseModel LearningModel { get; set; }
+    [Parameter]
+    public EventCallback<string> OnClick { get; set; }
+    [Parameter]
+    public WordDto CorrectWord { get; set; }
+    [Parameter]
+    public bool IsResponseSent { get; set; }
+    [Parameter]
+    public string UserResponse { get; set; }
+
+    private async Task SendResponse(string response)
+    {
+        await OnClick.InvokeAsync(response);
+    }
+
+    private async Task SendInformationalResponse(string response)
+    {
+        LearningModel.RepetitionType = RepetitionType.FromTranslatedToOriginalOpen;
+        await OnClick.InvokeAsync(response);
+        UserResponse = string.Empty;
+    }
+
+    private bool IsMultipleOption(RepetitionType repetitionType) =>
+    LearningModel.RepetitionType == RepetitionType.FromDefinitionToOriginalClose ||
+    LearningModel.RepetitionType == RepetitionType.FromExampleToTranslatedClose ||
+    LearningModel.RepetitionType == RepetitionType.FromOriginalToTranslatedClose ||
+    LearningModel.RepetitionType == RepetitionType.FromTranslatedToOriginalClose;
+}

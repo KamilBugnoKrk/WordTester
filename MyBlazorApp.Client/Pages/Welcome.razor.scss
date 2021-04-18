@@ -67,15 +67,6 @@
     margin-top: 10px;
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: $main-color;
-    text-align: center;
-    font-size: 15px;
-}
-
 @media (max-width: 640.98px) {
     .top-row:not(.auth) {
         display: none;

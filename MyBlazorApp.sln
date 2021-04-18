@@ -17,9 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{7EF139E5-85C3-4B91-A854-CF13D11B7D51}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherLicenses", "OtherLicenses", "{7EF139E5-85C3-4B91-A854-CF13D11B7D51}"
 	ProjectSection(SolutionItems) = preProject
 		apache-2.0.txt = apache-2.0.txt
 		bsd-3.0.txt = bsd-3.0.txt

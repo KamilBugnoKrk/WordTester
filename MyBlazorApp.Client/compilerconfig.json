@@ -50,5 +50,9 @@
   {
     "outputFile": "Pages/Learning/Open.razor.css",
     "inputFile": "Pages/Learning/Open.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Learning/NothingToLearn.razor.css",
+    "inputFile": "Pages/Learning/NothingToLearn.razor.scss"
   }
 ]

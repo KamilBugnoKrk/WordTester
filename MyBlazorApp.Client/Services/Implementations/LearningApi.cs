@@ -24,6 +24,15 @@ namespace MyBlazorApp.Client.Services.Implementations
         public async Task<GetLearningRepetitionResponseModel> GetLearningData(int courseId)
           => await $"https://localhost:44370/api/Learning/GetLearningRepetition?CourseId={courseId}"
                 .GetJsonAsync<GetLearningRepetitionResponseModel>();
-        
+
+        public async Task<PostLearningRepetitionResponseModel> PostLearningRepetition(int wordId, string userResponse, RepetitionType repetitionType)
+          => await "https://localhost:44370/api/Learning/PostLearningRepetition"
+                .PostJsonAsync(new PostLearningRepetitionRequestModel
+                {
+                   WordId = wordId,
+                   UserResponse = userResponse,
+                   RepetitionType = repetitionType
+                })
+                .ReceiveJson<PostLearningRepetitionResponseModel>();
     }
 }
