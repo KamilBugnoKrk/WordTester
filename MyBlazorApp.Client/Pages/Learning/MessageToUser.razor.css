@@ -1,16 +1,20 @@
-﻿.nothing-to-learn-container {
+﻿.message-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #e3d18a;
   padding: 1em 3em; }
-  .nothing-to-learn-container h4 {
+  .message-container h4 {
     text-align: center; }
-  .nothing-to-learn-container .image {
+  .message-container button {
+    margin: 10px; }
+  .message-container .image {
     width: 270px;
     height: 246px;
     display: flex;
     justify-content: center;
     align-items: center; }
-    .nothing-to-learn-container .image img {
+    .message-container .image img {
       width: 100%; }
+  .message-container span {
+    cursor: pointer; }

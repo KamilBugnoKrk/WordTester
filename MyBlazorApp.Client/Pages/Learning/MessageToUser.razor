@@ -12,15 +12,37 @@
 
 @inject NavigationManager navigationManager
 
-<div class="nothing-to-learn-container">
-    <h4>Congrats! You have learned everything at the moment. Please try again later to practice your knowledge.</h4>
+<div class="message-container">
+    <h4>@Message</h4>
     <div class="image">
-        <img src="/assets/nothingToLearn.svg" />
+        <img src="@ImagePath" />
     </div>
-    <button @onclick="@GoToDashboard" class="btn btn-lg btn-primary">Go to dashboard</button>
+    @if (HasContinueButton)
+    {
+        <button @onclick="@RetrieveNewData" class="btn btn-lg btn-primary">Continue learning</button>
+        <span @onclick="@GoToDashboard">Return to dashboard</span>
+    }
+    else
+    {
+        <button @onclick="@GoToDashboard" class="btn btn-lg btn-primary">Return to dashboard</button>
+    }
 </div>
 
 @code{
+    [Parameter]
+    public string Message { get; set; }
+    [Parameter]
+    public string ImagePath { get; set; }
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+    [Parameter]
+    public bool HasContinueButton { get; set; }
+
+    private async Task RetrieveNewData()
+    {
+        await OnClick.InvokeAsync();
+    }
+
     private void GoToDashboard()
     {
         navigationManager.NavigateTo("/");

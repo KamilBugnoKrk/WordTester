@@ -40,8 +40,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
         }
 
         public (string question,
-            string correctResponse,
-            IEnumerable<string> incorrectResponses,
+            IEnumerable<string> Responses,
             RepetitionType repetitionType) CreateRepetitionData(WordStats wordStats)
         {
 
@@ -59,53 +58,45 @@ namespace MyBlazorApp.Server.LearningAlgorithm
             {
                 RepetitionType.FromTranslatedToOriginalOpen => (
                     wordStats.Word.TranslatedWord,
-                    wordStats.Word.OriginalWord,
                     null,
                     RepetitionType.FromTranslatedToOriginalOpen
                 ),
                 RepetitionType.FromOriginalToTranslatedOpen => (
                     wordStats.Word.OriginalWord,
-                    wordStats.Word.TranslatedWord,
                     null,
                     RepetitionType.FromOriginalToTranslatedOpen
                 ),
                 RepetitionType.FromExampleToTranslatedOpen => (
                     wordStats.Word.ExampleUse,
-                    wordStats.Word.TranslatedWord,
                     null, 
                     RepetitionType.FromExampleToTranslatedOpen
                 ),
                 RepetitionType.FromDefinitionToOriginalOpen => (
                     wordStats.Word.Definition,
-                    wordStats.Word.OriginalWord,
                     null,
                     RepetitionType.FromDefinitionToOriginalOpen
                 ),
                 RepetitionType.FromOriginalToTranslatedClose => (
                     wordStats.Word.OriginalWord,
-                    wordStats.Word.TranslatedWord,
-                    GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId),
+                    GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
                     RepetitionType.FromOriginalToTranslatedClose
                 ),
                 RepetitionType.FromTranslatedToOriginalClose => (
                     wordStats.Word.TranslatedWord,
-                    wordStats.Word.OriginalWord,
                     GetOtherOriginalWords(wordStats.Word.OriginalWord),
                     RepetitionType.FromTranslatedToOriginalClose
                 ),
                 RepetitionType.FromDefinitionToOriginalClose => (
-                    wordStats.Word.Definition,
-                    wordStats.Word.OriginalWord,
+                    wordStats.Word.Definition,                    
                     GetOtherOriginalWords(wordStats.Word.OriginalWord),
                     RepetitionType.FromDefinitionToOriginalClose
                 ),
                 RepetitionType.FromExampleToTranslatedClose => (
                     wordStats.Word.ExampleUse,
-                    wordStats.Word.TranslatedWord,
-                    GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId),
+                    GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
                     RepetitionType.FromExampleToTranslatedClose
                 ),
-                _ => (null, null, null, RepetitionType.None),
+                _ => (null, null, RepetitionType.None),
             };
         }
 
@@ -116,19 +107,25 @@ namespace MyBlazorApp.Server.LearningAlgorithm
             otherWords.UnionWith(_wordGenerator.GenerateWordsWithoutDoubledLetters(originalWord));
             otherWords.UnionWith(_wordGenerator.GenerateWordsWithSwappedLetters(originalWord));
             
-            return otherWords.ToList().Shuffle().Take(_numberOfIncorrectWords);
+            var newList = otherWords.ToList().Shuffle().Take(_numberOfIncorrectWords).ToList();
+            newList.Add(originalWord);
+            return newList.Shuffle();
         }
 
-        private IEnumerable<string> GetOtherTranslatedWords(int wordId, int courseId)
+        private IEnumerable<string> GetOtherTranslatedWords(int wordId, int courseId, string correctWord)
         {           
-            return _unitOfWork
+            var newList = _unitOfWork
                 .Words
                 .GetAll()
                 .Where(w => w.CourseId == courseId && w.Id != wordId)
                 .ToList()
                 .Shuffle()
                 .Take(_numberOfIncorrectWords)
-                .Select(w => w.TranslatedWord);
+                .Select(w => w.TranslatedWord)
+                .ToList();
+
+            newList.Add(correctWord);
+            return newList.Shuffle();
         }
     }
 }

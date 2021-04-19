@@ -73,7 +73,7 @@ namespace MyBlazorApp.Tests
             response.ResponseType.Should().Be(ResponseType.PracticeResponse);
             response.RepetitionType.Should().Be(RepetitionType.FromExampleToTranslatedOpen);
             response.Question.Should().Be("Question");
-            response.CorrectResponse.Should().Be("CorrectResponse");
+            response.Responses.Should().BeNull();
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace MyBlazorApp.Tests
             var repetitionManagerMock = new Mock<IRepetitionManager>();
             repetitionManagerMock
                 .Setup(rm => rm.CreateRepetitionData(It.Is<WordStats>(ws => ws.Id == 30)))
-                .Returns(("Question", "CorrectResponse", null, RepetitionType.FromExampleToTranslatedOpen));
+                .Returns(("Question", null, RepetitionType.FromExampleToTranslatedOpen));
 
             var handler = new GetLearningRepetitionQueryHandler(new UnitOfWork(context),
                 mapper, repetitionManagerMock.Object);

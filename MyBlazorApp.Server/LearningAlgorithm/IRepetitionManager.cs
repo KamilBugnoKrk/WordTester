@@ -19,8 +19,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
     public interface IRepetitionManager
     {
         public (string question,
-            string correctResponse,
-            IEnumerable<string> incorrectResponses,
+            IEnumerable<string> Responses,
             RepetitionType repetitionType) CreateRepetitionData(WordStats wordStats);
     }
 }

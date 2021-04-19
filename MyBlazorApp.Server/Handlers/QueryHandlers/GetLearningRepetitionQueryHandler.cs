@@ -39,7 +39,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         }
         public Task<GetLearningRepetitionResponseModel> Handle(GetLearningRepetitionRequestModel request, CancellationToken cancellationToken)
         {
-            if (!IsUserOrDefaultCourse(request.UserId))
+            if (!IsUserOrDefaultCourse(request.UserId, request.CourseId))
                 return CreateErrorResponse();
 
             var wordStats = _unitOfWork
@@ -51,12 +51,17 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 ContinueLearning(request, wordStats);
         }
 
-        private bool IsUserOrDefaultCourse(string userId)
+        private bool IsUserOrDefaultCourse(string userId, int courseId)
         {
-            return _unitOfWork
+            var userOrDefaultCourses = _unitOfWork
                 .Courses
                 .GetMyCoursesWithWords(userId)
-                .Any();
+                .Select(course => course.Id);
+
+            if (!userOrDefaultCourses.Any())
+                return false;
+
+            return userOrDefaultCourses.Contains(courseId);
         }
 
         private static Task<GetLearningRepetitionResponseModel> CreateErrorResponse()
@@ -109,7 +114,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 
         private Task<GetLearningRepetitionResponseModel> RepeatLearnedWord(WordStats wordStats)
         {
-            var (question, correctResponse, incorrectResponses, repetitionType) = _repetitionManager
+            var (question, responses, repetitionType) = _repetitionManager
                 .CreateRepetitionData(wordStats);
 
             var response = new GetLearningRepetitionResponseModel
@@ -118,8 +123,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 WordId = wordStats.WordId,
                 ResponseType = ResponseType.PracticeResponse,
                 Question = question,
-                CorrectResponse = correctResponse,
-                IncorrectResponses = incorrectResponses,
+                Responses = responses,
                 RepetitionType = repetitionType
             };
 

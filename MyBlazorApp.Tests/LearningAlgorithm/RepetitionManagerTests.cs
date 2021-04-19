@@ -41,8 +41,7 @@ namespace MyBlazorApp.Tests.LearningAlgorithm
             });
             
             result.question.Should().Be("TranslatedWord");
-            result.correctResponse.Should().Be("OriginalWord");
-            result.incorrectResponses.Should().BeNull();
+            result.Responses.Should().BeNull();
             result.repetitionType.Should().Be(RepetitionType.FromTranslatedToOriginalOpen);
         }
     }
