@@ -14,7 +14,7 @@ using System;
 
 namespace MyBlazorApp.Server.Models
 {
-    public class UserCourse
+    public record UserCourse
     {
         public int Id { get; set; }
         public Guid UserId { get; set; }

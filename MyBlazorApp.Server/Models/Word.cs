@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace MyBlazorApp.Server.Models
 {
-    public class Word
+    public record Word
     {
         public int Id { get; set; }
         public string OriginalWord { get; set; }

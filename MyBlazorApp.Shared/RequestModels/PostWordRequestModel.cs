@@ -21,4 +21,6 @@ namespace MyBlazorApp.Shared.RequestModels
         public string CourseId { get; set; }
         public WordDto Word { get; set; }
     }
+
+    public record PostWordRequest(string CourseId, WordDto Word);
 }

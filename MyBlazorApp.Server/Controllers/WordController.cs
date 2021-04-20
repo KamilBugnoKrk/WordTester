@@ -31,9 +31,14 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> PostWord([FromBody]PostWordRequestModel requestModel)
+        public async Task<IActionResult> PostWord([FromBody] PostWordRequest request)
         {
-            requestModel.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var requestModel = new PostWordRequestModel
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                CourseId = request.CourseId,
+                Word = request.Word
+            };
             var response = await _mediator.Send(requestModel);
             return response.IsSucceed ? 
                 Ok() :

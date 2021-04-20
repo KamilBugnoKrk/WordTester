@@ -47,10 +47,16 @@ namespace MyBlazorApp.Server.Controllers
         [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostLearningRepetition([FromBody] PostLearningRepetitionRequestModel request)
+        public async Task<IActionResult> PostLearningRepetition([FromBody] PostLearningRepetitionRequest request)
         {
-            request.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var response = await _mediator.Send(request);
+            var requestModel = new PostLearningRepetitionRequestModel
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                WordId = request.WordId,
+                RepetitionType = request.RepetitionType,
+                UserResponse = request.UserResponse
+            };
+            var response = await _mediator.Send(requestModel);
             return Ok(response);
         }
     }

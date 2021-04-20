@@ -21,9 +21,16 @@
         if (numberOfRepetition % 10 == 0)
         {
             <MessageToUser Message="You practice very hard. Would you like to continue?"
-                           ImagePath="/assets/question.svg" 
+                           ImagePath="/assets/question.svg"
                            OnClick="RetrieveData"
-                           HasContinueButton="true"/>
+                           HasContinueButton="true" />
+        }
+        else if (numberOfRepetition % 14 == 0)
+        {
+            <MessageToUser Message="Pro tip: speak words out loud to remember them faster"
+                           ImagePath="/assets/speaking.svg"
+                           OnClick="RetrieveData"
+                           HasContinueButton="true" />
         }
         else if (learningModel.ResponseType == ResponseType.NothingToLearnResponse)
         {

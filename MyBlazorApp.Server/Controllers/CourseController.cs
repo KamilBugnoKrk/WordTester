@@ -38,9 +38,16 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> PostCourse([FromBody]PostCourseRequestModel requestModel)
+        public async Task<IActionResult> PostCourse([FromBody] PostCourseRequest request)
         {
-            requestModel.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var requestModel = new PostCourseRequestModel
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                CourseId = request.CourseId,
+                Description = request.Description,
+                Name = request.Name
+            };
+            
             var response = await _mediator.Send(requestModel);
             return response.IsSucceed ?
               Ok(response.CourseId) :
@@ -48,9 +55,14 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetCourseDetails(GetCourseDetailsRequestModel requestModel)
-        {           
-            requestModel.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        public async Task<IActionResult> GetCourseDetails(string courseId)
+        {
+            var requestModel = new GetCourseDetailsRequestModel
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                CourseId = courseId
+            };
+            
             var response = await _mediator.Send(requestModel);
             
             return response.Course == null ? 

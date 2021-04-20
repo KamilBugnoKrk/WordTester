@@ -22,4 +22,6 @@ namespace MyBlazorApp.Shared.RequestModels
         public RepetitionType RepetitionType { get; set; }
         public string UserResponse { get; set; }
     }
+
+    public record PostLearningRepetitionRequest(int WordId, RepetitionType RepetitionType, string UserResponse);
 }

@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace MyBlazorApp.Server.Models
 {
-    public class Course
+    public record Course
     {
         public int Id { get; set; }
         public string Name { get; set; }

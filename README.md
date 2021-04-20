@@ -3,6 +3,8 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=KamilBugnoKrk_WordTester&metric=ncloc)](https://sonarcloud.io/dashboard?id=KamilBugnoKrk_WordTester)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=KamilBugnoKrk_WordTester&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=KamilBugnoKrk_WordTester)
 
+<img src="WordTester.png" alt="WordTester">
+
 <details open="open">
   <summary>Table of Contents</summary>
   <ol>
@@ -10,6 +12,13 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#license">License</a></li>
@@ -34,6 +43,25 @@ There are several tools for learning foreign words using flashcards and spaced r
 
 * [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 * [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
+
+## Getting Started
+
+This section contains instructions on setting up the project locally. To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+* Visual Studio 2019 16.8 or later with the ASP.NET and web development workload
+* .NET 5.0 SDK or later
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/KamilBugnoKrk/WordTester.git
+   ```
+2. Open in Visual Studio and click IIS Express to run.
+3. The application will be available on https://localhost:44370/, API on https://localhost:44370/swagger/index.html
 
 ## License
 

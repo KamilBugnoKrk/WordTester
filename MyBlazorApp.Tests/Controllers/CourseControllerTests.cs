@@ -60,7 +60,7 @@ namespace MyBlazorApp.Tests
                 ControllerContext = MockControllerContext()
             };
 
-            var result = await controller.PostCourse(new PostCourseRequestModel());
+            var result = await controller.PostCourse(new PostCourseRequest("0", "Name", "Description"));
 
             (result as OkObjectResult).Value.Should().Be(4);
         }
@@ -78,7 +78,7 @@ namespace MyBlazorApp.Tests
                 ControllerContext = MockControllerContext()
             };
 
-            var result = await controller.GetCourseDetails(new GetCourseDetailsRequestModel());
+            var result = await controller.GetCourseDetails("1");
 
             ((result as OkObjectResult).Value as GetCourseDetailsResponseModel)
                 .Course.Should().NotBeNull();
@@ -97,7 +97,7 @@ namespace MyBlazorApp.Tests
                 ControllerContext = MockControllerContext()
             };
 
-            var result = await controller.GetCourseDetails(new GetCourseDetailsRequestModel());
+            var result = await controller.GetCourseDetails("1");
 
             result.Should().BeOfType<NotFoundResult>();
         }

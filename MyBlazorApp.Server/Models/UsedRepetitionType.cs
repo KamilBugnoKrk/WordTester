@@ -16,11 +16,10 @@ using System.Collections.Generic;
 
 namespace MyBlazorApp.Server.Models
 {
-    public class UsedRepetitionType
+    public record UsedRepetitionType
     {
         public int Id { get; set; }
         public WordStats WordStats { get; set; }
         public RepetitionType RevisionTypeList { get; set; }
-
     }
 }
