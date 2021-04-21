@@ -16,12 +16,14 @@
     {
         <MultipleOption Question="@LearningModel.Question"
             Responses="@LearningModel.Responses"
+            Pronunciation="@LearningModel.Pronunciation"
             OnClick="SendResponse" />
     }
     else
     {
         <Open Question="@LearningModel.Question"
         RepetitionType="@LearningModel.RepetitionType"
+        Pronunciation="@LearningModel.Pronunciation"
         OnClick="SendResponse" />
     }
 }

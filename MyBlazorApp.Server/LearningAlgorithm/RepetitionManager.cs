@@ -40,6 +40,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
         }
 
         public (string question,
+            string pronunciation,
             IEnumerable<string> Responses,
             RepetitionType repetitionType) CreateRepetitionData(WordStats wordStats)
         {
@@ -59,44 +60,52 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                 RepetitionType.FromTranslatedToOriginalOpen => (
                     wordStats.Word.TranslatedWord,
                     null,
+                    null,
                     RepetitionType.FromTranslatedToOriginalOpen
                 ),
                 RepetitionType.FromOriginalToTranslatedOpen => (
                     wordStats.Word.OriginalWord,
+                    wordStats.Word.Pronunciation,
                     null,
                     RepetitionType.FromOriginalToTranslatedOpen
                 ),
                 RepetitionType.FromExampleToTranslatedOpen => (
                     wordStats.Word.ExampleUse,
+                    wordStats.Word.Pronunciation,
                     null, 
                     RepetitionType.FromExampleToTranslatedOpen
                 ),
                 RepetitionType.FromDefinitionToOriginalOpen => (
                     wordStats.Word.Definition,
                     null,
+                    null,
                     RepetitionType.FromDefinitionToOriginalOpen
                 ),
                 RepetitionType.FromOriginalToTranslatedClose => (
                     wordStats.Word.OriginalWord,
+                    wordStats.Word.Pronunciation,
                     GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
                     RepetitionType.FromOriginalToTranslatedClose
                 ),
                 RepetitionType.FromTranslatedToOriginalClose => (
                     wordStats.Word.TranslatedWord,
+                    null,
                     GetOtherOriginalWords(wordStats.Word.OriginalWord),
                     RepetitionType.FromTranslatedToOriginalClose
                 ),
                 RepetitionType.FromDefinitionToOriginalClose => (
-                    wordStats.Word.Definition,                    
+                    wordStats.Word.Definition,  
+                    null,
                     GetOtherOriginalWords(wordStats.Word.OriginalWord),
                     RepetitionType.FromDefinitionToOriginalClose
                 ),
                 RepetitionType.FromExampleToTranslatedClose => (
                     wordStats.Word.ExampleUse,
+                    wordStats.Word.Pronunciation,
                     GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
                     RepetitionType.FromExampleToTranslatedClose
                 ),
-                _ => (null, null, RepetitionType.None),
+                _ => (null, null, null, RepetitionType.None),
             };
         }
 

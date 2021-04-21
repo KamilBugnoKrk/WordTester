@@ -13,10 +13,10 @@
 @inject ILearningApi learningApi
 
 <div class="open-container">
-    <h2>@Question</h2>
-    @if (RepetitionType == RepetitionType.FromOriginalToTranslatedOpen)
+    <h2>@Helper.ApplyStyleToText(Question)</h2>
+    @if (!string.IsNullOrEmpty(Pronunciation))
     {
-        <p>[Pronunciation]</p>
+        <p>[@Pronunciation]</p>
     }
     else
     {
@@ -30,6 +30,8 @@
 @code {
     [Parameter]
     public string Question { get; set; }
+    [Parameter]
+    public string Pronunciation { get; set; }
     [Parameter]
     public RepetitionType RepetitionType { get; set; }
     [Parameter]

@@ -101,7 +101,7 @@ namespace MyBlazorApp.Tests
             var repetitionManagerMock = new Mock<IRepetitionManager>();
             repetitionManagerMock
                 .Setup(rm => rm.CreateRepetitionData(It.Is<WordStats>(ws => ws.Id == 30)))
-                .Returns(("Question", null, RepetitionType.FromExampleToTranslatedOpen));
+                .Returns(("Question",null, null, RepetitionType.FromExampleToTranslatedOpen));
 
             var handler = new GetLearningRepetitionQueryHandler(new UnitOfWork(context),
                 mapper, repetitionManagerMock.Object);

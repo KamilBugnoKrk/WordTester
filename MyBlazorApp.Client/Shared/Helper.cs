@@ -10,17 +10,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
-using System.Collections.Generic;
 
-namespace MyBlazorApp.Server.LearningAlgorithm
+namespace MyBlazorApp.Client.Shared
 {
-    public interface IRepetitionManager
+    public static class Helper
     {
-        public (string question,
-            string pronunciation,
-            IEnumerable<string> Responses,
-            RepetitionType repetitionType) CreateRepetitionData(WordStats wordStats);
+        public static string ApplyStyleToText(string example)
+        {
+            if (example.Contains("*"))
+            {
+                var start = example.IndexOf('*');
+                var end = example.LastIndexOf('*');
+                var originalWord = example.Substring(start + 1, end - start - 1).ToUpper();
+                return example.Substring(0, start) 
+                    + originalWord 
+                    + example.Substring(end + 1);
+            }
+            return example;
+        }
     }
 }

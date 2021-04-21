@@ -88,6 +88,7 @@ It would not be possible to start developing this project without the great free
 * [Fluent Assertions](https://fluentassertions.com/) - Fluent API for asserting the results of unit tests 
 * [Moq](https://github.com/moq/moq4) - mocking framework 
 * [MediatR](https://github.com/jbogard/MediatR) - mediator implementation
+* [combinatorics](https://github.com/eoincampbell/combinatorics) - combinatorics library
 
 ### Related to images
 * [unDraw](https://undraw.co/) - open-source illustrations

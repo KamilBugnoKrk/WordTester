@@ -24,6 +24,7 @@ namespace MyBlazorApp.Shared.ResponseModels
         public int WordId { get; set; }
         public RepetitionType RepetitionType { get; set; }
         public string Question { get; set; }
+        public string Pronunciation { get; set; }
         public IEnumerable<string> Responses { get; set; }
         public ResponseType ResponseType { get; set; }
         public WordDto InformationalWord { get; set; }

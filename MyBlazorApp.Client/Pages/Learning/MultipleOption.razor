@@ -11,7 +11,15 @@
     along with this program.  If not, see https://www.gnu.org/licenses/.*@
 
 <div class="informational-container">
-    <h2>@Question</h2>
+    <h2>@Helper.ApplyStyleToText(Question)</h2>
+    @if (!string.IsNullOrEmpty(Pronunciation))
+    {
+        <p>[@Pronunciation]</p>
+    }
+    else
+    {
+        <p></p>
+    }
     <div class="response-container">
         @foreach (var response in Responses)
         {
@@ -25,6 +33,8 @@
 @code {
     [Parameter]
     public string Question { get; set; }
+    [Parameter]
+    public string Pronunciation { get; set; }
     [Parameter]
     public string CorrectResponse { get; set; }
     [Parameter]

@@ -114,7 +114,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 
         private Task<GetLearningRepetitionResponseModel> RepeatLearnedWord(WordStats wordStats)
         {
-            var (question, responses, repetitionType) = _repetitionManager
+            var (question, pronunciation, responses, repetitionType) = _repetitionManager
                 .CreateRepetitionData(wordStats);
 
             var response = new GetLearningRepetitionResponseModel
@@ -124,7 +124,8 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 ResponseType = ResponseType.PracticeResponse,
                 Question = question,
                 Responses = responses,
-                RepetitionType = repetitionType
+                RepetitionType = repetitionType,
+                Pronunciation = pronunciation
             };
 
             return Task.FromResult(response);
