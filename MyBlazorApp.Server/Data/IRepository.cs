@@ -23,6 +23,7 @@ namespace MyBlazorApp.Server.Data
         IEnumerable<T> GetAll();
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
         EntityEntry<T> Add(T entity);
+        EntityEntry<T> Remove(T entity);
 
     }
 }

@@ -44,5 +44,19 @@ namespace MyBlazorApp.Server.Controllers
                 Ok() :
                 BadRequest(response.Error);
         }
+
+        [HttpDelete("[action]")]
+        public async Task<IActionResult> DeleteWord(string wordId)
+        {
+            var requestModel = new DeleteWordRequestModel
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                WordId = wordId
+            };
+            var response = await _mediator.Send(requestModel);
+            return response.IsSucceed ?
+                Ok() :
+                BadRequest(response.Error);
+        }
     }
 }

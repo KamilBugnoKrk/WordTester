@@ -29,6 +29,10 @@ namespace MyBlazorApp.Client.Services.Implementations
                     CourseId = courseId.ToString()
                 })
                 .ReceiveJson<PostWordResponseModel>();
-        
+
+        public async Task<DeleteWordResponseModel> DeleteWord(int wordId)
+            => await $"https://localhost:44370/api/Word/DeleteWord?wordId={wordId}"
+               .DeleteAsync()
+               .ReceiveJson<DeleteWordResponseModel>();
     }
 }

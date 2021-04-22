@@ -34,6 +34,10 @@
             <ValidationMessage For="@(() => model.ExampleUse)" />
 
             <button class="btn" type="submit">Save</button>
+            @if (model.Id != 0)
+             {
+                <span @onclick="@DeleteWord" class="delete">Delete word</span>
+             }
         </div>
     </EditForm>
 }
@@ -67,6 +71,12 @@
     async Task SaveWord()
     {
         await wordApi.PostWord(model, CourseId);
+        await ModalInstance.CloseAsync(ModalResult.Ok(true));
+    }
+
+    async Task DeleteWord()
+    {
+        await wordApi.DeleteWord(model.Id);
         await ModalInstance.CloseAsync(ModalResult.Ok(true));
     }
 

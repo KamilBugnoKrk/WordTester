@@ -33,6 +33,11 @@ namespace MyBlazorApp.Server.Data
             return _entities.Add(entity);
         }
 
+        public EntityEntry<T> Remove(T entity)
+        {
+            return _entities.Remove(entity);
+        }
+
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
             return _entities.Where(predicate);

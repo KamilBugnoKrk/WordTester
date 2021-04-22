@@ -10,17 +10,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using MyBlazorApp.Shared;
-using MyBlazorApp.Shared.RequestModels;
-using MyBlazorApp.Shared.ResponseModels;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace MyBlazorApp.Client.Services.Contracts
+namespace MyBlazorApp.Shared.ResponseModels
 {
-    public interface IWordApi
+    public class DeleteWordResponseModel
     {
-        Task<PostWordResponseModel> PostWord(WordDto model, int courseId);
-        Task<DeleteWordResponseModel> DeleteWord(int wordId);
+        public bool IsSucceed { get; set; }
+        public string Error { get; set; }
     }
 }

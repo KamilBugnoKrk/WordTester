@@ -1,4 +1,12 @@
-﻿.edit-word-container {
+﻿@import "../Variables.scss";
+
+.edit-word-container {
     display: flex;
     flex-direction: column;
+
+    .delete {
+        color: $main-color;
+        cursor: pointer;
+        text-align: center;
+    }
 }
