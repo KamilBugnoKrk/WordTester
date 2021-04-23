@@ -12,7 +12,7 @@
 
 
 using FluentAssertions;
-using MyBlazorApp.Client.Shared;
+using MyBlazorApp.Server.Helpers;
 using Xunit;
 
 namespace MyBlazorApp.UiTests
@@ -26,9 +26,35 @@ namespace MyBlazorApp.UiTests
         [InlineData("*This* cat is really fun", "THIS cat is really fun")]
         [InlineData("This cat is really *fun*", "This cat is really FUN")]
         [InlineData("This cat *is really* fun", "This cat IS REALLY fun")]
-        public void HasCorrectLinks(string example, string expectedResult)
+        public void ApplyStyleToText_Verify(string example, string expectedResult)
         {
             var result = Helper.ApplyStyleToText(example);
+            result.Should().Be(expectedResult);
+        }
+
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("This cat is really fun", "")]
+        [InlineData("This *cat* is really fun", "cat")]
+        [InlineData("*This* cat is really fun", "this")]
+        [InlineData("This cat is really *fun*", "fun")]
+        [InlineData("This cat *is really* fun", "is really")]
+        public void GetOriginalFromExample_Verify(string example, string expectedResult)
+        {
+            var result = Helper.GetOriginalFromExample(example);
+            result.Should().Be(expectedResult);
+        }
+
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("This cat is really fun", "")]
+        [InlineData("This *cat* is really fun", "This _____ is really fun")]
+        [InlineData("*This* cat is really fun", "_____ cat is really fun")]
+        [InlineData("This cat is really *fun*", "This cat is really _____")]
+        [InlineData("This cat *is really* fun", "This cat _____ fun")]
+        public void HideOriginal_Verify(string example, string expectedResult)
+        {
+            var result = Helper.HideOriginal(example);
             result.Should().Be(expectedResult);
         }
     }

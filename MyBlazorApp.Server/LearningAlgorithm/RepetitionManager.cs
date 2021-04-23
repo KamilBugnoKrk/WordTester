@@ -11,6 +11,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using MyBlazorApp.Server.Data;
+using MyBlazorApp.Server.Helpers;
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
 using Newtonsoft.Json;
@@ -105,8 +106,42 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                     GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
                     RepetitionType.FromExampleToTranslatedClose
                 ),
+                RepetitionType.FromOriginalToDefinitionClose => (
+                   wordStats.Word.OriginalWord,
+                   wordStats.Word.Pronunciation,
+                   GetOtherDefinitions(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.Definition),
+                   RepetitionType.FromOriginalToDefinitionClose
+               ),
+                RepetitionType.FromExampleToDefinitionClose => (
+                   Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
+                   wordStats.Word.Pronunciation,
+                   GetOtherDefinitions(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.Definition),
+                   RepetitionType.FromExampleToDefinitionClose
+               ),
+                RepetitionType.FromExampleToOriginalClose => (
+                 Helper.HideOriginal(wordStats.Word.ExampleUse),
+                 wordStats.Word.Pronunciation,
+                 GetOtherOriginalWords(Helper.GetOriginalFromExample(wordStats.Word.ExampleUse)),
+                 RepetitionType.FromExampleToDefinitionClose
+             ),
                 _ => (null, null, null, RepetitionType.None),
             };
+        }
+
+        private IEnumerable<string> GetOtherDefinitions(int wordId, int courseId, string definition)
+        {
+            var newList = _unitOfWork
+              .Words
+              .GetAll()
+              .Where(w => w.CourseId == courseId && w.Id != wordId)
+              .ToList()
+              .Shuffle()
+              .Take(_numberOfIncorrectWords)
+              .Select(w => w.Definition)
+              .ToList();
+
+            newList.Add(definition);
+            return newList.Shuffle();
         }
 
         private IEnumerable<string> GetOtherOriginalWords(string originalWord)

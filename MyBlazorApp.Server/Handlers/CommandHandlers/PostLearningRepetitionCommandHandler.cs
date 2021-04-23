@@ -44,7 +44,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     Error = "This word does not come from your courses"
                 });
             }
-            
+
             var (word, stats) = GetLearningData(request);
 
             if (stats == null)
@@ -122,7 +122,8 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private static bool IsCorrectAnswer(PostLearningRepetitionRequestModel request, Word word)
         {
             return IsOriginalWordCorrect(request, word.OriginalWord) ||
-                   IsTranslatedWordCorrect(request, word.TranslatedWord);
+                   IsTranslatedWordCorrect(request, word.TranslatedWord) ||
+                   IsDefinitionCorrect(request, word.Definition);
         }
 
         private static string UpdateRepetitionTypes(RepetitionType currentRepetitionType, string usedRepetitionType)
@@ -165,7 +166,8 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             return (request.RepetitionType == RepetitionType.FromDefinitionToOriginalClose ||
                     request.RepetitionType == RepetitionType.FromDefinitionToOriginalOpen ||
                     request.RepetitionType == RepetitionType.FromTranslatedToOriginalClose ||
-                    request.RepetitionType == RepetitionType.FromTranslatedToOriginalOpen
+                    request.RepetitionType == RepetitionType.FromTranslatedToOriginalOpen ||
+                    request.RepetitionType == RepetitionType.FromExampleToOriginalClose
                     ) && request.UserResponse == originalWord;
         }
 
@@ -176,6 +178,13 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     request.RepetitionType == RepetitionType.FromOriginalToTranslatedClose ||
                     request.RepetitionType == RepetitionType.FromOriginalToTranslatedOpen
                     ) && request.UserResponse == translatedWord;
+        }
+
+        private static bool IsDefinitionCorrect(PostLearningRepetitionRequestModel request, string definition)
+        {
+            return (request.RepetitionType == RepetitionType.FromOriginalToDefinitionClose ||
+                    request.RepetitionType == RepetitionType.FromDefinitionToOriginalOpen 
+                    ) && request.UserResponse == definition;
         }
     }
 }
