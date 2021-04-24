@@ -1,7 +1,7 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     background-color: #85603f;
     overflow-x: hidden;
     font-size: 20px;
@@ -12,7 +12,7 @@ a {
 }
 
 .btn {
-    color: #fff !important;
+    color: #85603f !important;
     background-color: #e3d18a !important;
     border-color: #e3d18a !important;
 }
@@ -228,6 +228,10 @@ a {
     margin: 0.5rem !important;
 }
 
+.blazored-modal-container{
+    z-index: 10000;
+}
+
 /*MatBlazor*/
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background-color: white;
@@ -243,13 +247,13 @@ a {
     color: var(--mdc-theme-primary, #6200ee) !important
 }
 .mat-text-field-input {
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .mdc-floating-label {
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .mdc-form-field {
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .mdc-checkbox {
     margin-top: -7px;

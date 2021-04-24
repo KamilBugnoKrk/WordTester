@@ -12,6 +12,7 @@
 
 using MediatR;
 using MyBlazorApp.Server.Data;
+using MyBlazorApp.Server.Helpers;
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
 using MyBlazorApp.Shared.RequestModels;
@@ -82,7 +83,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     Definition = word.Definition,
                     OriginalWord = word.OriginalWord,
                     TranslatedWord = word.TranslatedWord,
-                    ExampleUse = word.ExampleUse,
+                    ExampleUse = Helper.ApplyStyleToText(word.ExampleUse),
                     Pronunciation = word.Pronunciation
                 }
             });

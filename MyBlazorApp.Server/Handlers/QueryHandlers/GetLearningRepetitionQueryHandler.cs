@@ -13,6 +13,7 @@
 using AutoMapper;
 using MediatR;
 using MyBlazorApp.Server.Data;
+using MyBlazorApp.Server.Helpers;
 using MyBlazorApp.Server.LearningAlgorithm;
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
@@ -103,11 +104,14 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 
         private Task<GetLearningRepetitionResponseModel> CreateInformationalResponse(Word notLearnedWord)
         {
+            var informationalWord = _mapper.Map<Word, WordDto>(notLearnedWord);
+            informationalWord.ExampleUse = Helper.ApplyStyleToText(notLearnedWord.ExampleUse);
+
             var response = new GetLearningRepetitionResponseModel
             {
                 WordId = notLearnedWord.Id,
                 ResponseType = ResponseType.InformationalResponse,
-                InformationalWord = _mapper.Map<Word, WordDto>(notLearnedWord)                
+                InformationalWord = informationalWord
             };
             return Task.FromResult(response);
         }

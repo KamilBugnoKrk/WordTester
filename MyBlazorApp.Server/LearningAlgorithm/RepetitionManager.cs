@@ -101,7 +101,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                     RepetitionType.FromDefinitionToOriginalClose
                 ),
                 RepetitionType.FromExampleToTranslatedClose => (
-                    wordStats.Word.ExampleUse,
+                    Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                     wordStats.Word.Pronunciation,
                     GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
                     RepetitionType.FromExampleToTranslatedClose
@@ -120,9 +120,9 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                ),
                 RepetitionType.FromExampleToOriginalClose => (
                  Helper.HideOriginal(wordStats.Word.ExampleUse),
-                 wordStats.Word.Pronunciation,
+                 null,
                  GetOtherOriginalWords(Helper.GetOriginalFromExample(wordStats.Word.ExampleUse)),
-                 RepetitionType.FromExampleToDefinitionClose
+                 RepetitionType.FromExampleToOriginalClose
              ),
                 _ => (null, null, null, RepetitionType.None),
             };

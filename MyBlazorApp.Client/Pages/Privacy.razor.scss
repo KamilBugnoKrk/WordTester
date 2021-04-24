@@ -8,6 +8,7 @@
     word-wrap: break-word;
     padding: 10px;
     max-width: 100%;
+    color: $main-color;
 }
 
 .terms-content {
@@ -15,7 +16,7 @@
     margin-right: 10vw;
 
     a {
-        color: black !important;
+        color: $main-color !important;
     }
 
     p {
