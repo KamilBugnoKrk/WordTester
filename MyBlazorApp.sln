@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherLicenses", "OtherLicen
 		bsd-3.0.txt = bsd-3.0.txt
 		for-x-unit.txt = for-x-unit.txt
 		mit.txt = mit.txt
+		MPL-2.0.txt = MPL-2.0.txt
 	EndProjectSection
 EndProject
 Global

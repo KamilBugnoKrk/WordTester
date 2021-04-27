@@ -81,6 +81,7 @@ It would not be possible to start developing this project without the great free
 * [bUnit](https://github.com/egil/bunit) - testing library
 * [MatBlazor](https://github.com/SamProf/MatBlazor) - material design components
 * [Blazored Modal](https://github.com/Blazored/Modal) - modal implementation 
+* [Toolbelt.Blazor.HotKeys](https://github.com/jsakamoto/Toolbelt.Blazor.HotKeys) - keyboard shortcuts
 
 ### Related to C#
 * [Flurl](https://flurl.dev/) - HTTP client library

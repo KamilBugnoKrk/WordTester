@@ -15,7 +15,7 @@
     if (IsMultipleOption(LearningModel.RepetitionType))
     {
         <MultipleOption Question="@LearningModel.Question"
-            Responses="@LearningModel.Responses"
+            Responses="@LearningModel.Responses.ToList()"
             Pronunciation="@LearningModel.Pronunciation"
             OnClick="SendResponse" />
     }

@@ -11,6 +11,8 @@
     along with this program.  If not, see https://www.gnu.org/licenses/.*@
 
 @inject ILearningApi learningApi
+@implements IDisposable
+@inject HotKeys HotKeys
 
 <div class="open-container">
     <h2>@Question</h2>
@@ -39,6 +41,14 @@
 
     private string userResponse = string.Empty;
 
+    HotKeysContext HotKeysContext;
+
+
+    protected override void OnInitialized()
+    {
+        this.HotKeysContext = this.HotKeys.CreateContext()
+          .Add(ModKeys.None, Keys.Enter, SendResponse);
+    }
 
     private async Task SendResponse()
     {
@@ -59,5 +69,10 @@
             return "Original word";
         }
         return string.Empty;
+    }
+
+    public void Dispose()
+    {
+        this.HotKeysContext.Dispose();
     }
 }

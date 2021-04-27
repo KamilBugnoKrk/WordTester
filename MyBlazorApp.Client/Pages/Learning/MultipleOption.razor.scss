@@ -18,6 +18,7 @@
     align-items: center;
     color: $main-color;
     padding: 1em 3em;
+    text-align: center;
 
     .response-container {
         display: flex;
@@ -26,6 +27,7 @@
         max-width: 700px;
 
         .response-tile {
+            position: relative;
             background-color: $main-color;
             color: $main-color-bg;
             margin: 10px;
@@ -42,6 +44,26 @@
                 text-align: center;
                 margin-bottom: 0;
             }
+
+            div {
+                position: absolute;
+                top: -2px;
+                left: 10px;
+            }
+
+            span {
+                border: 1px solid $main-color-bg;
+                border-radius: 4px;
+                padding: 10px;
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                height: 30px;
+            }
+
+            .smaller{
+                font-size: 25px;
+            }
         }
     }
 }
@@ -53,6 +75,14 @@
                 width: 160px;
                 height: 160px;
                 font-size: 26px;
+
+                span {
+                    height: 25px;
+                }
+
+                .smaller {
+                    font-size: 21px;
+                }
             }
         }
     }
@@ -61,11 +91,20 @@
 @media (max-width: 680px) {
     .informational-container {
         padding: 1em 0em;
+
         .response-container {
             .response-tile {
                 width: 130px;
                 height: 130px;
-                 font-size: 22px;
+                font-size: 22px;
+
+                span {
+                    height: 10px;
+                }
+
+                .smaller {
+                    font-size: 17px;
+                }
             }
         }
     }

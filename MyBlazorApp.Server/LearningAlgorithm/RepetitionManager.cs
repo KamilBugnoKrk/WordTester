@@ -71,7 +71,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                     RepetitionType.FromOriginalToTranslatedOpen
                 ),
                 RepetitionType.FromExampleToTranslatedOpen => (
-                    wordStats.Word.ExampleUse,
+                    Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                     wordStats.Word.Pronunciation,
                     null, 
                     RepetitionType.FromExampleToTranslatedOpen

@@ -10,6 +10,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see https://www.gnu.org/licenses/.*@
 
+@implements IDisposable
+@inject HotKeys HotKeys
+
 <div class="informational-container">
     <h2>@Question</h2>
     @if (!string.IsNullOrEmpty(Pronunciation))
@@ -21,11 +24,13 @@
         <p></p>
     }
     <div class="response-container">
-        @foreach (var response in Responses)
+        @for (var i = 0; i < Responses.Count; i++)
         {
-            <div @onclick="() => SendResponse(response)" class="response-tile">
-                <p>@response</p>
-            </div>
+        <div @onclick="() => SendResponse(Responses[i])" class="response-tile">
+            <div>@(i+1)</div>
+            <span/>
+            <p class="@(ShouldBeSmaller(Responses[i]) ? "smaller" : "")">@Responses[i]</p>
+        </div>
         }
     </div>
 </div>
@@ -38,12 +43,33 @@
     [Parameter]
     public string CorrectResponse { get; set; }
     [Parameter]
-    public IEnumerable<string> Responses { get; set; }
+    public IList<string> Responses { get; set; }
     [Parameter]
     public EventCallback<string> OnClick { get; set; }
+
+    HotKeysContext HotKeysContext;
+    private List<Keys> keyList = new List<Keys> { Keys.Num1, Keys.Num2, Keys.Num3, Keys.Num4,
+        Keys.Num5, Keys.Num6, Keys.Num7, Keys.Num8, Keys.Num9};
+
+    protected override void OnInitialized()
+    {
+        this.HotKeysContext = this.HotKeys.CreateContext();
+        for (var i = 0; i < Responses.Count(); i++)
+        {
+            var response = Responses[i];
+            this.HotKeysContext.Add(ModKeys.None, keyList[i], async () => { await SendResponse(response); });
+        }
+    }
+
+    private bool ShouldBeSmaller(string text) => text.Count() >= 25;
 
     private async Task SendResponse(string userResponse)
     {
         await OnClick.InvokeAsync(userResponse);
+    }
+
+    public void Dispose()
+    {
+        this.HotKeysContext.Dispose();
     }
 }

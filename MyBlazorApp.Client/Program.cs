@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using Blazored.Modal;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace MyBlazorApp.Client
 {
@@ -40,7 +41,7 @@ namespace MyBlazorApp.Client
             builder.Services.AddScoped<IWordApi, WordApi>();
             builder.Services.AddScoped<ILearningApi, LearningApi>();
             builder.Services.AddBlazoredModal();
-
+            builder.Services.AddHotKeys();
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 
