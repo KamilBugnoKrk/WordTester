@@ -32,7 +32,7 @@
               class="response-tile">
                 <div>@(i+1)</div>
                 <span/>
-                <p class="@(ShouldBeSmaller(i) ? "smaller" : "")">@Responses[i]</p>
+                <p class="@GetStyle(i)">@Responses[i]</p>
             </div>
         }
     </div>
@@ -64,7 +64,11 @@
         }
     }
 
-    private bool ShouldBeSmaller(int i) => Responses[i].Count() >= 25;
+    private string GetStyle(int i) {
+        if (Responses[i].Count() >= 45) return "smallest";
+        if (Responses[i].Count() >= 25) return "smaller";
+        return string.Empty;
+    }
 
     private async Task SendResponse(int i)
     {

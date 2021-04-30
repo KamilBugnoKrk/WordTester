@@ -61,8 +61,12 @@
                 height: 30px;
             }
 
-            .smaller{
+            .smaller {
                 font-size: 25px;
+            }
+
+            .smallest {
+                font-size: 21px;
             }
         }
     }
@@ -82,6 +86,10 @@
 
                 .smaller {
                     font-size: 21px;
+                }
+
+                .smallest {
+                    font-size: 17px;
                 }
             }
         }
@@ -105,7 +113,23 @@
                 .smaller {
                     font-size: 17px;
                 }
+
+                .smallest {
+                    font-size: 13px;
+                }
             }
         }
     }
 }
+
+@media (pointer: coarse) {
+    .informational-container {
+        .response-container {
+            .response-tile {
+                span, div {
+                   display: none;
+                }
+            }
+        }
+    }
+}           

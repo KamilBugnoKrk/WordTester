@@ -21,13 +21,15 @@ namespace MyBlazorApp.Client.Services.Implementations
 {
     public class CourseApi : ICourseApi
     {
+        private const string url = "https://localhost:44370/";
+
         public async Task<IEnumerable<CourseDto>> GetMyCourses() =>
-            (await "https://localhost:44370/api/Course/GetMyCourses"
+            (await $"{url}api/Course/GetMyCourses"
                 .GetJsonAsync<GetMyCoursesResponseModel>())
                 .Courses;
 
         public async Task<int> PostCourse(string id, string name, string description) => 
-            await $"https://localhost:44370/api/Course/PostCourse"
+            await $"{url}api/Course/PostCourse"
                 .PostJsonAsync(new
                 {
                     CourseId = id,
@@ -37,7 +39,7 @@ namespace MyBlazorApp.Client.Services.Implementations
                .ReceiveJson<int>();
 
         public async Task<GetCourseDetailsResponseModel> GetCourseDetails(string courseId) =>
-            await $"https://localhost:44370/api/Course/GetCourseDetails?CourseId={courseId}"
+            await $"{url}api/Course/GetCourseDetails?CourseId={courseId}"
                 .GetJsonAsync<GetCourseDetailsResponseModel>();
     }
 }

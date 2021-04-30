@@ -70,8 +70,9 @@ Distributed under the GPL-3.0 License. See `LICENSE` for more information.
 ## Contact
 
 Kamil Bugno - [LinkedIn](https://www.linkedin.com/in/kamil-bugno/)
-
-Project Link: [https://github.com/KamilBugnoKrk/WordTester](https://github.com/KamilBugnoKrk/WordTester)
+E-mail: hello@wordtester.org
+Project Website: [http://wordtester.org](http://wordtester.org)
+Project Repository: [https://github.com/KamilBugnoKrk/WordTester](https://github.com/KamilBugnoKrk/WordTester)
 
 ## Acknowledgements
 It would not be possible to start developing this project without the great free resources. I would like to say thanks to all people who dedicate their time to develop open-source projects:

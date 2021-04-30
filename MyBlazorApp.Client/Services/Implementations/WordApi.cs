@@ -22,8 +22,10 @@ namespace MyBlazorApp.Client.Services.Implementations
 {
     public class WordApi : IWordApi
     {
+        private const string url = "https://localhost:44370/";
+
         public async Task<PostWordResponseModel> PostWord(WordDto word, int courseId)        
-             => await "https://localhost:44370/api/Word/PostWord"
+             => await $"{url}api/Word/PostWord"
                 .PostJsonAsync(new PostWordRequestModel{ 
                     Word = word,
                     CourseId = courseId.ToString()
@@ -31,7 +33,7 @@ namespace MyBlazorApp.Client.Services.Implementations
                 .ReceiveJson<PostWordResponseModel>();
 
         public async Task<DeleteWordResponseModel> DeleteWord(int wordId)
-            => await $"https://localhost:44370/api/Word/DeleteWord?wordId={wordId}"
+            => await $"{url}api/Word/DeleteWord?wordId={wordId}"
                .DeleteAsync()
                .ReceiveJson<DeleteWordResponseModel>();
     }
