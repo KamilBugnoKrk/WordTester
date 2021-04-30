@@ -184,7 +184,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private static bool IsDefinitionCorrect(PostLearningRepetitionRequestModel request, string definition)
         {
             return (request.RepetitionType == RepetitionType.FromOriginalToDefinitionClose ||
-                    request.RepetitionType == RepetitionType.FromDefinitionToOriginalOpen 
+                    request.RepetitionType == RepetitionType.FromExampleToDefinitionClose 
                     ) && request.UserResponse == definition;
         }
     }

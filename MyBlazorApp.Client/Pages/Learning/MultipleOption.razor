@@ -26,11 +26,14 @@
     <div class="response-container">
         @for (var i = 0; i < Responses.Count; i++)
         {
-        <div @onclick="() => SendResponse(Responses[i])" class="response-tile">
-            <div>@(i+1)</div>
-            <span/>
-            <p class="@(ShouldBeSmaller(Responses[i]) ? "smaller" : "")">@Responses[i]</p>
-        </div>
+            var index = i;
+            <div 
+              @onclick="async () => await SendResponse(index)" 
+              class="response-tile">
+                <div>@(i+1)</div>
+                <span/>
+                <p class="@(ShouldBeSmaller(i) ? "smaller" : "")">@Responses[i]</p>
+            </div>
         }
     </div>
 </div>
@@ -56,16 +59,16 @@
         this.HotKeysContext = this.HotKeys.CreateContext();
         for (var i = 0; i < Responses.Count(); i++)
         {
-            var response = Responses[i];
-            this.HotKeysContext.Add(ModKeys.None, keyList[i], async () => { await SendResponse(response); });
+            var index = i;
+            this.HotKeysContext.Add(ModKeys.None, keyList[i], async () => { await SendResponse(index); });
         }
     }
 
-    private bool ShouldBeSmaller(string text) => text.Count() >= 25;
+    private bool ShouldBeSmaller(int i) => Responses[i].Count() >= 25;
 
-    private async Task SendResponse(string userResponse)
+    private async Task SendResponse(int i)
     {
-        await OnClick.InvokeAsync(userResponse);
+        await OnClick.InvokeAsync(Responses[i]);
     }
 
     public void Dispose()

@@ -19,7 +19,7 @@
         <div class="info">
             <h2>Hi @userName!</h2>
             <h5>We have stats for you:</h5>
-            <p>You have created @courses.Count() courses</p>
+            <p>You have created @courses.Where(c => !c.IsVisibleForEveryone).Count() courses</p>
             <p>
                 All your courses contain @courses.Where(c => !c.IsVisibleForEveryone).Sum(c => c.NumberOfWords)
                 words
@@ -33,7 +33,7 @@
             {
                 <div class="course-tile course-tile-content">
                     <h2>@course.Name</h2>
-                    <p>@course.Description</p>
+                    <p class="@(ShouldBeSmaller(course.Description) ? "smaller" : "")">@course.Description</p>
                     <div @onclick=@(() => NagivateToLearning(course.Id)) class="actions">
                         <div>
                             <i class="fas fa-graduation-cap"></i>
@@ -68,6 +68,8 @@
     private IEnumerable<CourseDto> courses = new List<CourseDto>();
     private string userName;
     private bool isLoading = true;
+
+    private bool ShouldBeSmaller(string text) => text.Count() >= 25;
 
     protected override async Task OnInitializedAsync()
     {
