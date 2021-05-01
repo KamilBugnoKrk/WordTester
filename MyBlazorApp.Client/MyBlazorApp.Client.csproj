@@ -9,6 +9,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Pages\About.razor.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\About.razor.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="compilerconfig.json" />
     <None Include="wwwroot\assets\login.svg" />
   </ItemGroup>

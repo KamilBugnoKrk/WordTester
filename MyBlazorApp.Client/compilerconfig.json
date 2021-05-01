@@ -58,5 +58,9 @@
   {
     "outputFile": "Pages/Learning/MessageToUser.razor.css",
     "inputFile": "Pages/Learning/MessageToUser.razor.scss"
+  },
+  {
+    "outputFile": "Pages/About.razor.css",
+    "inputFile": "Pages/About.razor.scss"
   }
 ]

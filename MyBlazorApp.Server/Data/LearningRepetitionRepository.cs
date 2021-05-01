@@ -35,6 +35,7 @@ namespace MyBlazorApp.Server.Data
                         ws.Word.Course.UserCourses
                             .Where(uc => uc.UserId.ToString() == userId)
                             .Any()) &&
+                        ws.UserId.ToString() == userId && 
                         ws.Word.Course.Id.ToString() == courseId.ToString());
         }
     }

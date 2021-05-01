@@ -1,0 +1,61 @@
+﻿@import "../Variables.scss";
+
+.about-page {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        padding-top: 50px;
+        text-align: center;
+        color: $main-color;
+    }
+
+    .about-container {
+        display: flex;
+        flex-direction: row;
+        margin: 100px;
+        margin-top: 0;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            padding: 20px;
+
+            a{
+                text-align: center;
+                font-size: 35px;
+            }
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .yellow {
+        color: $main-color-bg;
+        background: $main-color;
+    }
+
+    .brown {
+        color: $main-color;
+        background: $main-color-bg;
+    }
+}
+
+@media (max-width: 600px) {
+    .about-page {
+        .about-container {
+            flex-direction: column;
+            margin: 50px;
+            margin-top: 0px;
+
+            div {
+                width: 100%;
+            }
+        }
+    }
+}
