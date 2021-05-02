@@ -24,8 +24,8 @@
   align-content: flex-start; }
   .main .course-tile {
     background-color: #e3d18a;
-    width: 200px;
-    height: 300px;
+    width: 230px;
+    height: 330px;
     margin: 20px 10px 20px 10px; }
   .main .course-tile:hover {
     -webkit-transform: scale(1.05, 1.05);
@@ -36,7 +36,7 @@
   .main .course-tile-content {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 100px 170px 20px; }
+    grid-template-rows: 100px 200px 20px; }
     .main .course-tile-content h2 {
       font-size: 30px;
       margin: 10px;

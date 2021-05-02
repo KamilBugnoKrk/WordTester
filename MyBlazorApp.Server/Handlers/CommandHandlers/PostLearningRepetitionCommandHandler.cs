@@ -123,6 +123,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private static bool IsCorrectAnswer(PostLearningRepetitionRequestModel request, Word word)
         {
             return IsOriginalWordCorrect(request, word.OriginalWord) ||
+                   IsOriginalWordCorrect(request, Helper.GetOriginalFromExample(word.ExampleUse)) ||
                    IsTranslatedWordCorrect(request, word.TranslatedWord) ||
                    IsDefinitionCorrect(request, word.Definition);
         }
@@ -169,7 +170,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     request.RepetitionType == RepetitionType.FromTranslatedToOriginalClose ||
                     request.RepetitionType == RepetitionType.FromTranslatedToOriginalOpen ||
                     request.RepetitionType == RepetitionType.FromExampleToOriginalClose
-                    ) && request.UserResponse == originalWord;
+                    ) && request.UserResponse.ToLower() == originalWord.ToLower();
         }
 
         private static bool IsTranslatedWordCorrect(PostLearningRepetitionRequestModel request, string translatedWord)
@@ -178,14 +179,14 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     request.RepetitionType == RepetitionType.FromExampleToTranslatedOpen ||
                     request.RepetitionType == RepetitionType.FromOriginalToTranslatedClose ||
                     request.RepetitionType == RepetitionType.FromOriginalToTranslatedOpen
-                    ) && request.UserResponse == translatedWord;
+                    ) && request.UserResponse.ToLower() == translatedWord.ToLower();
         }
 
         private static bool IsDefinitionCorrect(PostLearningRepetitionRequestModel request, string definition)
         {
             return (request.RepetitionType == RepetitionType.FromOriginalToDefinitionClose ||
                     request.RepetitionType == RepetitionType.FromExampleToDefinitionClose 
-                    ) && request.UserResponse == definition;
+                    ) && request.UserResponse.ToLower() == definition.ToLower();
         }
     }
 }

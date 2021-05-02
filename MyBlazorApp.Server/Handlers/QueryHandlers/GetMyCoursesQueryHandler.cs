@@ -37,7 +37,18 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         {
             var courses = _unitOfWork.Courses.GetMyCoursesWithWords(request.UserId);
 
-            var coursesDto = _mapper.Map<IEnumerable<CourseDto>>(courses);
+            var coursesDto = courses.Select(c => new CourseDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description,
+                IsVisibleForEveryone = c.IsVisibleForEveryone,
+                NumberOfWords = c.Words.Count(),
+                NumberOfKnownWords = c
+                    .Words
+                    .Where(w => w.WordStats.Any(ws => ws.UserId.ToString() == request.UserId))
+                    .Count()
+            }); 
 
             return Task.FromResult(new GetMyCoursesResponseModel { Courses = coursesDto});
         }

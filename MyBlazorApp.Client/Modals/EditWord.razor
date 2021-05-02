@@ -18,26 +18,31 @@
         <div class="edit-word-container">
             <DataAnnotationsValidator />
 
-            <MatTextField @bind-Value="model.OriginalWord" Label="Original Word" autofocus />
+            <label for="originalWord" class="sr-only">OriginalWord</label>
+            <MatTextField id="originalWord" @bind-Value="model.OriginalWord" Label="Original Word" autofocus />
             <ValidationMessage For="@(() => model.OriginalWord)" />
 
-            <MatTextField @bind-Value="model.Pronunciation" Label="Pronunciation" autofocus />
+            <label for="pronunciation" class="sr-only">Pronunciation</label>
+            <MatTextField id="pronunciation" @bind-Value="model.Pronunciation" Label="Pronunciation" autofocus />
             <ValidationMessage For="@(() => model.Pronunciation)" />
 
-            <MatTextField @bind-Value="model.TranslatedWord" autofocus Label="Translated Word" />
+            <label for="translatedWord" class="sr-only">TranslatedWord</label>
+            <MatTextField id="translatedWord" @bind-Value="model.TranslatedWord" autofocus Label="Translated Word" />
             <ValidationMessage For="@(() => model.TranslatedWord)" />
 
-            <MatTextField TextArea="true" @bind-Value="model.Definition" autofocus Label="Definition" />
+            <label for="definition" class="sr-only">Definition</label>
+            <MatTextField id="definition" TextArea="true" @bind-Value="model.Definition" autofocus Label="Definition" />
             <ValidationMessage For="@(() => model.Definition)" />
 
-            <MatTextField TextArea="true" @bind-Value="model.ExampleUse" autofocus Label="Example Use" />
+            <label for="exampleUse" class="sr-only">ExampleUse</label>
+            <MatTextField id="exampleUse" TextArea="true" @bind-Value="model.ExampleUse" autofocus Label="Example Use" />
             <ValidationMessage For="@(() => model.ExampleUse)" />
 
             <button class="btn" type="submit">Save</button>
             @if (model.Id != 0)
-             {
+            {
                 <span @onclick="@DeleteWord" class="delete">Delete word</span>
-             }
+            }
         </div>
     </EditForm>
 }

@@ -24,8 +24,6 @@ namespace MyBlazorApp.Server
     {
         public MappingProfile()
         {
-            CreateMap<Course, CourseDto>()
-                .ForMember(dest => dest.NumberOfWords, opt => opt.MapFrom(src => src.Words.Count()));
             CreateMap<UserCourse, UserCourseDto>();
             CreateMap<Word, WordDto>();
             CreateMap<WordStats, WordStatsDto>();

@@ -30,6 +30,7 @@ namespace MyBlazorApp.Server.Data
             return _applicationDbContext
                 .Courses
                 .Include(c => c.Words)
+                .ThenInclude(w => w.WordStats)
                 .Include(c => c.UserCourses)
                 .FirstOrDefault(c => !c.IsVisibleForEveryone &&
                         c.UserCourses
@@ -43,6 +44,7 @@ namespace MyBlazorApp.Server.Data
             return _applicationDbContext
                  .Courses
                  .Include(c => c.Words)
+                 .ThenInclude(w => w.WordStats)
                  .Include(c => c.UserCourses)
                  .Where(c => c.IsVisibleForEveryone ||
                          c.UserCourses

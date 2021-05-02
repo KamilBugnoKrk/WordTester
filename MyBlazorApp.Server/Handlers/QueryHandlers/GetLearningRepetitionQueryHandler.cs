@@ -43,11 +43,11 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             if (!IsUserOrDefaultCourse(request.UserId, request.CourseId))
                 return CreateErrorResponse();
 
-            var wordStats = _unitOfWork
+           var wordStats = _unitOfWork
                 .WordStats?
                 .GetWordStatsByCourseId(request.CourseId, request.UserId);
 
-            return wordStats == null ?
+            return wordStats == null || !wordStats.Any() ?
                 LearnNewWord(request) :
                 ContinueLearning(request, wordStats);
         }
@@ -92,7 +92,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             var notLearnedWord = _unitOfWork
                     .Words
                     .GetAll()
-                    .Where(w => w.CourseId == request.CourseId && w.WordStats == null)
+                    .Where(w => w.CourseId == request.CourseId && (w.WordStats == null || !w.WordStats.Any(ws => ws.UserId.ToString() == request.UserId)))
                     .ToList()
                     .Shuffle()
                     .FirstOrDefault();

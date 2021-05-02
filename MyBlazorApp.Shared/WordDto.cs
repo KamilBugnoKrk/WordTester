@@ -28,7 +28,8 @@ namespace MyBlazorApp.Shared
         [MaxLength(170, ErrorMessage = "Definition should be shorter")]
         public string Definition { get; set; }
         [Required]
-        [MaxLength(170, ErrorMessage = "Example use should be shorter")]
+        [MaxLength(170, ErrorMessage = "Example of use should be shorter")]
+        [ExampleUse(ErrorMessage = "Example of use should contain *your word*")]
         public string ExampleUse { get; set; }
         [MaxLength(70, ErrorMessage = "Pronunciation should be shorter")]
         public string Pronunciation { get; set; }

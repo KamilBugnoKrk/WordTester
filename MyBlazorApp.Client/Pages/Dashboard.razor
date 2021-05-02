@@ -34,10 +34,13 @@
                 <div class="course-tile course-tile-content">
                     <h2>@course.Name</h2>
                     <p class="@(ShouldBeSmaller(course.Description) ? "smaller" : "")">@course.Description</p>
-                    <div @onclick=@(() => NagivateToLearning(course.Id)) class="actions">
-                        <div>
+                    <div class="actions">
+                        <div @onclick=@(() => NagivateToLearning(course.Id))>
                             <i class="fas fa-graduation-cap"></i>
                             <p>Learn</p>
+                        </div>
+                        <div>
+                            <span>@course.NumberOfKnownWords/@course.NumberOfWords</span>
                         </div>
                         @if (!course.IsVisibleForEveryone)
                         {

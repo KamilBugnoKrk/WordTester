@@ -17,6 +17,7 @@ using MyBlazorApp.Shared;
 using MyBlazorApp.Shared.RequestModels;
 using MyBlazorApp.Shared.ResponseModels;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,7 +36,27 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         {
             var course = _unitOfWork.Courses.GetUserCourseWithWordsById(int.Parse(request.CourseId), request.UserId);
 
-            var courseDto = _mapper.Map<CourseDto>(course);
+            if(course == null)
+            {
+                return Task.FromResult(new GetCourseDetailsResponseModel
+                {
+                    Course = null,
+                    Words = null
+                });
+            }
+
+            var courseDto = new CourseDto
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Description = course.Description,
+                IsVisibleForEveryone = course.IsVisibleForEveryone,
+                NumberOfWords = course.Words.Count(),
+                NumberOfKnownWords = course
+                   .Words == null 
+                   ? 0 
+                   : course.Words.Where(w => w.WordStats?.Any(ws => ws.UserId.ToString() == request.UserId) == true).Count()
+            };
             var wordsDto = _mapper.Map<IEnumerable<WordDto>>(course?.Words);
 
             return Task.FromResult(new GetCourseDetailsResponseModel 

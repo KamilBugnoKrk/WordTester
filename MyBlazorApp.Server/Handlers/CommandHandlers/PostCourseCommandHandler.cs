@@ -62,6 +62,17 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                             {
                                 UserId = new Guid(request.UserId)
                             }
+                        },
+                        Words = new List<Word>
+                        {
+                            new Word
+                            { 
+                                OriginalWord = "example",
+                                Pronunciation = "ɪɡˈzɑːmpl̩",
+                                TranslatedWord = "Here should be the translated word",
+                                Definition = "something that serves to illustrate or explain a rule",
+                                ExampleUse = "This is an *example* of how to create a new word in WordTester."
+                            }
                         }
                     });
 

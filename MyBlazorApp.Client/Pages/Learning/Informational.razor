@@ -34,7 +34,7 @@
            placeholder="@WordDto.OriginalWord"
            autofocus />
     <p>Write the original word</p>
-    @if (writtenWord.Trim() == WordDto.OriginalWord.Trim())
+    @if (writtenWord.Trim().ToLower() == WordDto.OriginalWord.Trim().ToLower())
     {
         <button @onclick="SendResponse" class="btn btn-lg btn-primary">Next</button>
     }

@@ -20,6 +20,7 @@ namespace MyBlazorApp.Shared
     public class RegisterParameters
     {
         [Required]
+        [UserNick(ErrorMessage = "Login cannot contain '@' and '.'")]
         public string UserName { get; set; }
 
         [Required]

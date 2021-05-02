@@ -10,21 +10,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MyBlazorApp.Shared
 {
-    public class CourseDto
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    public class UserNickAttribute : ValidationAttribute
     {
-        public int Id { get; set; }
-        [Required]
-        [MaxLength(30, ErrorMessage = "Name should be shorter")]
-        public string Name { get; set; }
-        [Required]
-        [MaxLength(70, ErrorMessage = "Description should be shorter")]
-        public string Description { get; set; }
-        public bool IsVisibleForEveryone { get; set; }
-        public int NumberOfWords { get; set; }
-        public int NumberOfKnownWords { get; set; }
+        public override bool IsValid(object value)
+        {
+            var inputValue = value as string;
+            return !inputValue.Contains("@") && !inputValue.Contains(".");
+        }
     }
 }

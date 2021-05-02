@@ -45,8 +45,8 @@
 
     .course-tile {
         background-color: $main-color;
-        width: 200px;
-        height: 300px;
+        width: 230px;
+        height: 330px;
         margin: 20px 10px 20px 10px;
     }
 
@@ -61,7 +61,7 @@
     .course-tile-content {
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: 100px 170px 20px;
+        grid-template-rows: 100px 200px 20px;
 
         h2 {
             font-size: 30px;
