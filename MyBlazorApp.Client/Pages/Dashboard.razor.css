@@ -50,15 +50,18 @@
       font-size: 16px; }
     .main .course-tile-content .actions {
       display: flex;
-      justify-content: space-between; }
+      justify-content: space-between;
+      margin: 10px; }
       .main .course-tile-content .actions div {
         display: flex;
         align-items: center;
-        cursor: pointer;
-        margin-left: 10px; }
+        cursor: pointer; }
         .main .course-tile-content .actions div p {
-          margin-left: 5px; }
+          margin-left: 5px;
+          margin-right: 0px; }
         .main .course-tile-content .actions div i {
+          font-size: 15px; }
+        .main .course-tile-content .actions div span {
           font-size: 15px; }
       .main .course-tile-content .actions div:hover p, .main .course-tile-content .actions div:hover i {
         color: white; }

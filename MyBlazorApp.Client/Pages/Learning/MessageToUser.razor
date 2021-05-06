@@ -14,6 +14,9 @@
 
 <div class="message-container">
     <h4>@Message</h4>
+    @if (IsBuyMeACoffeVisible) { 
+        <a href="https://www.buymeacoffee.com/kamilbugno" target="_blank">Buy Me a Coffe</a>
+    }
     <div class="image">
         <img src="@ImagePath" />
     </div>
@@ -37,6 +40,8 @@
     public EventCallback OnClick { get; set; }
     [Parameter]
     public bool HasContinueButton { get; set; }
+    [Parameter]
+    public bool IsBuyMeACoffeVisible { get; set; }
 
     private async Task RetrieveNewData()
     {

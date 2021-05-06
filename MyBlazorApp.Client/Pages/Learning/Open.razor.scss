@@ -21,7 +21,19 @@
     text-align: center;
 
     h2 {
-        margin-bottom: 0;
+        margin: 0 10px 0 10px;
+    }
+
+    .small {
+        font-size: 30px;
+    }
+
+    .smaller {
+        font-size: 28px;
+    }
+
+    .smallest {
+        font-size: 26px;
     }
 
     input {

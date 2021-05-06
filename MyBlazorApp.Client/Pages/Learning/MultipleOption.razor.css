@@ -1,16 +1,24 @@
-﻿.informational-container {
+﻿.multiple-option-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #e3d18a;
   padding: 1em 3em;
   text-align: center; }
-  .informational-container .response-container {
+  .multiple-option-container h2 {
+    margin: 0 10px 0 10px; }
+  .multiple-option-container .small {
+    font-size: 30px; }
+  .multiple-option-container .smaller {
+    font-size: 28px; }
+  .multiple-option-container .smallest {
+    font-size: 26px; }
+  .multiple-option-container .response-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     max-width: 700px; }
-    .informational-container .response-container .response-tile {
+    .multiple-option-container .response-container .response-tile {
       position: relative;
       background-color: #e3d18a;
       color: #85603f;
@@ -23,14 +31,15 @@
       font-size: 30px;
       padding: 10px;
       cursor: pointer; }
-      .informational-container .response-container .response-tile p {
+      .multiple-option-container .response-container .response-tile p {
         text-align: center;
-        margin-bottom: 0; }
-      .informational-container .response-container .response-tile div {
+        margin-bottom: 0;
+        word-break: break-word; }
+      .multiple-option-container .response-container .response-tile div {
         position: absolute;
         top: -2px;
         left: 10px; }
-      .informational-container .response-container .response-tile span {
+      .multiple-option-container .response-container .response-tile span {
         border: 1px solid #85603f;
         border-radius: 4px;
         padding: 10px;
@@ -38,37 +47,41 @@
         top: 5px;
         left: 5px;
         height: 30px; }
-      .informational-container .response-container .response-tile .smaller {
+      .multiple-option-container .response-container .response-tile .small {
         font-size: 25px; }
-      .informational-container .response-container .response-tile .smallest {
+      .multiple-option-container .response-container .response-tile .smaller {
         font-size: 21px; }
+      .multiple-option-container .response-container .response-tile .smallest {
+        font-size: 18px; }
 
 @media (max-width: 800px) {
-  .informational-container .response-container .response-tile {
+  .multiple-option-container .response-container .response-tile {
     width: 160px;
     height: 160px;
     font-size: 26px; }
-    .informational-container .response-container .response-tile span {
+    .multiple-option-container .response-container .response-tile span {
       height: 25px; }
-    .informational-container .response-container .response-tile .smaller {
+    .multiple-option-container .response-container .response-tile .small {
       font-size: 21px; }
-    .informational-container .response-container .response-tile .smallest {
-      font-size: 17px; } }
+    .multiple-option-container .response-container .response-tile .smaller {
+      font-size: 17px; }
+    .multiple-option-container .response-container .response-tile .smallest {
+      font-size: 15px; } }
 
 @media (max-width: 680px) {
-  .informational-container {
+  .multiple-option-container {
     padding: 1em 0em; }
-    .informational-container .response-container .response-tile {
-      width: 130px;
-      height: 130px;
+    .multiple-option-container .response-container .response-tile {
+      width: 140px;
+      height: 140px;
       font-size: 22px; }
-      .informational-container .response-container .response-tile span {
+      .multiple-option-container .response-container .response-tile span {
         height: 10px; }
-      .informational-container .response-container .response-tile .smaller {
+      .multiple-option-container .response-container .response-tile span, .multiple-option-container .response-container .response-tile div {
+        display: none; }
+      .multiple-option-container .response-container .response-tile .small {
         font-size: 17px; }
-      .informational-container .response-container .response-tile .smallest {
-        font-size: 13px; } }
-
-@media (pointer: coarse) {
-  .informational-container .response-container .response-tile span, .informational-container .response-container .response-tile div {
-    display: none; } }
+      .multiple-option-container .response-container .response-tile .smaller {
+        font-size: 13px; }
+      .multiple-option-container .response-container .response-tile smallest {
+        font-size: 11px; } }

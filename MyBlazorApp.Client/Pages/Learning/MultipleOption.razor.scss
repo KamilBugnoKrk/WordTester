@@ -12,13 +12,29 @@
 
 @import "../../Variables.scss";
 
-.informational-container {
+.multiple-option-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     color: $main-color;
     padding: 1em 3em;
     text-align: center;
+
+    h2{
+        margin: 0 10px 0 10px;
+    }
+
+    .small {
+        font-size: 30px;
+    }
+
+    .smaller {
+        font-size: 28px;
+    }
+
+    .smallest {
+        font-size: 26px;
+    }
 
     .response-container {
         display: flex;
@@ -43,6 +59,7 @@
             p {
                 text-align: center;
                 margin-bottom: 0;
+                word-break: break-word;
             }
 
             div {
@@ -61,19 +78,23 @@
                 height: 30px;
             }
 
-            .smaller {
+            .small {
                 font-size: 25px;
             }
 
-            .smallest {
+            .smaller {
                 font-size: 21px;
+            }
+
+            .smallest {
+                font-size: 18px;
             }
         }
     }
 }
 
 @media (max-width: 800px) {
-    .informational-container {
+    .multiple-option-container {
         .response-container {
             .response-tile {
                 width: 160px;
@@ -84,12 +105,16 @@
                     height: 25px;
                 }
 
-                .smaller {
+                .small {
                     font-size: 21px;
                 }
 
-                .smallest {
+                .smaller {
                     font-size: 17px;
+                }
+
+                .smallest {
+                    font-size: 15px;
                 }
             }
         }
@@ -97,39 +122,35 @@
 }
 
 @media (max-width: 680px) {
-    .informational-container {
+    .multiple-option-container {
         padding: 1em 0em;
 
         .response-container {
             .response-tile {
-                width: 130px;
-                height: 130px;
+                width: 140px;
+                height: 140px;
                 font-size: 22px;
 
                 span {
                     height: 10px;
                 }
 
-                .smaller {
+                span, div {
+                    display: none;
+                }
+
+                .small {
                     font-size: 17px;
                 }
 
-                .smallest {
+                .smaller {
                     font-size: 13px;
                 }
-            }
-        }
-    }
-}
 
-@media (pointer: coarse) {
-    .informational-container {
-        .response-container {
-            .response-tile {
-                span, div {
-                   display: none;
+                smallest {
+                    font-size: 11px;
                 }
             }
         }
     }
-}           
+}    

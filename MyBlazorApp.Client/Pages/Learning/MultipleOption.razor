@@ -13,8 +13,8 @@
 @implements IDisposable
 @inject HotKeys HotKeys
 
-<div class="informational-container">
-    <h2>@Question</h2>
+<div class="multiple-option-container">
+    <h2 class="@GetStyle(Question)">@Question</h2>
     @if (!string.IsNullOrEmpty(Pronunciation))
     {
         <p>[@Pronunciation]</p>
@@ -27,12 +27,13 @@
         @for (var i = 0; i < Responses.Count; i++)
         {
             var index = i;
+            var response = Responses[i];
             <div 
               @onclick="async () => await SendResponse(index)" 
               class="response-tile">
                 <div>@(i+1)</div>
                 <span/>
-                <p class="@GetStyle(i)">@Responses[i]</p>
+                <p class="@GetStyle(response)">@response</p>
             </div>
         }
     </div>
@@ -64,9 +65,10 @@
         }
     }
 
-    private string GetStyle(int i) {
-        if (Responses[i].Count() >= 45) return "smallest";
-        if (Responses[i].Count() >= 25) return "smaller";
+    private string GetStyle(string input) {
+        if (input.Length >= 65) return "smallest";
+        if (input.Length >= 45) return "smaller";
+        if (input.Length >= 25) return "small";
         return string.Empty;
     }
 

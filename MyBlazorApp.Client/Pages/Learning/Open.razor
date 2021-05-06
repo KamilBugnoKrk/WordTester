@@ -15,7 +15,7 @@
 @inject HotKeys HotKeys
 
 <div class="open-container">
-    <h2>@Question</h2>
+    <h2 class="@GetStyle(Question)">@Question</h2>
     @if (!string.IsNullOrEmpty(Pronunciation))
     {
         <p>[@Pronunciation]</p>
@@ -43,6 +43,13 @@
 
     HotKeysContext HotKeysContext;
 
+    private string GetStyle(string input)
+    {
+        if (input.Length >= 65) return "smallest";
+        if (input.Length >= 45) return "smaller";
+        if (input.Length >= 25) return "small";
+        return string.Empty;
+    }
 
     protected override void OnInitialized()
     {
@@ -54,7 +61,7 @@
     {
         var responseToSend = userResponse;
         userResponse = string.Empty;
-        await OnClick.InvokeAsync(responseToSend);       
+        await OnClick.InvokeAsync(responseToSend);
     }
 
     private string GetPlaceholder()

@@ -27,10 +27,21 @@
         }
         else if (numberOfRepetition % 14 == 0)
         {
-            <MessageToUser Message="Pro tip: speak words out loud to remember them faster"
-                           ImagePath="/assets/speaking.svg"
-                           OnClick="RetrieveData"
-                           HasContinueButton="true" />
+            if (random.Next(2) == 0)
+            {
+                <MessageToUser Message="Pro tip: speak words out loud to remember them faster"
+                               ImagePath="/assets/speaking.svg"
+                               OnClick="RetrieveData"
+                               HasContinueButton="true" />
+            }
+            else
+            {
+                <MessageToUser Message="Do you like WordTester? You can support the creator."
+                               ImagePath="/assets/love.svg"
+                               OnClick="RetrieveData"
+                               HasContinueButton="true"
+                               IsBuyMeACoffeVisible="true"/>
+            }
         }
         else if (learningModel.ResponseType == ResponseType.NothingToLearnResponse)
         {
@@ -70,6 +81,7 @@
     private bool isResponseSent = false;
     private WordDto correctWord;
     private int numberOfRepetition = 1;
+    private Random random = new Random();
 
     protected override async Task OnInitializedAsync()
     {

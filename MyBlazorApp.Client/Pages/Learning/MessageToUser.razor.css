@@ -4,6 +4,14 @@
   align-items: center;
   color: #e3d18a;
   padding: 1em 3em; }
+  .message-container a {
+    color: #6c63ff !important;
+    font-size: 35px;
+    text-align: center;
+    position: relative;
+    top: 50px;
+    font-weight: bolder;
+    text-shadow: 1px 1px white; }
   .message-container h4 {
     text-align: center; }
   .message-container button {
