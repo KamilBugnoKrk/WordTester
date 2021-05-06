@@ -22,6 +22,8 @@ using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using Blazored.Modal;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
+using Flurl.Http;
+using MyBlazorApp.Client.Services;
 
 namespace MyBlazorApp.Client
 {
@@ -43,7 +45,7 @@ namespace MyBlazorApp.Client
             builder.Services.AddBlazoredModal();
             builder.Services.AddHotKeys();
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            builder.Services.AddSingleton(new UrlHelper(builder.HostEnvironment.BaseAddress));
 
             var host = builder.Build();
             await host.RunAsync();

@@ -13,13 +13,13 @@
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyBlazorApp.Server.Authorization;
+using System.Net.Http;
+using Flurl.Http;
 
 namespace MyBlazorApp.Server.Controllers
 {
@@ -28,10 +28,12 @@ namespace MyBlazorApp.Server.Controllers
     public class AuthorizeController : ControllerBase
     {
         private readonly IAuthorizator _authorizator;
+        private readonly IReCaptcha _reCaptcha;
 
-        public AuthorizeController(IAuthorizator authorizator)
+        public AuthorizeController(IReCaptcha reCaptcha, IAuthorizator authorizator)
         {
             _authorizator = authorizator;
+            _reCaptcha = reCaptcha;
         }
 
         [HttpPost]
@@ -50,6 +52,9 @@ namespace MyBlazorApp.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterParameters parameters)
         {
+            if (!await _reCaptcha.Verify(parameters.CaptchaResponse))            
+                return BadRequest();            
+
             var user = new ApplicationUser
             {
                 UserName = parameters.UserName
@@ -61,7 +66,7 @@ namespace MyBlazorApp.Server.Controllers
             {
                 UserName = parameters.UserName,
                 Password = parameters.Password
-            });
+            });            
         }
 
         [Authorize]

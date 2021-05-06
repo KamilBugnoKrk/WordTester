@@ -20,6 +20,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;
 using MyBlazorApp.Server.Authorization;
+using System.Net.Http;
+using System.Collections.Generic;
+using Flurl.Http.Testing;
+using Newtonsoft.Json;
 
 namespace MyBlazorApp.Tests
 {
@@ -29,7 +33,8 @@ namespace MyBlazorApp.Tests
         public async void Login_UserNotExists_ReturnsBadRequest()
         {
             var authorizatorMock = new Mock<IAuthorizator>().Object;
-            var controller = new AuthorizeController(authorizatorMock);
+            var reCaptcha = new Mock<IReCaptcha>().Object;
+            var controller = new AuthorizeController(reCaptcha, authorizatorMock);
 
             var result = await controller.Login(new LoginParameters());
 
@@ -80,7 +85,8 @@ namespace MyBlazorApp.Tests
         public async void Logout_CorrectLogout_ReturnsOk()
         {
             var authorizatorMock = new Mock<IAuthorizator>().Object;
-            var controller = new AuthorizeController(authorizatorMock);
+            var reCaptcha = new Mock<IReCaptcha>().Object;
+            var controller = new AuthorizeController(reCaptcha, authorizatorMock);
 
             var result = await controller.Logout();
 
@@ -101,7 +107,11 @@ namespace MyBlazorApp.Tests
                     It.IsAny<ApplicationUser>(),
                     It.IsAny<string>()))
                 .ReturnsAsync(true);
-            var controller = new AuthorizeController(authorizatorMock.Object);
+
+            var reCaptcha = new Mock<IReCaptcha>();
+            reCaptcha.Setup(rc => rc.Verify(It.IsAny<string>())).ReturnsAsync(true);
+
+            var controller = new AuthorizeController(reCaptcha.Object, authorizatorMock.Object);
             return controller;
         }
 
@@ -116,7 +126,7 @@ namespace MyBlazorApp.Tests
                     It.IsAny<ApplicationUser>(),
                     It.IsAny<string>()))
                 .ReturnsAsync(isCorrectPassword);
-            var controller = new AuthorizeController(authorizatorMock.Object);
+            var controller = new AuthorizeController(new Mock<IReCaptcha>().Object, authorizatorMock.Object);
             return controller;
         }
     }

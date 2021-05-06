@@ -58,7 +58,7 @@ namespace MyBlazorApp.Server
                 // Password settings
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = false;
 
@@ -93,6 +93,7 @@ namespace MyBlazorApp.Server
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+            services.AddHttpClient();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IRepository<Course>, Repository<Course>>();
             services.AddTransient<IRepository<Word>, Repository<Word>>();
@@ -103,6 +104,7 @@ namespace MyBlazorApp.Server
             services.AddTransient<IAuthorizator, Authorizator>();
             services.AddTransient<IRepetitionManager, RepetitionManager>();
             services.AddTransient<IWordGenerator, WordGenerator>();
+            services.AddTransient<IReCaptcha, ReCaptcha>();
 
             services.AddSwaggerGen(c =>
             {

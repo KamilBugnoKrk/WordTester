@@ -70,8 +70,11 @@ Distributed under the GPL-3.0 License. See `LICENSE` for more information.
 ## Contact
 
 Kamil Bugno - [LinkedIn](https://www.linkedin.com/in/kamil-bugno/)
+
 E-mail: hello@wordtester.org
+
 Project Website: [http://wordtester.org](http://wordtester.org)
+
 Project Repository: [https://github.com/KamilBugnoKrk/WordTester](https://github.com/KamilBugnoKrk/WordTester)
 
 ## Acknowledgements
@@ -83,6 +86,7 @@ It would not be possible to start developing this project without the great free
 * [MatBlazor](https://github.com/SamProf/MatBlazor) - material design components
 * [Blazored Modal](https://github.com/Blazored/Modal) - modal implementation 
 * [Toolbelt.Blazor.HotKeys](https://github.com/jsakamoto/Toolbelt.Blazor.HotKeys) - keyboard shortcuts
+* [Blazor-UseGoogleReCAPTCHA](https://github.com/sample-by-jsakamoto/Blazor-UseGoogleReCAPTCHA) - example usage of reCaptcha
 
 ### Related to C#
 * [Flurl](https://flurl.dev/) - HTTP client library

@@ -10,26 +10,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Threading.Tasks;
 
-namespace MyBlazorApp.Shared
+namespace MyBlazorApp.Server.Authorization
 {
-    public class RegisterParameters
+    public interface IReCaptcha
     {
-        [Required]
-        [UserNick(ErrorMessage = "Login cannot contain '@' and '.'")]
-        public string UserName { get; set; }
-
-        [Required]
-        public string Password { get; set; }
-
-        [Required]
-        [Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
-        public string PasswordConfirm { get; set; }
-
-        public string CaptchaResponse { get; set; }
+        Task<bool> Verify(string captchaResponse);
     }
 }

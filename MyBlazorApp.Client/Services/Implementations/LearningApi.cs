@@ -21,8 +21,11 @@ namespace MyBlazorApp.Client.Services.Implementations
 {
     public class LearningApi : ILearningApi
     {
-        private const string url = "https://localhost:44370/";
-
+        private string url;
+        public LearningApi(UrlHelper urlHelper)
+        {
+            url = urlHelper.BaseUrl;
+        }
         public async Task<GetLearningRepetitionResponseModel> GetLearningData(int courseId)
           => await $"{url}api/Learning/GetLearningRepetition?CourseId={courseId}"
                 .GetJsonAsync<GetLearningRepetitionResponseModel>();

@@ -12,6 +12,7 @@
 	<PackageReference Include="Flurl.Http" Version="3.0.1" />
 	<PackageReference Include="MediatR" Version="9.0.0" />
 	<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+	<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
 	<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.2" />
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />

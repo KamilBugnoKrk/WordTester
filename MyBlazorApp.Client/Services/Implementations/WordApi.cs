@@ -22,8 +22,11 @@ namespace MyBlazorApp.Client.Services.Implementations
 {
     public class WordApi : IWordApi
     {
-        private const string url = "https://localhost:44370/";
-
+        private string url;
+        public WordApi(UrlHelper urlHelper)
+        {
+            url = urlHelper.BaseUrl;
+        }
         public async Task<PostWordResponseModel> PostWord(WordDto word, int courseId)        
              => await $"{url}api/Word/PostWord"
                 .PostJsonAsync(new PostWordRequestModel{ 

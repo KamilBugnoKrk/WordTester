@@ -21,7 +21,12 @@ namespace MyBlazorApp.Client.Services.Implementations
 {
     public class CourseApi : ICourseApi
     {
-        private const string url = "https://localhost:44370/";
+        private string url;
+
+        public CourseApi(UrlHelper urlHelper)
+        {
+            url = urlHelper.BaseUrl;
+        }
 
         public async Task<IEnumerable<CourseDto>> GetMyCourses() =>
             (await $"{url}api/Course/GetMyCourses"

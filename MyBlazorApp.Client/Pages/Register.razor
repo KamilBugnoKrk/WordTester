@@ -4,7 +4,9 @@
 @inject IdentityAuthenticationStateProvider authStateProvider
 
 <h4 class="text-center">Create Account</h4>
-<p style="font-size: 18px;">It is free and open source. By creating an account, you agree to the <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a>.</p>
+<p style="font-size: 17px; margin: 0px 20px 0px 20px;">
+    It is free and open source. By creating an account, you agree to the <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a>.
+</p>
 
 
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerParameters">
@@ -22,11 +24,15 @@
     <MatTextField Type="password" id="inputPasswordConfirm" Label="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm" />
     <ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
+    <div style="margin-bottom: 5px; transform: scale(0.94); -webkit-transform: scale(0.94); transform-origin: 0 0; -webkit-transform-origin: 0 0;">
+       <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LfAwsUaAAAAAA0WXVyqnvFLAG7TMeHPSWyXDZ4Q" OnSuccess="OnSuccess" OnExpired="OnExpired" />
+    </div>  
+        
+    <button class="btn btn-lg btn-primary btn-block" disabled="@DisablePostButton" type="submit">Create account</button>
 
     <label class="text-danger">@error</label>
     <NavLink href="login">
-        <h6 class="font-weight-normal text-center">Already have an account? Click here to login</h6>
+        <h6 style="font-size: 17px;" class="font-weight-normal text-center">Already have an account? Click here to login</h6>
     </NavLink>
 </EditForm>
 
@@ -34,18 +40,47 @@
 
     RegisterParameters registerParameters { get; set; } = new RegisterParameters();
     string error { get; set; }
+    private ReCAPTCHA reCAPTCHAComponent;
+    private bool ValidReCAPTCHA = false;
+    private bool ServerVerificating = false;
+    private bool DisablePostButton => !ValidReCAPTCHA || ServerVerificating;
+
+    private void OnSuccess()
+    {
+        Console.WriteLine("OnSuccess");
+        ValidReCAPTCHA = true;
+    }
+
+    private void OnExpired()
+    {
+        Console.WriteLine("OnExpired");
+        ValidReCAPTCHA = false;
+    }
 
     async Task OnSubmit()
     {
-        error = null;
-        try
+        Console.WriteLine("OnSubmit");
+        if (ValidReCAPTCHA)
         {
-            await authStateProvider.Register(registerParameters);
-            navigationManager.NavigateTo("");
-        }
-        catch (Exception ex)
-        {
-            error = ex.Message;
+            Console.WriteLine("OnSubmit1");
+            error = null;
+            var response = await reCAPTCHAComponent.GetResponseAsync();
+            try
+            {
+                Console.WriteLine("OnSubmit2");
+                ServerVerificating = true;
+                StateHasChanged();
+                registerParameters.CaptchaResponse = response;
+                await authStateProvider.Register(registerParameters);
+                navigationManager.NavigateTo("");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("OnSubmit3");
+                error = ex.Message;
+                ServerVerificating = false;
+                StateHasChanged();
+            }
         }
     }
 }
