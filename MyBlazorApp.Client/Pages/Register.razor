@@ -25,7 +25,7 @@
     <ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
 
     <div style="margin-bottom: 5px; transform: scale(0.94); -webkit-transform: scale(0.94); transform-origin: 0 0; -webkit-transform-origin: 0 0;">
-       <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LfAwsUaAAAAAA0WXVyqnvFLAG7TMeHPSWyXDZ4Q" OnSuccess="OnSuccess" OnExpired="OnExpired" />
+       <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LfAwsUaAAAAAA0WXVyqnvFLAG7TMeHPSWyXDZ4Q" OnSuccess="OnSuccess" OnExpired="OnExpired" isError="isError" />
     </div>  
         
     <button class="btn btn-lg btn-primary btn-block" disabled="@DisablePostButton" type="submit">Create account</button>
@@ -44,6 +44,7 @@
     private bool ValidReCAPTCHA = false;
     private bool ServerVerificating = false;
     private bool DisablePostButton => !ValidReCAPTCHA || ServerVerificating;
+    private bool isError = false;
 
     private void OnSuccess()
     {
@@ -67,18 +68,18 @@
             var response = await reCAPTCHAComponent.GetResponseAsync();
             try
             {
-                Console.WriteLine("OnSubmit2");
                 ServerVerificating = true;
                 StateHasChanged();
                 registerParameters.CaptchaResponse = response;
                 await authStateProvider.Register(registerParameters);
                 navigationManager.NavigateTo("");
+                isError = false;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("OnSubmit3");
                 error = ex.Message;
                 ServerVerificating = false;
+                isError = true;
                 StateHasChanged();
             }
         }

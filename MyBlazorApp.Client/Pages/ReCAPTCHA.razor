@@ -14,6 +14,17 @@
     [Parameter]
     public EventCallback OnExpired { get; set; }
 
+    [Parameter]
+    public bool isError { get; set; }
+
+    protected async override void OnParametersSet()
+    {
+        if (isError)
+        {
+            await JS.InvokeVoidAsync("My.reCAPTCHA.reset");
+        }
+    }
+
     private string UniqueId = Guid.NewGuid().ToString();
 
     private int WidgetId;

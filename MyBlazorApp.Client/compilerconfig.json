@@ -62,5 +62,9 @@
   {
     "outputFile": "Pages/About.razor.css",
     "inputFile": "Pages/About.razor.scss"
+  },
+  {
+    "outputFile": "wwwroot/scripts/script.es5.js",
+    "inputFile": "wwwroot/scripts/script.js"
   }
 ]

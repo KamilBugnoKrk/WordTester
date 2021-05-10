@@ -10,6 +10,10 @@ namespace My.reCAPTCHA {
         else setTimeout(() => waitScriptLoaded(resolve), 100);
     }
 
+    export function reset() {
+        grecaptcha.reset();    
+    }
+
     export function init() {
 
         const scripts = Array.from(document.getElementsByTagName('script'));
