@@ -49,6 +49,7 @@
     private void OnSuccess()
     {
         Console.WriteLine("OnSuccess");
+        isError = false;
         ValidReCAPTCHA = true;
     }
 
@@ -69,11 +70,11 @@
             try
             {
                 ServerVerificating = true;
+                isError = false;
                 StateHasChanged();
                 registerParameters.CaptchaResponse = response;
                 await authStateProvider.Register(registerParameters);
                 navigationManager.NavigateTo("");
-                isError = false;
             }
             catch (Exception ex)
             {
