@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #e3d18a;
+  color: #4D3AFF;
   padding: 1em 3em;
   text-align: center; }
   .multiple-option-container h2 {
@@ -20,7 +20,7 @@
     max-width: 700px; }
     .multiple-option-container .response-container .response-tile {
       position: relative;
-      background-color: #e3d18a;
+      background-color: #4D3AFF;
       color: #85603f;
       margin: 10px;
       width: 200px;

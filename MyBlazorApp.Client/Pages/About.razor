@@ -1,18 +1,23 @@
 ﻿@page "/about"
 @layout MainLayout
+@inject NavigationManager navigationManager
 
 <div class="about-page">
-    <h1>What is WordTester?</h1>
-    <div class="about-container brown">
+    <div class="top-panel">
+        <img src="/assets/logo.png" @onclick="@onLogoClick" />
+        <div class="ctas"><CtasForNewUser /></div>
+    </div>
+    <div class="about-container">
         <div>
-            <h3>It is a spaced repetition system</h3>
+            <img src="/assets/laptop.png" />
+        </div>
+        <div class="spaced-repetition">
+            <img src="/assets/spaced-repetition.png" />
+            <h3>What is WordTester?</h3>
             <p>WordTester uses spaced repetition - thanks to it you repeat new words more often and older words less frequently. It is proved that this kind of repetition maximizes your learning rate!</p>
         </div>
-        <div>
-            <img src="/assets/spacedRepetition.png" />
-        </div>
     </div>
-    <div class="about-container yellow">
+    <div class="about-container">
         <div>
             <img src="/assets/context.png" />
         </div>
@@ -21,7 +26,7 @@
             <p>All words are required to have specified both definition and example of use. During the repetition, you will exercise how to use the word - it has a great impact on your memorization and ability to recall the given word fast.</p>
         </div>
     </div>
-    <div class="about-container brown">
+    <div class="about-container">
         <div>
             <h3>It is free and open source</h3>
             <p>You don't have to pay anything. All features are available for everyone without any fee. What is more, it is an open-source project - you have access to the source code!</p>
@@ -30,7 +35,7 @@
             <img src="/assets/free.svg" />
         </div>
     </div>
-    <div class="about-container yellow">
+    <div class="about-container">
         <div>
             <h3>You are convinced to WordTester, aren't you?</h3>
             <p>Let's start learning in a modern and effective way - create your account!</p>
@@ -43,5 +48,8 @@
 
 
 @code {
-
+    void onLogoClick()
+    {
+      navigationManager.NavigateTo("");     
+    }
 }

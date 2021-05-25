@@ -1,10 +1,23 @@
 ﻿.about-page {
   display: flex;
   flex-direction: column; }
+  .about-page .top-panel {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 100px 0 100px; }
+    .about-page .top-panel img {
+      cursor: pointer;
+      margin: 10px; }
+  .about-page .ctas {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; }
   .about-page h1 {
     padding-top: 50px;
     text-align: center;
-    color: #e3d18a; }
+    color: #4D3AFF; }
+  .about-page .spaced-repetition img {
+    display: normal; }
   .about-page .about-container {
     display: flex;
     flex-direction: row;
@@ -22,12 +35,22 @@
     .about-page .about-container img {
       width: 100%;
       height: auto; }
-  .about-page .yellow {
-    color: #85603f;
-    background: #e3d18a; }
-  .about-page .brown {
-    color: #e3d18a;
-    background: #85603f; }
+
+@media (max-width: 1000px) {
+  .about-page .spaced-repetition img {
+    display: none; }
+  .about-page .top-panel {
+    flex-direction: column;
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -80px;
+    width: 100vw;
+    margin: 0;
+    padding-bottom: 12px; }
+  .about-page .ctas {
+    margin-top: 0px;
+    margin-right: 0px; } }
 
 @media (max-width: 600px) {
   .about-page .about-container {

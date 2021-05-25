@@ -66,5 +66,13 @@
   {
     "outputFile": "wwwroot/scripts/script.es5.js",
     "inputFile": "wwwroot/scripts/script.js"
+  },
+  {
+    "outputFile": "Shared/Footer.razor.css",
+    "inputFile": "Shared/Footer.razor.scss"
+  },
+  {
+    "outputFile": "Shared/CtasForNewUser.razor.css",
+    "inputFile": "Shared/CtasForNewUser.razor.scss"
   }
 ]

@@ -12,13 +12,6 @@
 
 @import "../Variables.scss";
 
-.main-container {
-    min-height: calc(100vh - 24px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .cookies {
     background: #ffe6ca;
     position: absolute;
@@ -36,10 +29,11 @@
 }
 
 footer {
-    background-color: $main-color !important;
+    background-color: white;
     text-align: center;
-    line-height: 24px;
+    height: 100px;
     font-size: 15px;
+    font-weight: bold;
     z-index: 100;
     position: relative;
 }

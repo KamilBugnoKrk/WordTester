@@ -1,10 +1,4 @@
-﻿.main-container {
-  min-height: calc(100vh - 24px);
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-
-.cookies {
+﻿.cookies {
   background: #ffe6ca;
   position: absolute;
   top: 80vh;
@@ -13,16 +7,17 @@
   z-index: 1000; }
 
 .top-panel {
-  background-color: #e3d18a;
+  background-color: #4D3AFF;
   justify-content: flex-end;
   display: flex;
   align-items: center; }
 
 footer {
-  background-color: #e3d18a !important;
+  background-color: white;
   text-align: center;
-  line-height: 24px;
+  height: 100px;
   font-size: 15px;
+  font-weight: bold;
   z-index: 100;
   position: relative; }
 

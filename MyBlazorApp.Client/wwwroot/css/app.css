@@ -1,9 +1,8 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Source Sans Pro', sans-serif;
-    background-color: #85603f;
-    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
     font-size: 20px;
 }
 
