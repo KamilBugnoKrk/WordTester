@@ -2,6 +2,6 @@
   display: flex;
   flex-direction: column; }
   .edit-word-container .delete {
-    color: #4D3AFF;
+    color: #e3d18a;
     cursor: pointer;
     text-align: center; }

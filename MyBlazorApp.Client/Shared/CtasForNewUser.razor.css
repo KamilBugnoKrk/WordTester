@@ -1,7 +1,7 @@
 ﻿a:first-of-type {
   font-size: 18px;
   font-weight: 600;
-  color: #4D3AFF;
+  color: #4D3AFF !important;
   text-decoration: none; }
 
 a:last-of-type {

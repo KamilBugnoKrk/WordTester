@@ -1,6 +1,6 @@
 ﻿.grid-container {
   display: grid;
-  grid-template-columns: 30vw 70vw;
+  grid-template-columns: 30% 70%;
   background-color: #85603f;
   top: 56px;
   min-height: calc(100vh - 101px); }
@@ -23,7 +23,7 @@
   align-items: flex-start;
   align-content: flex-start; }
   .main .course-tile {
-    background-color: #4D3AFF;
+    background-color: #e3d18a;
     width: 230px;
     height: 330px;
     margin: 20px 10px 20px 10px; }

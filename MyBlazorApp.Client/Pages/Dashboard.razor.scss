@@ -14,7 +14,7 @@
 
 .grid-container {
     display: grid;
-    grid-template-columns: 30vw 70vw;
+    grid-template-columns: 30% 70%;
     background-color: $main-color-bg;
     top: 56px;
     min-height: calc(100vh - 101px);

@@ -3,7 +3,7 @@
 a:first-of-type {
     font-size: 18px;
     font-weight: 600;
-    color: $main-color;
+    color: $blue !important;
     text-decoration: none;
 }
 
@@ -12,7 +12,7 @@ a:last-of-type {
     font-weight: 700;
     text-align: center;
     color: white !important;
-    background: $main-color;
+    background: $blue;
     padding: 10px;
     border-radius: 51px;
     margin-left: 15px;
