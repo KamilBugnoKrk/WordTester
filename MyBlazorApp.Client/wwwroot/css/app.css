@@ -7,19 +7,20 @@ html, body {
 }
 
 a {
-    color: #85603f !important;
+    color: #4D3AFF !important;
 }
 
 .btn {
-    color: #85603f !important;
-    background-color: #e3d18a !important;
-    border-color: #e3d18a !important;
+    color: white !important;
+    background-color: #4D3AFF !important;
+    border-color: #4D3AFF !important;
+    border-radius: 51px;
 }
 
 .btn:hover {
     color: #fff !important;
-    background-color: #85603f !important;
-    border-color: #85603f !important;
+    background-color: #4D3AFF !important;
+    border-color: #4D3AFF !important;
 }
 
 .content {

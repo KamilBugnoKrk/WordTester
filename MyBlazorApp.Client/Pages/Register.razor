@@ -3,38 +3,45 @@
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
 
-<h4 class="text-center">Create Account</h4>
-<p style="font-size: 17px; margin: 0px 20px 0px 20px;">
-    It is free and open source. By creating an account, you agree to the <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a>.
-</p>
+<div class="login-container">
+    <div class="header">
+        <h4 class="text-center">Create Account</h4>
+        <p style="font-size: 17px; margin: 0px 20px 0px 20px;">
+            It is free and open source. By creating an account, you agree to the <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a>.
+        </p>
+    </div>
+    <div class="form-container">
+        <div class="login-body">
+            <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerParameters">
+                <DataAnnotationsValidator />
 
+                <label for="inputUsername" class="sr-only">User Name</label>
+                <MatTextField id="inputUsername" Label="Username" autofocus @bind-Value="@registerParameters.UserName" />
+                <ValidationMessage For="@(() => registerParameters.UserName)" />
 
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerParameters">
-    <DataAnnotationsValidator />
+                <label for="inputPassword" class="sr-only">Password</label>
+                <MatTextField Type="password" id="inputPassword" Label="Password" @bind-Value="@registerParameters.Password" />
+                <ValidationMessage For="@(() => registerParameters.Password)" />
 
-    <label for="inputUsername" class="sr-only">User Name</label>
-    <MatTextField id="inputUsername" Label="Username" autofocus @bind-Value="@registerParameters.UserName" />
-    <ValidationMessage For="@(() => registerParameters.UserName)" />
+                <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
+                <MatTextField Type="password" id="inputPasswordConfirm" Label="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm" />
+                <ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <MatTextField Type="password" id="inputPassword" Label="Password" @bind-Value="@registerParameters.Password" />
-    <ValidationMessage For="@(() => registerParameters.Password)" />
+                <div style="margin-bottom: 5px; transform: scale(0.94); -webkit-transform: scale(0.94); transform-origin: 0 0; -webkit-transform-origin: 0 0;">
+                    <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LfAwsUaAAAAAA0WXVyqnvFLAG7TMeHPSWyXDZ4Q" OnSuccess="OnSuccess" OnExpired="OnExpired" isError="isError" />
+                </div>
 
-    <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-    <MatTextField Type="password" id="inputPasswordConfirm" Label="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm" />
-    <ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
+                <button class="btn" type="submit">Create account</button>
 
-    <div style="margin-bottom: 5px; transform: scale(0.94); -webkit-transform: scale(0.94); transform-origin: 0 0; -webkit-transform-origin: 0 0;">
-       <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LfAwsUaAAAAAA0WXVyqnvFLAG7TMeHPSWyXDZ4Q" OnSuccess="OnSuccess" OnExpired="OnExpired" isError="isError" />
-    </div>  
-        
-    <button class="btn btn-lg btn-primary btn-block" disabled="@DisablePostButton" type="submit">Create account</button>
-
-    <label class="text-danger">@error</label>
-    <NavLink href="login">
-        <h6 style="font-size: 17px;" class="font-weight-normal text-center">Already have an account? Click here to login</h6>
-    </NavLink>
-</EditForm>
+                <label class="text-danger">@error</label>
+                    <h6 style="font-size: 17px;" class="font-weight-normal text-center">Already have an account? <a href="login">Login here</a></h6>
+            </EditForm>
+        </div>
+        <div class="login-image">
+            <img src="/assets/login.png" />
+        </div>
+    </div>
+</div>
 
 @functions{
 
@@ -48,23 +55,21 @@
 
     private void OnSuccess()
     {
-        Console.WriteLine("OnSuccess");
         isError = false;
+        error = String.Empty;
         ValidReCAPTCHA = true;
     }
 
     private void OnExpired()
     {
-        Console.WriteLine("OnExpired");
         ValidReCAPTCHA = false;
+        error = String.Empty;
     }
 
     async Task OnSubmit()
     {
-        Console.WriteLine("OnSubmit");
-        if (ValidReCAPTCHA)
+        if (ValidReCAPTCHA && !isError)
         {
-            Console.WriteLine("OnSubmit1");
             error = null;
             var response = await reCAPTCHAComponent.GetResponseAsync();
             try
@@ -76,13 +81,25 @@
                 await authStateProvider.Register(registerParameters);
                 navigationManager.NavigateTo("");
             }
-            catch (Exception ex)
+            catch (Exception ex) when (!ex.Message.Contains("tools.ietf.org"))
             {
                 error = ex.Message;
                 ServerVerificating = false;
                 isError = true;
                 StateHasChanged();
             }
+            catch (Exception ex) when (ex.Message.Contains("tools.ietf.org"))
+            {
+                error = "You need to use reCAPTCHA";
+                ServerVerificating = false;
+                isError = true;
+                StateHasChanged();
+            }
+        }
+        else
+        {
+            isError = true;
+            error = "You need to use reCAPTCHA";
         }
     }
 }

@@ -2,7 +2,12 @@
     background-color: white;
     text-align: center;
     font-size: 15px;
-    font-weight: bold;
     z-index: 100;
     position: relative;
+    font-weight: 500;
+    margin: 0 10px;
+
+    a {
+        color: black !important;
+    }
 }
