@@ -82,5 +82,9 @@
   {
     "outputFile": "Pages/Register.razor.css",
     "inputFile": "Pages/Register.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Start.razor.css",
+    "inputFile": "Pages/Start.razor.scss"
   }
 ]

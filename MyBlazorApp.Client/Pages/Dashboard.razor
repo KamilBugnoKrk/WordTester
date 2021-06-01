@@ -28,33 +28,27 @@
     </div>
     <div class="main">
         @if (!isLoading)
-        {
+         {
             @foreach (var course in courses)
-            {
-                <div class="course-tile course-tile-content">
-                    <h2>@course.Name</h2>
-                    <p class="@(ShouldBeSmaller(course.Description) ? "smaller" : "")">@course.Description</p>
-                    <div class="actions">
-                        <div @onclick=@(() => NagivateToLearning(course.Id))>
-                            <i class="fas fa-graduation-cap"></i>
-                            <p>Learn</p>
-                        </div>
+             {
+                 <div class="course-tile course-tile-content">
+                     @if (!course.IsVisibleForEveryone)
+                     {
+                        <a class="edit" href="@($"/details/{course.Id}")">Edit</a>
+                     }
+                     <h2>@course.Name</h2>
+                     <p class="description @(ShouldBeSmaller(course.Description) ? "smaller" : "")">@course.Description</p>
+                     <div class="actions">
                         <div>
                             <span>@course.NumberOfKnownWords/@course.NumberOfWords</span>
-                        </div>
-                        @if (!course.IsVisibleForEveryone)
-                        {
-                            <div @onclick=@(() => NagivateToDetails(course.Id))>
-                                <i class="fas fa-edit"></i>
-                                <p>Edit</p>
-                            </div>
-                        }
-                    </div>
-                </div>
+                        </div>                       
+                        <button class="btn" @onclick=@(() => Learn(course.Id))>Learn</button>
+                     </div>
+                 </div>
             }
-            <div class="course-tile add-new" @onclick=@(() => NagivateToDetails())>
-                <p>Add a new course</p>
-                <img class="image-add-new" src="/assets/add.svg" />
+            <div class="course-tile add-new" @onclick=@(() => AddNewCourse())>
+                <img src="/assets/add.png" />
+                <button class="btn">+ Add a new course</button>
             </div>
         }
         else
@@ -81,17 +75,13 @@
         userName = await authStateProvider.GetUserName();
     }
 
-    void NagivateToDetails(int courseId = 0)
+    void AddNewCourse()
     {
-        if (courseId == 0)
-            navigationManager.NavigateTo("/details");
-        else
-            navigationManager.NavigateTo("/details/" + courseId);
-
+        navigationManager.NavigateTo("/details");
     }
 
-    void NagivateToLearning(int courseId)
+    void Learn(int courseId)
     {
-        navigationManager.NavigateTo("/learning/" + courseId);
+        navigationManager.NavigateTo($"/learning/{courseId}");
     }
 }

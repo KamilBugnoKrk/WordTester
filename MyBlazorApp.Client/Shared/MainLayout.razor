@@ -23,8 +23,11 @@
     <Authorized>
         @*Show the menu and the rest of the body*@
         <div class="top-panel">
-            <a class="btn" href="/">Dashboard</a>
-            <button type="button" class="btn" @onclick="@LogoutClick">Logout</button>
+            <img src="/assets/logo.png" @onclick="onLogoClick" />
+            <div>
+                <a href="/">Dashboard</a>
+                <a @onclick="@LogoutClick">Logout</a>
+            </div>
         </div>
         @Body
         <Footer/>
@@ -40,5 +43,10 @@
     {
         await authStateProvider.Logout();
         navigationManager.NavigateTo("/login");
+    }
+
+    void onLogoClick()
+    {
+        navigationManager.NavigateTo("");
     }
 }

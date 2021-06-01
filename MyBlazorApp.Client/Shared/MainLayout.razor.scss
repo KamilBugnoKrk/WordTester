@@ -12,34 +12,49 @@
 
 @import "../Variables.scss";
 
-.cookies {
-    background: #ffe6ca;
-    position: absolute;
-    top: 80vh;
-    left: 30vw;
-    padding: 10px;
-    z-index: 1000;
-}
 
 .top-panel {
-    background-color: $main-color;
-    justify-content: flex-end;
-    display: flex;
-    align-items: center
-}
-
-footer {
     background-color: white;
-    text-align: center;
-    height: 100px;
-    font-size: 15px;
-    font-weight: bold;
-    z-index: 100;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px 0 100px;
+    border-bottom: black solid 1px;
+
+    > div {
+        display: flex;
+        align-items: center;
+    }
+
+    img {
+        cursor: pointer;
+        margin: 10px;
+    }
+
+    a:first-of-type {
+        color: $grey !important;
+    }
+
+    a:last-of-type {
+        color: $blue;
+    }
+
+    a {
+        cursor: pointer;
+        margin: 10px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
 }
 
-@media (max-width: 400px) {
-    .cookies {
-        left: 0;
+@media (max-width: 750px) {
+    .top-panel {
+        justify-content: center;
+
+        > img {
+            display: none;
+        }
     }
 }
