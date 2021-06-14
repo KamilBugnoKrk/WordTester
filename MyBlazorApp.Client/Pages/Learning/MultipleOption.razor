@@ -31,8 +31,7 @@
             <div 
               @onclick="async () => await SendResponse(index)" 
               class="response-tile">
-                <div>@(i+1)</div>
-                <span/>
+                <span>@(i+1)</span>
                 <p class="@GetStyle(response)">@response</p>
             </div>
         }
