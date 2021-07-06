@@ -1,14 +1,14 @@
-﻿.support-us {
-    background: #d0af84;
+﻿@import "../Variables.scss";
+
+.support-us {
+    background: $grey-background;
     display: flex;
     align-items: center;
     justify-content: center;
     grid-row: 1;
     grid-column: 1;
-}
-
-@media (max-width: 400px) {
-    .cookies {
-        left: 0;
-    }
+    position: sticky;
+    position: -webkit-sticky;
+    top: -1px;
+    z-index: 10000;
 }

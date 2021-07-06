@@ -1,18 +1,18 @@
 ﻿.terms-container {
   margin: 25px;
-  border-color: #e3d18a;
+  border-color: #4D3AFF;
   border-width: 10px;
   border-style: solid;
   word-wrap: break-word;
   padding: 10px;
   max-width: 100%;
-  color: #e3d18a; }
+  color: black; }
 
 .terms-content {
   margin-left: 10vw;
   margin-right: 10vw; }
   .terms-content a {
-    color: #e3d18a !important; }
+    color: #4D3AFF !important; }
   .terms-content p {
     margin-bottom: 10px; }
 

@@ -66,5 +66,25 @@
   {
     "outputFile": "wwwroot/scripts/script.es5.js",
     "inputFile": "wwwroot/scripts/script.js"
+  },
+  {
+    "outputFile": "Shared/Footer.razor.css",
+    "inputFile": "Shared/Footer.razor.scss"
+  },
+  {
+    "outputFile": "Shared/CtasForNewUser.razor.css",
+    "inputFile": "Shared/CtasForNewUser.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Login.razor.css",
+    "inputFile": "Pages/Login.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Register.razor.css",
+    "inputFile": "Pages/Register.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Start.razor.css",
+    "inputFile": "Pages/Start.razor.scss"
   }
 ]

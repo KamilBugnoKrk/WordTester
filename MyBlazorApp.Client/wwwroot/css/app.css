@@ -1,26 +1,26 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Source Sans Pro', sans-serif;
-    background-color: #85603f;
-    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
     font-size: 20px;
 }
 
 a {
-    color: #85603f !important;
+    color: #4D3AFF !important;
 }
 
 .btn {
-    color: #85603f !important;
-    background-color: #e3d18a !important;
-    border-color: #e3d18a !important;
+    color: white !important;
+    background-color: #4D3AFF !important;
+    border-color: #4D3AFF !important;
+    border-radius: 51px;
 }
 
 .btn:hover {
     color: #fff !important;
-    background-color: #85603f !important;
-    border-color: #85603f !important;
+    background-color: #4D3AFF !important;
+    border-color: #4D3AFF !important;
 }
 
 .content {
@@ -112,7 +112,7 @@ a {
     display: block;
     width: 25%;
     height: 25%;
-    background-color: #e3d18a;
+    background-color: #4D3AFF;
     border-radius: 100%;
     animation: sk-chase-dot-before 2.0s infinite ease-in-out both;
 }
@@ -237,13 +237,13 @@ a {
     background-color: white;
 }
 .mdc-text-field--filled .mdc-line-ripple::after {
-    border-bottom-color: #85603f;
+    border-bottom-color: #4D3AFF;
 }
 .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
-    color: #85603f;
+    color: #4D3AFF;
 }
 .mdc-theme--primary {
-    color: #85603f !important;
+    color: #4D3AFF !important;
     color: var(--mdc-theme-primary, #6200ee) !important
 }
 .mat-text-field-input {
@@ -260,4 +260,9 @@ a {
 }
 .mdc-text-field__input:autofill + .mdc-floating-label {
     transform: translateY(-106%) scale(0.75);
+}
+
+.course-description {
+    width: 300px !important;
+    margin-left: 20px;
 }

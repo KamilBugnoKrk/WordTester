@@ -23,55 +23,30 @@
     <Authorized>
         @*Show the menu and the rest of the body*@
         <div class="top-panel">
-            <a class="btn" href="/">Dashboard</a>
-            <button type="button" class="btn" @onclick="@LogoutClick">Logout</button>
+            <img src="/assets/logo.png" @onclick="onLogoClick" />
+            <div>
+                <a href="/">Dashboard</a>
+                <a @onclick="@LogoutClick">Logout</a>
+            </div>
         </div>
         @Body
-    <footer>
-        Copyright © 2021 <a href="https://www.linkedin.com/in/kamil-bugno/" target="_blank">Kamil Bugno</a> | <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a> | Licensed <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU GPLv3</a> | <a href="https://github.com/KamilBugnoKrk/WordTester" target="_blank">Source code</a> | Made with ♥️ in Poland
-    </footer>
+        <Footer/>
     </Authorized>
     <NotAuthorized>
-        <div class="main-container">
-            @Body
-            @if (!isAccepted)
-            {
-                <div class="cookies">
-                    This website uses cookies 🍪. By using this Site you accept <a href="/privacy" target="_blank">the use of cookies</a>.
-                    <button @onclick="SaveToLocalData">OK</button>
-                </div>
-            }
-        </div>
-        <footer>
-            Copyright © 2021 <a href="https://www.linkedin.com/in/kamil-bugno/" target="_blank">Kamil Bugno</a> | <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a> | Licensed <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU GPLv3</a> | <a href="https://github.com/KamilBugnoKrk/WordTester" target="_blank">Source code</a> | Made with ♥️ in Poland
-        </footer>
+        @Body
     </NotAuthorized>
 </AuthorizeView>
 
 
 @code{
-
-    const string key = "cookies";
-    bool isAccepted = true;
-
-    public async void SaveToLocalData()
-    {
-        await localStore.SetItemAsync(key, true);
-        isAccepted = true;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            isAccepted = await localStore.ContainKeyAsync(key);
-            StateHasChanged();
-        }
-    }
-
     async Task LogoutClick()
     {
         await authStateProvider.Logout();
         navigationManager.NavigateTo("/login");
+    }
+
+    void onLogoClick()
+    {
+        navigationManager.NavigateTo("");
     }
 }

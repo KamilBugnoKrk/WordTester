@@ -4,16 +4,25 @@
 
 <AuthorizeView>
     <Authorized>
-        @{navigationManager.NavigateTo("/");}; 
+        @{navigationManager.NavigateTo("/");};
     </Authorized>
     <NotAuthorized>
-        <div class="login-container">
-            <div class="login-body">
-                @Body
+        <div class="content">
+            <div class="top-panel">
+                <img src="/assets/logo.png" @onclick="@onLogoClick" />
+                <div class="ctas"><CtasForNewUser /></div>
             </div>
-            <div class="login-image">
-                <img src="/assets/login.svg" />
-            </div>
+            @Body
+            <Footer />
         </div>
     </NotAuthorized>
 </AuthorizeView>
+
+
+@code {
+    void onLogoClick()
+    {
+        navigationManager.NavigateTo("");
+    }
+}
+

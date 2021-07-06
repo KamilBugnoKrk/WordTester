@@ -1,0 +1,9 @@
+﻿footer {
+  background-color: white;
+  text-align: center;
+  font-size: 15px;
+  position: relative;
+  font-weight: 500;
+  margin: 0 10px; }
+  footer a {
+    color: black !important; }

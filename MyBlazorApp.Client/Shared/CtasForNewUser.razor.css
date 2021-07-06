@@ -1,0 +1,16 @@
+﻿a:first-of-type {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4D3AFF !important;
+  text-decoration: none; }
+
+a:last-of-type {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: white !important;
+  background: #4D3AFF;
+  padding: 10px;
+  border-radius: 51px;
+  margin-left: 15px;
+  text-decoration: none; }

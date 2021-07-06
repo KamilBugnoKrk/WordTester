@@ -1,10 +1,31 @@
 ﻿.about-page {
   display: flex;
   flex-direction: column; }
+  .about-page .top-panel {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 100px 0 100px; }
+    .about-page .top-panel img {
+      cursor: pointer;
+      margin: 10px; }
+  .about-page .ctas {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; }
   .about-page h1 {
     padding-top: 50px;
     text-align: center;
-    color: #e3d18a; }
+    color: #4D3AFF; }
+  .about-page .spaced-repetition img {
+    display: normal; }
+  .about-page .change-order {
+    order: initial; }
+    .about-page .change-order .right {
+      text-align: right; }
+  .about-page .final {
+    background: #F2F2F2;
+    padding: 0 100px 0 100px;
+    margin: 0 0 20px 0 !important; }
   .about-page .about-container {
     display: flex;
     flex-direction: row;
@@ -17,22 +38,51 @@
       width: 50%;
       padding: 20px; }
       .about-page .about-container div a {
+        font-size: 18px;
+        font-weight: 700;
         text-align: center;
-        font-size: 35px; }
+        color: white !important;
+        background: #4D3AFF;
+        padding: 10px;
+        border-radius: 51px;
+        text-decoration: none;
+        max-width: 200px; }
     .about-page .about-container img {
       width: 100%;
       height: auto; }
-  .about-page .yellow {
-    color: #85603f;
-    background: #e3d18a; }
-  .about-page .brown {
-    color: #e3d18a;
-    background: #85603f; }
+
+@media (max-width: 1000px) {
+  .about-page .spaced-repetition img {
+    display: none; }
+  .about-page .top-panel {
+    flex-direction: column;
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -80px;
+    margin: 0;
+    padding-bottom: 12px;
+    background: white; }
+  .about-page .ctas {
+    margin-top: 0px;
+    margin-right: 0px; } }
 
 @media (max-width: 600px) {
-  .about-page .about-container {
-    flex-direction: column;
-    margin: 50px;
-    margin-top: 0px; }
-    .about-page .about-container div {
-      width: 100%; } }
+  .about-page {
+    text-align: center; }
+    .about-page .about-container {
+      flex-direction: column;
+      margin: 10px;
+      margin-top: 0px; }
+      .about-page .about-container div {
+        width: 100%; }
+    .about-page .change-order > div:first-of-type {
+      order: 2; }
+    .about-page .change-order > div:last-of-type {
+      order: 1; }
+    .about-page .change-order .right {
+      text-align: center; }
+    .about-page .final {
+      padding: 0 10px 0 10px; }
+      .about-page .final a {
+        margin: auto; } }

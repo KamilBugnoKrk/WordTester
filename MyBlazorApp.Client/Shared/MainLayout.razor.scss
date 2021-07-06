@@ -12,40 +12,49 @@
 
 @import "../Variables.scss";
 
-.main-container {
-    min-height: calc(100vh - 24px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cookies {
-    background: #ffe6ca;
-    position: absolute;
-    top: 80vh;
-    left: 30vw;
-    padding: 10px;
-    z-index: 1000;
-}
 
 .top-panel {
-    background-color: $main-color;
-    justify-content: flex-end;
+    background-color: white;
     display: flex;
-    align-items: center
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px 0 100px;
+    border-bottom: black solid 1px;
+
+    > div {
+        display: flex;
+        align-items: center;
+    }
+
+    img {
+        cursor: pointer;
+        margin: 10px;
+    }
+
+    a:first-of-type {
+        color: $grey !important;
+    }
+
+    a:last-of-type {
+        color: $blue;
+    }
+
+    a {
+        cursor: pointer;
+        margin: 10px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
 }
 
-footer {
-    background-color: $main-color !important;
-    text-align: center;
-    line-height: 24px;
-    font-size: 15px;
-    z-index: 100;
-    position: relative;
-}
+@media (max-width: 750px) {
+    .top-panel {
+        justify-content: center;
 
-@media (max-width: 400px) {
-    .cookies {
-        left: 0;
+        > img {
+            display: none;
+        }
     }
 }

@@ -86,8 +86,12 @@ namespace MyBlazorApp.UiTests
 
         private static void VerifyEditDisplay(IRenderedComponent<Dashboard> cut, int number)
         {
-            var editIcon = cut.FindAll("i.fa-edit");
-            editIcon.Count.Should().Be(number);
+            var links = cut.FindAll("a");
+            var editLink = links
+                .SelectMany(l => l.Attributes
+                    .Where(a => a.Name == "href" && a.Value.StartsWith("/details/"))
+                    .Select(a => a.Value));
+            editLink.Count().Should().Be(number);
         }
 
         private static void VerifyTitle(IRenderedComponent<Dashboard> cut)

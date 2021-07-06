@@ -14,20 +14,20 @@
 
 .grid-container {
     display: grid;
-    grid-template-columns: 30vw 70vw;
-    background-color: $main-color-bg;
+    grid-template-columns: 30% 70%;
+    background-color: white;
     top: 56px;
     min-height: calc(100vh - 101px);
+    padding: 0 100px 0 100px;
 }
 
 .details {
     grid-row: 1;
     grid-column: 1;
-    margin: 20px 10px 20px 20px;
+    margin: 20px 10px 20px 10px;
 
     .info {
-        background: #ffe6ca;
-        padding: 10px;
+        padding: 10px 10px 10px 0px;
 
         p {
             margin: 0px;
@@ -44,16 +44,16 @@
     align-content: flex-start;
 
     .course-tile {
-        background-color: $main-color;
-        width: 230px;
+        width: 240px;
         height: 330px;
         margin: 20px 10px 20px 10px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        border-radius: 20px;
     }
 
     .course-tile:hover {
         -webkit-transform: scale(1.05, 1.05);
         transform: scale(1.05, 1.05);
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
@@ -61,19 +61,29 @@
     .course-tile-content {
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: 100px 200px 20px;
+        grid-template-rows: 30px 60px 170px 50px;
+        padding: 10px;
+
+        button {
+            font-size: 16px;
+        }
+
+        .edit {
+            grid-row-start: 1;
+            text-align: right;
+            font-weight: 600;
+        }
 
         h2 {
-            font-size: 30px;
-            margin: 10px;
-            border-style: solid;
-            border-color: wheat;
-            text-align: center;
+            font-size: 20px;
+            text-align: left;
+            grid-row-start: 2;
             overflow: hidden;
         }
 
-        p {
-            margin: 10px;
+        .description {
+            grid-row-start: 3;
+            overflow: hidden;
         }
 
         .smaller {
@@ -83,7 +93,8 @@
         .actions {
             display: flex;
             justify-content: space-between;
-            margin: 10px;
+            align-items: center;
+            grid-row-start: 4;
 
             div {
                 display: flex;
@@ -113,16 +124,21 @@
     }
 
     .add-new {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        cursor: pointer;
-    }
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 260px 50px;
+        padding: 10px;
 
-    .image-add-new {
-        width: 150px;
-        margin-right: 15px;
+        img {
+            width: 150px;
+            grid-row-start: 1;
+            margin: auto;
+        }
+
+        button {
+            grid-row-start: 2;
+            font-size: 16px;
+        }
     }
 }
 
@@ -142,6 +158,7 @@
         display: grid;
         grid-template-rows: auto auto;
         grid-template-columns: auto;
+        padding: 0;
     }
 
     .details {

@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
-    <None Include="wwwroot\assets\login.svg" />
   </ItemGroup>
 
   <ItemGroup>

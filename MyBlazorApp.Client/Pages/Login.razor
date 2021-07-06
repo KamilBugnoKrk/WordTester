@@ -3,28 +3,36 @@
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
 
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginParameters">
-    <DataAnnotationsValidator />
-    <h4 class="font-weight-normal text-center">Login</h4>
-
-    <MatTextField @bind-Value="loginParameters.UserName" autofocus Label="Username" />
-    <ValidationMessage For="@(() => loginParameters.UserName)" />
-
-    <MatTextField Type="password" Label="Password" @bind-Value="loginParameters.Password" />
-    <ValidationMessage For="@(() => loginParameters.Password)" />
-
-    <div class="form-check m-3">
-        <MatCheckbox id="inputRememberMe" Label="Remember Me" @bind-Value="@loginParameters.RememberMe" />
+<div class="login-container">
+    <div class="header">
+        <h4 class="text-center">Login</h4>
     </div>
+    <div class="form-container">
+        <div class="login-body">
+            <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginParameters">
+                <DataAnnotationsValidator />
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <MatTextField @bind-Value="loginParameters.UserName" autofocus Label="Username" />
+                <ValidationMessage For="@(() => loginParameters.UserName)" />
 
-    <label class="text-danger">@error</label>
+                <MatTextField Type="password" Label="Password" @bind-Value="loginParameters.Password" />
+                <ValidationMessage For="@(() => loginParameters.Password)" />
 
-    <NavLink href="register">
-        <h6 style="font-size: 17px;" class="font-weight-normal text-center">Create account</h6>
-    </NavLink>
-</EditForm>
+                <div class="form-check m-3">
+                    <MatCheckbox id="inputRememberMe" Label="Remember Me" @bind-Value="@loginParameters.RememberMe" />
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+                <label class="text-danger">@error</label>
+                <h6 style="font-size: 17px;" class="font-weight-normal text-center"><a href="/register">Create account</a></h6>
+            </EditForm>
+        </div>
+        <div class="login-image">
+            <img src="/assets/login.png" />
+        </div>
+    </div>
+</div>
 
 @code{
     LoginParameters loginParameters { get; set; } = new LoginParameters();

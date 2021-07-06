@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #e3d18a;
+  color: black;
   padding: 1em 3em; }
   .message-container a {
-    color: #6c63ff !important;
+    color: black !important;
     font-size: 35px;
     text-align: center;
     position: relative;
