@@ -1,44 +1,37 @@
 ﻿.course-grid-container {
   display: grid;
-  grid-template-columns: 30vw 70vw;
-  background-color: #85603f;
+  grid-template-columns: auto;
+  grid-template-rows: 200px auto;
   top: 56px;
-  min-height: calc(100vh - 71px); }
+  min-height: calc(100vh - 150px); }
   .course-grid-container .course-details {
     grid-row: 1;
     grid-column: 1;
     margin: 20px 10px 20px 20px; }
     .course-grid-container .course-details .course-form {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      background: #ffe6ca;
-      padding: 20px; }
+      padding: 20px 20px 20px 0px; }
       .course-grid-container .course-details .course-form ::deep label {
         width: 220px; }
       .course-grid-container .course-details .course-form button {
         margin: 10px;
-        width: 60%; }
+        width: 200px; }
   .course-grid-container .course-main {
-    grid-row: 1;
-    grid-column: 2;
+    grid-row: 2;
+    grid-column: 1;
     margin: 20px; }
     .course-grid-container .course-main .panel {
       display: flex;
-      justify-content: space-between; }
+      flex-direction: column;
+      width: 300px; }
       .course-grid-container .course-main .panel .word-title {
         color: white; }
-      .course-grid-container .course-main .panel #search {
-        padding: 10px;
-        width: 170px;
-        margin-bottom: 15px;
-        font-size: 15px; }
     .course-grid-container .course-main .course-words {
       display: flex;
       flex-wrap: wrap;
       align-items: flex-start;
       align-content: flex-start;
-      background: #e3d18a;
       width: auto;
       height: auto;
       padding: 10px; }
@@ -47,11 +40,17 @@
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 200px;
-        background: #ffe6ca;
+        background: #e9e7ff;
+        color: #4D3AFF;
         margin: 10px;
         padding: 10px;
         border-radius: 20px;
+        border: solid 1px;
         cursor: pointer; }
+      .course-grid-container .course-main .course-words .course-word:first-of-type {
+        background: #4D3AFF;
+        color: white;
+        border: none; }
 
 @media (max-width: 840px) {
   .course-grid-container {
@@ -61,15 +60,18 @@
     .course-grid-container .course-details {
       grid-row: 1;
       grid-column: 1;
-      margin: 20px 10vw 10px 10vw; }
+      margin: 20px 10vw 10px 10vw;
+      text-align: center; }
+      .course-grid-container .course-details .course-form {
+        flex-direction: column; }
     .course-grid-container .course-main {
       grid-row: 2;
       grid-column: 1;
       justify-content: center;
       margin: 0px 10px 20px 10px; }
       .course-grid-container .course-main .panel {
-        flex-direction: column;
-        align-items: center; } }
+        align-items: center;
+        width: auto; } }
 
 @media (max-width: 600px) {
   .course-grid-container .course-details {

@@ -2,13 +2,13 @@
 
 .terms-container {
     margin: 25px;
-    border-color: $main-color;
+    border-color: $blue;
     border-width: 10px;
     border-style: solid;
     word-wrap: break-word;
     padding: 10px;
     max-width: 100%;
-    color: $main-color;
+    color: black;
 }
 
 .terms-content {
@@ -16,7 +16,7 @@
     margin-right: 10vw;
 
     a {
-        color: $main-color !important;
+        color: $blue !important;
     }
 
     p {

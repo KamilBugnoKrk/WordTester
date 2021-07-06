@@ -20,27 +20,27 @@
     {
         if (numberOfRepetition % 10 == 0)
         {
-            <MessageToUser Message="You practice very hard. Would you like to continue?"
-                           ImagePath="/assets/question.svg"
-                           OnClick="RetrieveData"
-                           HasContinueButton="true" />
-        }
-        else if (numberOfRepetition % 14 == 0)
-        {
-            if (random.Next(2) == 0)
+            if (randomNumber == 0)
             {
                 <MessageToUser Message="Pro tip: speak words out loud to remember them faster"
                                ImagePath="/assets/speaking.svg"
                                OnClick="RetrieveData"
                                HasContinueButton="true" />
             }
-            else
+            else if (randomNumber == 1)
             {
                 <MessageToUser Message="Do you like WordTester? You can support the creator."
                                ImagePath="/assets/love.svg"
                                OnClick="RetrieveData"
                                HasContinueButton="true"
-                               IsBuyMeACoffeVisible="true"/>
+                               IsBuyMeACoffeVisible="true" /> 
+            }
+            else
+            {
+                <MessageToUser Message="You practice very hard. Would you like to continue?"
+                               ImagePath="/assets/question.svg"
+                               OnClick="RetrieveData"
+                               HasContinueButton="true" />
             }
         }
         else if (learningModel.ResponseType == ResponseType.NothingToLearnResponse)
@@ -82,6 +82,7 @@
     private WordDto correctWord;
     private int numberOfRepetition = 1;
     private Random random = new Random();
+    private int randomNumber = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -90,6 +91,7 @@
 
     private async Task RetrieveData()
     {
+        randomNumber = random.Next(3);
         if (int.TryParse(CourseId, out int courseIdNumber))
         {
             learningModel = await learningApi.GetLearningData(courseIdNumber);

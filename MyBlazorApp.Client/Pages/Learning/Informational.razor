@@ -14,7 +14,7 @@
     <h2>@WordDto.OriginalWord</h2>
     @if (!string.IsNullOrEmpty(WordDto.Pronunciation))
     {
-        <p>[@WordDto.Pronunciation]</p>      
+        <p>[@WordDto.Pronunciation]</p>
     }
     else
     {
@@ -26,13 +26,13 @@
     <p>Definition</p>
     <h4>@WordDto.ExampleUse</h4>
     <p>Example use</p>
-    @if (!string.IsNullOrEmpty(IncorrectResponse)) { 
+    @if (!string.IsNullOrEmpty(IncorrectResponse))
+    {
         <p>Your incorrect response: @IncorrectResponse</p>
     }
-    <input @bind-value="writtenWord"
-           @bind-value:event="oninput"
-           placeholder="@WordDto.OriginalWord"
-           autofocus />
+    <MatTextField autofocus Label="@WordDto.OriginalWord" @bind-Value="writtenWord"
+                  OnInput="@(e => writtenWord = e.Value.ToString())" />
+
     <p>Write the original word</p>
     @if (writtenWord.Trim().ToLower() == WordDto.OriginalWord.Trim().ToLower())
     {

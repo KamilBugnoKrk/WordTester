@@ -3,7 +3,7 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=KamilBugnoKrk_WordTester&metric=ncloc)](https://sonarcloud.io/dashboard?id=KamilBugnoKrk_WordTester)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=KamilBugnoKrk_WordTester&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=KamilBugnoKrk_WordTester)
 
-<img src="WordTester.png" alt="WordTester">
+<img src="WordTester.gif" alt="WordTester">
 
 <details open="open">
   <summary>Table of Contents</summary>
@@ -50,7 +50,6 @@ This section contains instructions on setting up the project locally. To get a l
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 * Visual Studio 2019 16.8 or later with the ASP.NET and web development workload
 * .NET 5.0 SDK or later
 
@@ -69,7 +68,7 @@ Distributed under the GPL-3.0 License. See `LICENSE` for more information.
 
 ## Contact
 
-Kamil Bugno - [LinkedIn](https://www.linkedin.com/in/kamil-bugno/)
+Kamil Bugno - [Website](https://kamilbugno.com/)
 
 E-mail: hello@wordtester.org
 

@@ -20,41 +20,41 @@
     <div class="course-details">
         @if (course != null)
         {
-            <EditForm Model="course" OnValidSubmit="@OnSubmit">
-                <div class="course-form">
-                    <DataAnnotationsValidator />
-                    @if (string.IsNullOrEmpty(CourseId))
-                    {
-                        <h4 class="font-weight-normal">Create a new course </h4>
-                    }
-                    else
-                    {
-                        <h4 class="font-weight-normal">Modify your course </h4>
-                    }
-                    <MatTextField @bind-Value="course.Name" Label="Name"/>
-                    <ValidationMessage For="@(() => course.Name)" />
+        <EditForm Model="course" OnValidSubmit="@OnSubmit">
+            @if (string.IsNullOrEmpty(CourseId))
+            {
+                <h4 class="font-weight-normal">Create a new course </h4>
+            }
+            else
+            {
+                <h4 class="font-weight-normal">Modify your course </h4>
+            }
 
-                    <MatTextField TextArea="true" @bind-Value="course.Description" Label="Description"/>
-                    <ValidationMessage For="@(() => course.Description)" />
-                    <button class="btn" type="submit">Save</button>
-                </div>
-            </EditForm>
+            <div class="course-form">
+                <DataAnnotationsValidator />
+                <MatTextField @bind-Value="course.Name" Label="Name" />
+                <ValidationMessage For="@(() => course.Name)" />
+
+                <MatTextField Class="course-description" @bind-Value="course.Description" Label="Description" />
+                <ValidationMessage For="@(() => course.Description)" />
+                <button class="btn" type="submit">Save</button>
+            </div>
+        </EditForm>
         }
     </div>
     <div class="course-main">
         @if (words != null)
         {
             <div class="panel">
-                <h4 class="font-weight-normal word-title">Your words:</h4>
-                <MatTextField 
-                    Id="search"
+                <h4 class="font-weight-normal">Your words</h4>
+                <MatTextField
                     @bind-Value="searchTerm" 
                     Label="Search"
                     OnKeyUp="@HandleKeyUp" 
                     OnInput="@OnInputHandler"/>
             </div>
             <div class="course-words">
-                <div class="course-word" @onclick="@(() => ShowEditWord(null))"><i class="fas fa-plus"></i></div>
+                <div class="course-word" @onclick="@(() => ShowEditWord(null))"><i class="fas fa-plus"></i> Add</div>
                 @foreach (var word in words)
                 {
                     <div class="course-word" @onclick="@(() => ShowEditWord(word))">@word.OriginalWord</div>

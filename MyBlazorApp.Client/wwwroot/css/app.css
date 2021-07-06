@@ -237,13 +237,13 @@ a {
     background-color: white;
 }
 .mdc-text-field--filled .mdc-line-ripple::after {
-    border-bottom-color: #85603f;
+    border-bottom-color: #4D3AFF;
 }
 .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
-    color: #85603f;
+    color: #4D3AFF;
 }
 .mdc-theme--primary {
-    color: #85603f !important;
+    color: #4D3AFF !important;
     color: var(--mdc-theme-primary, #6200ee) !important
 }
 .mat-text-field-input {
@@ -260,4 +260,9 @@ a {
 }
 .mdc-text-field__input:autofill + .mdc-floating-label {
     transform: translateY(-106%) scale(0.75);
+}
+
+.course-description {
+    width: 300px !important;
+    margin-left: 20px;
 }
