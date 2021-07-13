@@ -38,7 +38,7 @@
 
 ## About The Project
 
-There are several tools for learning foreign words using flashcards and spaced repetition, but I found that most of them don't include the functionality of learning in context. The main goal of this project is to create an application that requires to specify not only translated word but also a definition and example use of the given word. Thanks to it, I believe that the quality of learning and memorization will be increased. 
+There are several tools for learning foreign words using flashcards and spaced repetition, but I found that most of them don't include the functionality of learning in a context. The main goal of this project is to create an application that requires you not only to provide the translation of a word but also a definition and example use of the given word. Thanks to it, I believe that the quality of your learning and memorization will be greatly improved.
 ### Built With
 
 * [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
