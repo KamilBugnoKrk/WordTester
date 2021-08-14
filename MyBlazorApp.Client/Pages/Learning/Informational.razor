@@ -38,6 +38,10 @@
     {
         <button @onclick="SendResponse" class="btn btn-lg btn-primary">Next</button>
     }
+    else
+    {
+        <button disabled @onclick="SendResponse" class="btn btn-lg btn-primary disabled">Next</button>
+    }
 </div>
 
 @code {

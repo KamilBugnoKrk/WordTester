@@ -86,3 +86,10 @@
         font-size: 13px; }
       .multiple-option-container .response-container .response-tile .smallest {
         font-size: 11px; } }
+
+@media (max-width: 450px) {
+  .multiple-option-container {
+    padding: 1em 0em; }
+    .multiple-option-container .response-container .response-tile {
+      width: calc(calc(100vw - 30px) / 2);
+      height: 150px; } }

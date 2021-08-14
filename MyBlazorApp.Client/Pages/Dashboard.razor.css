@@ -100,3 +100,13 @@
     padding: 0; }
   .details {
     margin: 20px 10px 20px 10px; } }
+
+@media (max-width: 450px) {
+  .main .course-tile {
+    width: 90vw;
+    height: 250px;
+    margin: 10px; }
+  .main .course-tile-content {
+    grid-template-rows: 30px 35px 120px 50px; }
+  .main .add-new {
+    grid-template-rows: 170px 50px; } }

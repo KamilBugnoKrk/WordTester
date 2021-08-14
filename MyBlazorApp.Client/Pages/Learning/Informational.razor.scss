@@ -40,4 +40,9 @@
     button {
         width: 250px;
     }
+
+    .disabled {
+        background: $grey !important;
+        border: $grey !important;
+    }
 }

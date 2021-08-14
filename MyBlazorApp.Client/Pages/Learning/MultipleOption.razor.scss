@@ -152,4 +152,17 @@
             }
         }
     }
+}
+
+@media (max-width: 450px) {
+    .multiple-option-container {
+        padding: 1em 0em;
+
+        .response-container {
+            .response-tile {
+                width: calc(calc(100vw - 30px) / 2);
+                height: 150px;
+            }
+        }
+    }
 }    

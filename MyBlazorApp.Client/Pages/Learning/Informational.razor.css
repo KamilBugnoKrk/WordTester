@@ -16,3 +16,6 @@
     width: 250px; }
   .informational-container button {
     width: 250px; }
+  .informational-container .disabled {
+    background: #828282 !important;
+    border: #828282 !important; }
