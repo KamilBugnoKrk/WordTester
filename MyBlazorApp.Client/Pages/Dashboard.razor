@@ -19,32 +19,32 @@
         <div class="info">
             <h2>Hi @userName!</h2>
             <h5>We have stats for you:</h5>
-            <p>You have created @courses.Where(c => !c.IsVisibleForEveryone).Count() courses</p>
-            <p>
-                All your courses contain @courses.Where(c => !c.IsVisibleForEveryone).Sum(c => c.NumberOfWords)
-                words
-            </p>
+            @if (!isLoading)
+            {
+                <Stats Courses="@courses"/>
+            }
         </div>
     </div>
+
     <div class="main">
         @if (!isLoading)
-         {
+        {
             @foreach (var course in courses)
-             {
-                 <div class="course-tile course-tile-content">
-                     @if (!course.IsVisibleForEveryone)
-                     {
+            {
+                <div class="course-tile course-tile-content">
+                    @if (!course.IsVisibleForEveryone)
+                    {
                         <a class="edit" href="@($"/details/{course.Id}")">Edit</a>
-                     }
-                     <h2>@course.Name</h2>
-                     <p class="description @(ShouldBeSmaller(course.Description) ? "smaller" : "")">@course.Description</p>
-                     <div class="actions">
+                    }
+                    <h2>@course.Name</h2>
+                    <p class="description @(ShouldBeSmaller(course.Description) ? "smaller" : "")">@course.Description</p>
+                    <div class="actions">
                         <div>
                             <span>@course.NumberOfKnownWords/@course.NumberOfWords</span>
-                        </div>                       
+                        </div>
                         <button class="btn" @onclick=@(() => Learn(course.Id))>Learn</button>
-                     </div>
-                 </div>
+                    </div>
+                </div>
             }
             <div class="course-tile add-new" @onclick=@(() => AddNewCourse())>
                 <img src="/assets/add.png" />
@@ -53,7 +53,7 @@
         }
         else
         {
-            <div class="course-tile add-new")>
+            <div class="course-tile add-new" )>
                 <p>Loading...</p>
             </div>
         }

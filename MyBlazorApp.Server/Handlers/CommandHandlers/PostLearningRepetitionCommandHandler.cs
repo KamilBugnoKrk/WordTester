@@ -72,6 +72,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             stats.RevisionFactor = 0;
             stats.NextRevisionTicks = _thirtySecondsInTicks;
             stats.NextRevisionTime = DateTime.Now.AddTicks(stats.NextRevisionTicks);
+            stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0); 
             _unitOfWork.Complete();
 
             return Task.FromResult(new PostLearningRepetitionResponseModel
@@ -94,6 +95,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             stats.RevisionFactor += 1;
             stats.NextRevisionTicks *= 2;
             stats.NextRevisionTime = DateTime.Now.AddTicks(stats.NextRevisionTicks);
+            stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0);
             _unitOfWork.Complete();
 
             return Task.FromResult(new PostLearningRepetitionResponseModel
@@ -110,8 +112,9 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 NextRevisionTicks = _thirtySecondsInTicks,
                 NextRevisionTime = DateTime.Now.AddTicks(_thirtySecondsInTicks),
                 WordId = request.WordId,
-                UserId = Guid.Parse(request.UserId)
-            });
+                UserId = Guid.Parse(request.UserId),
+                UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0)
+        });
             _unitOfWork.Complete();
 
             return Task.FromResult(new PostLearningRepetitionResponseModel

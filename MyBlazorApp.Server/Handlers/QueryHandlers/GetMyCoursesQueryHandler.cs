@@ -47,7 +47,23 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 NumberOfKnownWords = c
                     .Words
                     .Where(w => w.WordStats.Any(ws => ws.UserId.ToString() == request.UserId))
-                    .Count()
+                    .Count(),
+                Stats = c.Words
+                    .SelectMany(w => w.WordStats)
+                    .Where(ws => ws.UserId.ToString() == request.UserId)
+                    .GroupBy(ws => ws.RevisionFactor).Select(group => new
+                    {
+                        a = group.Key,
+                        b = group.Count()
+                    }).ToDictionary(o => o.a, o => o.b),
+                NumberOfCorrectRepetitions = c.Words
+                    .SelectMany(w => w.WordStats)
+                    .Where(ws => ws.UserId.ToString() == request.UserId && ws.RevisionFactor != 0)
+                    .GroupBy(ws => ws.UpdatedTime).Select(group => new
+                     {
+                         a = group.Key,
+                         b = group.Count()
+                     }).ToDictionary(o => o.a, o => o.b),
             }); 
 
             return Task.FromResult(new GetMyCoursesResponseModel { Courses = coursesDto});

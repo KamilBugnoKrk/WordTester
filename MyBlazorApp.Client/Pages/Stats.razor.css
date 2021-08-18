@@ -1,0 +1,18 @@
+﻿.chart {
+  position: relative;
+  left: -15px;
+  margin-top: 20px; }
+
+@media (max-width: 1170px) {
+  .chart {
+    position: relative;
+    left: 0px;
+    width: 75vw; }
+  .chart:first-of-type {
+    margin-top: 0px; }
+  .chart:last-of-type {
+    margin-top: 50px; } }
+
+@media (max-width: 570px) {
+  .chart {
+    width: 90vw; } }

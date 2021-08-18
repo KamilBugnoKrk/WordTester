@@ -1,0 +1,189 @@
+﻿@* Copyright (C) 2021  Kamil Bugno
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.*@
+
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IdentityAuthenticationStateProvider authStateProvider
+@inject ICourseApi courseApi
+@using ChartJs.Blazor.LineChart
+
+
+<div class="chart"><Chart Config="_configFirstChart" @ref="_firstChart"></Chart></div>
+<div class="chart"><Chart Config="_configSecondChart" @ref="_secondChart"></Chart></div>
+
+
+@code {
+    [Parameter]
+    public IEnumerable<CourseDto> Courses { get; set; }
+    private LineConfig _configFirstChart;
+    private LineConfig _configSecondChart;
+    private Chart _firstChart;
+    private Chart _secondChart;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        _configFirstChart = CreateConfig();
+
+        var datasetForFirstChart = new LineDataset<int>(DetermineStatsForFirstChart())
+        {
+            Label = "Number of words",
+            BackgroundColor = "#4D3AFF",
+            Fill = FillingMode.Start
+        };
+
+        _configFirstChart.Data.Labels.Add("new");
+        _configFirstChart.Data.Labels.Add("repeated 1-5 times");
+        _configFirstChart.Data.Labels.Add("repeated 6-10 times");
+        _configFirstChart.Data.Labels.Add("repeated 11-15 times");
+        _configFirstChart.Data.Labels.Add("repeated 16+ times");
+        _configFirstChart.Data.Datasets.Add(datasetForFirstChart);
+
+        _configSecondChart = CreateConfig();
+
+        var datasetForSecondChart = new LineDataset<int>(DetermineStatsForSecondChart())
+        {
+            Label = "Number of repeated words",
+            BackgroundColor = "#4D3AFF",
+            Fill = FillingMode.Start
+        };
+
+        for (int dayIndex = -4; dayIndex < 0; dayIndex++)
+        {
+            _configSecondChart.Data.Labels.Add(DateTime.Today.AddDays(dayIndex).ToString("dddd"));
+        }
+
+        _configSecondChart.Data.Labels.Add("today");
+        _configSecondChart.Data.Datasets.Add(datasetForSecondChart);
+    }
+
+    IEnumerable<int> DetermineStatsForFirstChart()
+    {
+        var statsToShow = new List<int> { 0, 0, 0, 0, 0 };
+        var newWords = 0;
+
+        foreach (var course in Courses)
+        {
+            newWords += course.NumberOfWords - course.NumberOfKnownWords;
+            foreach (var stat in course.Stats)
+            {
+                if (stat.Key > 0 && stat.Key <= 5)
+                {
+                    statsToShow[1] += stat.Value;
+                }
+                if (stat.Key > 5 && stat.Key <= 10)
+                {
+                    statsToShow[2] += stat.Value;
+                }
+                if (stat.Key > 10 && stat.Key <= 15)
+                {
+                    statsToShow[3] += stat.Value;
+                }
+                if (stat.Key > 15)
+                {
+                    statsToShow[4] += stat.Value;
+                }
+            }
+        }
+
+        statsToShow[0] += newWords;
+
+        return statsToShow;
+    }
+
+    IEnumerable<int> DetermineStatsForSecondChart()
+    {
+        var statsToShow = new List<int> { 0, 0, 0, 0, 0 };
+
+        foreach (var course in Courses)
+        {
+            foreach (var stat in course.NumberOfCorrectRepetitions)
+            {
+                for(int dayIndex = -4; dayIndex < 0; dayIndex++)
+                {
+                    if (IsDateTheSame(stat.Key.ToLocalTime(), DateTime.Today.AddDays(dayIndex)))
+                    {
+                        statsToShow[dayIndex + 4] += stat.Value;
+                    }
+                }
+
+                if (IsDateTheSame(stat.Key.ToLocalTime(), DateTime.Today))
+                {
+                    statsToShow[4] += stat.Value;
+                }
+          
+            }
+        }
+        return statsToShow;
+    }
+
+    bool IsDateTheSame(DateTime a, DateTime b)
+    {
+        return a.Day == b.Day
+            && a.Month == b.Month
+            && a.Year == b.Year;
+    }
+
+
+    LineConfig CreateConfig()
+    {
+        return new LineConfig
+        {
+            Options = new LineOptions
+            {
+                Responsive = true,
+                Title = new OptionsTitle
+                {
+                    Display = false,
+                },
+                Tooltips = new Tooltips
+                {
+                    Mode = InteractionMode.Nearest,
+                    Intersect = true
+                },
+                Hover = new Hover
+                {
+                    Mode = InteractionMode.Nearest,
+                    Intersect = true
+                },
+                Scales = new Scales
+                {
+                    XAxes = new List<CartesianAxis>
+                {
+                        new CategoryAxis
+                        {
+                            ScaleLabel = new ScaleLabel
+                            {
+                                LabelString = "Value"
+                            }
+                        }
+                    },
+                    YAxes = new List<CartesianAxis>
+                    {
+                            new LinearCartesianAxis
+                            {
+                                ScaleLabel = new ScaleLabel
+                                {
+                                    LabelString = "Value"
+                                },
+                                Ticks = new LinearCartesianTicks()
+                                {
+                                    BeginAtZero = true,
+                                    StepSize = 1,
+                                    MaxTicksLimit = 5
+                                }
+                            }
+                        }
+                }
+            }
+        };
+    }
+}
