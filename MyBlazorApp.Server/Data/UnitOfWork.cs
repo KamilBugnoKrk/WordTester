@@ -24,12 +24,14 @@ namespace MyBlazorApp.Server.Data
             Courses = new CourseRepository(_context);
             Words = new WordRepository(_context);
             WordStats = new LearningRepetitionRepository(_context);
+            Languages = new Repository<Language>(_context);
         }
 
         public ICourseRepository Courses { get; }
 
         public IWordRepository Words { get; }
         public ILearningRepetitionRepository WordStats { get; }
+        public IRepository<Language> Languages { get; set; }
 
         public int Complete()
         {

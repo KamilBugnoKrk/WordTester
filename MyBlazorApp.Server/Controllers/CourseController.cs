@@ -45,7 +45,8 @@ namespace MyBlazorApp.Server.Controllers
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 CourseId = request.CourseId,
                 Description = request.Description,
-                Name = request.Name
+                Name = request.Name,
+                LanguageName = request.LanguageName
             };
             
             var response = await _mediator.Send(requestModel);

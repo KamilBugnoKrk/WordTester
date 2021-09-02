@@ -44,8 +44,60 @@ namespace MyBlazorApp.Server.Data
                     Name = "English B2+ course",
                     Description = "Sample course for Polish learners. Majority of Words, Definitions, Pronunciations and Example Uses come from en.wiktionary.org",
                     IsVisibleForEveryone = true,
+                    LanguageId = 5,
                 }
             );
+
+            builder.Entity<Language>().HasData(
+               new Language
+               {
+                   Id = 1,
+                   Name = "Croatian",
+                   VoiceName = "hr-HR-GabrijelaNeural"
+               },
+               new Language
+               {
+                   Id = 2,
+                   Name = "Czech",
+                   VoiceName = "cs-CZ-AntoninNeural"
+               },
+               new Language
+               {
+                   Id = 3,
+                   Name = "Danish",
+                   VoiceName = "da-DK-ChristelNeural"
+               },
+               new Language
+               {
+                   Id = 4,
+                   Name = "English - UK",
+                   VoiceName = "en-GB-RyanNeural"
+               },
+               new Language
+               {
+                   Id = 5,
+                   Name = "English - US",
+                   VoiceName = "en-US-BrandonNeural"
+               },
+               new Language
+               {
+                   Id = 6,
+                   Name = "German",
+                   VoiceName = "de-DE-ConradNeural"
+               },
+               new Language
+               {
+                   Id = 7,
+                   Name = "Spanish",
+                   VoiceName = "es-ES-ElviraNeural"
+               },
+               new Language
+               {
+                   Id = 8,
+                   Name = "Italian",
+                   VoiceName = "it-IT-ElsaNeural"
+               }
+           );
 
             // Majority of Words, Definitions, Pronunciations and Example Uses come from https://en.wiktionary.org/
             // License:  Creative Commons Attribution-ShareAlike License, more info: https://creativecommons.org/licenses/by-sa/3.0/
@@ -239,6 +291,7 @@ namespace MyBlazorApp.Server.Data
         public virtual DbSet<Word> Words { get; set; }
         public virtual DbSet<WordStats> WordStats { get; set; }
         public virtual DbSet<UsedRepetitionType> UsedRepetitionTypes { get; set; }
+        public virtual DbSet<Language> Languages {get; set; }
 
     }
 }

@@ -10,18 +10,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using MyBlazorApp.Server.Models;
-using MyBlazorApp.Shared;
-using System.Collections.Generic;
-
-namespace MyBlazorApp.Server.LearningAlgorithm
+namespace MyBlazorApp.Server.Data
 {
-    public interface IRepetitionManager
+    public record Language
     {
-        public (string question,
-            string pronunciation,
-            IEnumerable<string> Responses,
-            string audio,
-            RepetitionType repetitionType) CreateRepetitionData(WordStats wordStats);
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string VoiceName { get; set; }
     }
 }

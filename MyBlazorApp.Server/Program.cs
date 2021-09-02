@@ -11,7 +11,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using MyBlazorApp.Server.BackgroundServices;
 
 namespace MyBlazorApp.Server
 {
@@ -24,9 +27,17 @@ namespace MyBlazorApp.Server
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(loggerFactory => {
+                    loggerFactory.ClearProviders();
+                    loggerFactory.AddConsole();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<Worker>();
                 });
     }
 }

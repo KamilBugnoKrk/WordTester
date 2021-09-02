@@ -24,6 +24,8 @@ using FluentAssertions;
 using System.Collections.Generic;
 using MyBlazorApp.Tests.Utils;
 using MyBlazorApp.Shared;
+using MyBlazorApp.Server.Data.Audio;
+using Moq;
 
 namespace MyBlazorApp.Tests
 {
@@ -94,7 +96,7 @@ namespace MyBlazorApp.Tests
         {
             var userId = Guid.NewGuid();
             CreateDataInDatabase(userId, context, hasStats, usedRepetitionTypes);
-            var handler = new PostLearningRepetitionCommandHandler(new UnitOfWork(context));
+            var handler = new PostLearningRepetitionCommandHandler(new UnitOfWork(context), new Mock<IAudioService>().Object);
             var request = new PostLearningRepetitionRequestModel
             {
                 RepetitionType = RepetitionType.FromDefinitionToOriginalClose,

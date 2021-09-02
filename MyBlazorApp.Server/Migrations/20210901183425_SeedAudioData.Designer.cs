@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBlazorApp.Server.Data;
 
 namespace MyBlazorApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210901183425_SeedAudioData")]
+    partial class SeedAudioData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,49 +171,49 @@ namespace MyBlazorApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Croatian",
+                            Name = "Croatian (Croatia)",
                             VoiceName = "hr-HR-GabrijelaNeural"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Czech",
+                            Name = "Czech (Czech)",
                             VoiceName = "cs-CZ-AntoninNeural"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Danish",
+                            Name = "Danish (Denmark)",
                             VoiceName = "da-DK-ChristelNeural"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "English - UK",
+                            Name = "English (United Kingdom)",
                             VoiceName = "en-GB-RyanNeural"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "English - US",
+                            Name = "English (United States)",
                             VoiceName = "en-US-BrandonNeural"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "German",
+                            Name = "German (Germany)",
                             VoiceName = "de-DE-ConradNeural"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Spanish",
+                            Name = "Spanish (Spain)",
                             VoiceName = "es-ES-ElviraNeural"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Italian",
+                            Name = "Italian (Italy)",
                             VoiceName = "it-IT-ElsaNeural"
                         });
                 });

@@ -53,7 +53,7 @@ namespace MyBlazorApp.Client.Pages
         async Task OnSubmit()
         {
             var response = await courseApi
-                .PostCourse(CourseId, course.Name, course.Description);
+                .PostCourse(CourseId, course.Name, course.Description, course.SelectedLanguageName);
             
             navigationManager
                 .NavigateTo("/details/" + response, true);

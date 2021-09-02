@@ -29,6 +29,7 @@ namespace MyBlazorApp.Server.Data
         {
             return _applicationDbContext
                 .Courses
+                .Include(c => c.Language)
                 .Include(c => c.Words)
                 .ThenInclude(w => w.WordStats)
                 .Include(c => c.UserCourses)

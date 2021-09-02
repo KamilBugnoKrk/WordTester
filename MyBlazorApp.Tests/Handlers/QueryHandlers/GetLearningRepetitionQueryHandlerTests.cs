@@ -25,6 +25,7 @@ using Moq;
 using MyBlazorApp.Shared;
 using MyBlazorApp.Server.Models;
 using System.Collections.Generic;
+using MyBlazorApp.Server.Data.Audio;
 
 namespace MyBlazorApp.Tests
 {
@@ -101,10 +102,10 @@ namespace MyBlazorApp.Tests
             var repetitionManagerMock = new Mock<IRepetitionManager>();
             repetitionManagerMock
                 .Setup(rm => rm.CreateRepetitionData(It.Is<WordStats>(ws => ws.Id == 30)))
-                .Returns(("Question",null, null, RepetitionType.FromExampleToTranslatedOpen));
+                .Returns(("Question",null, null, null, RepetitionType.FromExampleToTranslatedOpen));
 
             var handler = new GetLearningRepetitionQueryHandler(new UnitOfWork(context),
-                mapper, repetitionManagerMock.Object);
+                mapper, repetitionManagerMock.Object, new Mock<IAudioService>().Object);
 
             var request = new GetLearningRepetitionRequestModel
             {

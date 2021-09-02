@@ -53,9 +53,11 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 IsVisibleForEveryone = course.IsVisibleForEveryone,
                 NumberOfWords = course.Words.Count(),
                 NumberOfKnownWords = course
-                   .Words == null 
-                   ? 0 
-                   : course.Words.Where(w => w.WordStats?.Any(ws => ws.UserId.ToString() == request.UserId) == true).Count()
+                   .Words == null
+                   ? 0
+                   : course.Words.Where(w => w.WordStats?.Any(ws => ws.UserId.ToString() == request.UserId) == true).Count(),
+                SelectedLanguageName = course.Language != null ? course.Language.Name : "None",
+                LanguageOptions = _unitOfWork.Languages.GetAll().Select(l => l.Name).ToList()
             };
             var wordsDto = _mapper.Map<IEnumerable<WordDto>>(course?.Words);
 

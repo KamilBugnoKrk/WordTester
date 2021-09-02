@@ -20,7 +20,7 @@ namespace MyBlazorApp.Client.Services.Contracts
     public interface ICourseApi
     {
         Task<IEnumerable<CourseDto>> GetMyCourses();
-        Task<int> PostCourse(string id, string name, string description);
+        Task<int> PostCourse(string id, string name, string description, string languageName);
         Task<GetCourseDetailsResponseModel> GetCourseDetails(string courseId);
     }
 }

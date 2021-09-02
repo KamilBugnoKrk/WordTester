@@ -12,6 +12,7 @@
 
 using MediatR;
 using MyBlazorApp.Server.Data;
+using MyBlazorApp.Server.Data.Audio;
 using MyBlazorApp.Server.Helpers;
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
@@ -31,10 +32,12 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private const int _thirtySecondsInTicks = 30000000;
         private const int _numberOfRepetitionTypes = 8;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAudioService _audioService;
 
-        public PostLearningRepetitionCommandHandler(IUnitOfWork unitOfWork)
+        public PostLearningRepetitionCommandHandler(IUnitOfWork unitOfWork, IAudioService audioService)
         {
             _unitOfWork = unitOfWork;
+            _audioService = audioService;
         }
         public Task<PostLearningRepetitionResponseModel> Handle(PostLearningRepetitionRequestModel request, CancellationToken cancellationToken)
         {
@@ -75,6 +78,13 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0); 
             _unitOfWork.Complete();
 
+            string audio = string.Empty;
+
+            if (word.HasAudioGenerated)
+            {
+                audio = _audioService.RetrieveAudio(word.Id, WordType.OriginalWord);
+            }
+
             return Task.FromResult(new PostLearningRepetitionResponseModel
             {
                 IsCorrectAnswer = false,
@@ -85,8 +95,9 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     OriginalWord = word.OriginalWord,
                     TranslatedWord = word.TranslatedWord,
                     ExampleUse = Helper.ApplyStyleToText(word.ExampleUse),
-                    Pronunciation = word.Pronunciation
-                }
+                    Pronunciation = word.Pronunciation                    
+                },
+                Audio = audio
             });
         }
 

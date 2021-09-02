@@ -5,6 +5,9 @@
   color: black;
   padding: 1em 3em;
   text-align: center; }
+  .multiple-option-container #audio {
+    visibility: hidden;
+    height: 0px; }
   .multiple-option-container h2 {
     margin: 0 10px 0 10px; }
   .multiple-option-container .small {

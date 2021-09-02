@@ -20,6 +20,9 @@
     {
         <p></p>
     }
+    <audio id="audio" src="data:audio/wav;base64,@Audio" controls autoplay>
+        <source id="source" src="data:audio/wav;base64,@Audio" type="audio/wav" />
+    </audio>
     <h4>@WordDto.TranslatedWord</h4>
     <p>Translated word</p>
     <h4>@WordDto.Definition</h4>
@@ -46,6 +49,8 @@
 
 @code {
     [Parameter]
+    public string Audio { get; set; }
+    [Parameter]
     public WordDto WordDto { get; set; }
     [Parameter]
     public EventCallback<string> OnClick { get; set; }
@@ -57,7 +62,9 @@
 
     private async Task SendResponse()
     {
+        StateHasChanged();
         await OnClick.InvokeAsync(writtenWord);
         writtenWord = string.Empty;
+        Audio = string.Empty;
     }
 }

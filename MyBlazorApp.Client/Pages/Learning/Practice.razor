@@ -17,19 +17,21 @@
         <MultipleOption Question="@LearningModel.Question"
             Responses="@LearningModel.Responses.ToList()"
             Pronunciation="@LearningModel.Pronunciation"
-            OnClick="SendResponse" />
+            OnClick="SendResponse" 
+            Audio="@LearningModel.Audio"/>
     }
     else
     {
         <Open Question="@LearningModel.Question"
         RepetitionType="@LearningModel.RepetitionType"
         Pronunciation="@LearningModel.Pronunciation"
-        OnClick="SendResponse" />
+        OnClick="SendResponse" 
+        Audio="@LearningModel.Audio"/>
     }
 }
 else
 {
-    <Informational WordDto="@CorrectWord" OnClick="SendInformationalResponse" IncorrectResponse="@UserResponse" />
+    <Informational Audio="@Audio" WordDto="@CorrectWord" OnClick="SendInformationalResponse" IncorrectResponse="@UserResponse" />
 }
 
 @code {
@@ -39,6 +41,8 @@ else
     [Parameter]
     public EventCallback<string> OnClick { get; set; }
     [Parameter]
+    public string Audio { get; set; }
+    [Parameter]
     public WordDto CorrectWord { get; set; }
     [Parameter]
     public bool IsResponseSent { get; set; }
@@ -47,6 +51,7 @@ else
 
     private async Task SendResponse(string response)
     {
+        StateHasChanged();
         await OnClick.InvokeAsync(response);
     }
 
@@ -55,6 +60,7 @@ else
         LearningModel.RepetitionType = RepetitionType.FromTranslatedToOriginalOpen;
         await OnClick.InvokeAsync(response);
         UserResponse = string.Empty;
+        Audio = string.Empty;
     }
 
     private bool IsMultipleOption(RepetitionType repetitionType) =>

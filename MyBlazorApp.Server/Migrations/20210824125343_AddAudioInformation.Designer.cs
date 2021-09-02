@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBlazorApp.Server.Data;
 
 namespace MyBlazorApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210824125343_AddAudioInformation")]
+    partial class AddAudioInformation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,74 +150,6 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Data.Language", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VoiceName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Languages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Croatian",
-                            VoiceName = "hr-HR-GabrijelaNeural"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Czech",
-                            VoiceName = "cs-CZ-AntoninNeural"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Danish",
-                            VoiceName = "da-DK-ChristelNeural"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "English - UK",
-                            VoiceName = "en-GB-RyanNeural"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "English - US",
-                            VoiceName = "en-US-BrandonNeural"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "German",
-                            VoiceName = "de-DE-ConradNeural"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Spanish",
-                            VoiceName = "es-ES-ElviraNeural"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Italian",
-                            VoiceName = "it-IT-ElsaNeural"
-                        });
-                });
-
             modelBuilder.Entity("MyBlazorApp.Server.Models.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -295,15 +229,13 @@ namespace MyBlazorApp.Server.Migrations
                     b.Property<bool>("IsVisibleForEveryone")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("LanguageId")
-                        .HasColumnType("int");
+                    b.Property<string>("LanguageName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LanguageId");
 
                     b.ToTable("Courses");
 
@@ -313,7 +245,6 @@ namespace MyBlazorApp.Server.Migrations
                             Id = 1,
                             Description = "Sample course for Polish learners. Majority of Words, Definitions, Pronunciations and Example Uses come from en.wiktionary.org",
                             IsVisibleForEveryone = true,
-                            LanguageId = 5,
                             Name = "English B2+ course"
                         });
                 });
@@ -681,15 +612,6 @@ namespace MyBlazorApp.Server.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MyBlazorApp.Server.Models.Course", b =>
-                {
-                    b.HasOne("MyBlazorApp.Server.Data.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId");
-
-                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("MyBlazorApp.Server.Models.UsedRepetitionType", b =>

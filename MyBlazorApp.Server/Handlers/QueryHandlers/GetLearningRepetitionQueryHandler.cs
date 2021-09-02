@@ -13,6 +13,7 @@
 using AutoMapper;
 using MediatR;
 using MyBlazorApp.Server.Data;
+using MyBlazorApp.Server.Data.Audio;
 using MyBlazorApp.Server.Helpers;
 using MyBlazorApp.Server.LearningAlgorithm;
 using MyBlazorApp.Server.Models;
@@ -32,11 +33,13 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IRepetitionManager _repetitionManager;
-        public GetLearningRepetitionQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IRepetitionManager repetitionManager)
+        private readonly IAudioService _audioService;
+        public GetLearningRepetitionQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IRepetitionManager repetitionManager, IAudioService audioService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _repetitionManager = repetitionManager;
+            _audioService = audioService;
         }
         public Task<GetLearningRepetitionResponseModel> Handle(GetLearningRepetitionRequestModel request, CancellationToken cancellationToken)
         {
@@ -106,19 +109,26 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         {
             var informationalWord = _mapper.Map<Word, WordDto>(notLearnedWord);
             informationalWord.ExampleUse = Helper.ApplyStyleToText(notLearnedWord.ExampleUse);
+            string audio = string.Empty;
+            
+            if (notLearnedWord.HasAudioGenerated)
+            {
+                audio = _audioService.RetrieveAudio(informationalWord.Id, WordType.OriginalWord);
+            }
 
             var response = new GetLearningRepetitionResponseModel
             {
                 WordId = notLearnedWord.Id,
                 ResponseType = ResponseType.InformationalResponse,
-                InformationalWord = informationalWord
+                InformationalWord = informationalWord,
+                Audio = audio
             };
             return Task.FromResult(response);
         }
 
         private Task<GetLearningRepetitionResponseModel> RepeatLearnedWord(WordStats wordStats)
         {
-            var (question, pronunciation, responses, repetitionType) = _repetitionManager
+            var (question, pronunciation, responses, audio, repetitionType) = _repetitionManager
                 .CreateRepetitionData(wordStats);
 
             var response = new GetLearningRepetitionResponseModel
@@ -129,7 +139,8 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 Question = question,
                 Responses = responses,
                 RepetitionType = repetitionType,
-                Pronunciation = pronunciation
+                Pronunciation = pronunciation,
+                Audio = audio
             };
 
             return Task.FromResult(response);

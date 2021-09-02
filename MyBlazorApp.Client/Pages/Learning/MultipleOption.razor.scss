@@ -20,6 +20,11 @@
     padding: 1em 3em;
     text-align: center;
 
+    #audio {
+        visibility: hidden;
+        height: 0px;
+    }
+
     h2 {
         margin: 0 10px 0 10px;
     }

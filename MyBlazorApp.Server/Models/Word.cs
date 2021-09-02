@@ -22,6 +22,7 @@ namespace MyBlazorApp.Server.Models
         public string Definition { get; set; }
         public string ExampleUse { get; set; }
         public string Pronunciation { get; set; }
+        public bool HasAudioGenerated { get; set; }
         public IEnumerable<WordStats> WordStats { get; set; }
         public int CourseId { get; set; }
         public Course Course { get; set; }

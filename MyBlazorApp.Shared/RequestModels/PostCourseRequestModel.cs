@@ -21,7 +21,8 @@ namespace MyBlazorApp.Shared.RequestModels
         public string CourseId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string LanguageName { get; set; }
     }
 
-    public record PostCourseRequest(string CourseId, string Name, string Description);
+    public record PostCourseRequest(string CourseId, string Name, string Description, string LanguageName);
 }

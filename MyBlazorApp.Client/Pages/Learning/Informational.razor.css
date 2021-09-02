@@ -4,6 +4,9 @@
   align-items: center;
   color: black;
   padding: 1em 3em; }
+  .informational-container #audio {
+    visibility: hidden;
+    height: 0px; }
   .informational-container h2 {
     color: #4D3AFF; }
   .informational-container h4, .informational-container h2 {

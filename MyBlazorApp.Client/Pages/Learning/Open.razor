@@ -16,6 +16,9 @@
 
 <div class="open-container">
     <h2 class="@GetStyle(Question)">@Question</h2>
+    <audio id="audio" src="data:audio/wav;base64,@Audio" controls autoplay>
+        <source id="source" src="data:audio/wav;base64,@Audio" type="audio/wav" />
+    </audio>
     @if (!string.IsNullOrEmpty(Pronunciation))
     {
         <p>[@Pronunciation]</p>
@@ -38,6 +41,8 @@
     public RepetitionType RepetitionType { get; set; }
     [Parameter]
     public EventCallback<string> OnClick { get; set; }
+    [Parameter]
+    public string Audio { get; set; }
 
     private string userResponse = string.Empty;
 
@@ -61,6 +66,8 @@
     {
         var responseToSend = userResponse;
         userResponse = string.Empty;
+        Audio = string.Empty;
+        StateHasChanged();
         await OnClick.InvokeAsync(responseToSend);
     }
 

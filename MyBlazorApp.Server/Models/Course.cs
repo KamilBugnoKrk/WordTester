@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using MyBlazorApp.Server.Data;
 using System.Collections.Generic;
 
 namespace MyBlazorApp.Server.Models
@@ -20,6 +21,8 @@ namespace MyBlazorApp.Server.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsVisibleForEveryone { get; set; }
+        public int? LanguageId { get; set; }
+        public Language Language { get; set; }
         public IEnumerable<Word> Words { get; set; }
         public IEnumerable<UserCourse> UserCourses { get; set; }
     }

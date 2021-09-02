@@ -5,6 +5,9 @@
   color: black;
   padding: 5em 3em;
   text-align: center; }
+  .open-container #audio {
+    visibility: hidden;
+    height: 0px; }
   .open-container h2 {
     margin: 0 10px 0 10px; }
   .open-container .small {

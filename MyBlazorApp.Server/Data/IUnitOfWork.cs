@@ -20,6 +20,7 @@ namespace MyBlazorApp.Server.Data
         ICourseRepository Courses { get; }
         IWordRepository Words { get; }
         ILearningRepetitionRepository WordStats { get; }
+        IRepository<Language> Languages { get; }
         int Complete();
     }
 }

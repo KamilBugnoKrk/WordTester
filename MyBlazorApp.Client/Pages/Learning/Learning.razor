@@ -50,7 +50,7 @@
         }
         else if (learningModel.ResponseType == ResponseType.InformationalResponse)
         {
-            <Informational WordDto="@learningModel.InformationalWord" OnClick="SendResponse" />
+            <Informational Audio="@learningModel.Audio" WordDto="@learningModel.InformationalWord" OnClick="SendResponse" />
         }
         else if (learningModel.ResponseType == ResponseType.ErrorResponse)
         {
@@ -63,7 +63,8 @@
                       OnClick="@SendResponse"
                       CorrectWord="@correctWord"
                       IsResponseSent="@isResponseSent"
-                      UserResponse="@userResponse" />
+                      UserResponse="@userResponse" 
+                      Audio="@audioForIncorrectResponse"/>
         }
     }
     else
@@ -83,6 +84,7 @@
     private int numberOfRepetition = 1;
     private Random random = new Random();
     private int randomNumber = 0;
+    private string audioForIncorrectResponse = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -111,10 +113,12 @@
         if (result.IsCorrectAnswer)
         {
             await RetrieveData();
+            audioForIncorrectResponse = string.Empty;
             return;
         }
 
         correctWord = result.CorrectWord;
         isResponseSent = true;
+        audioForIncorrectResponse = result.Audio;
     }
 }

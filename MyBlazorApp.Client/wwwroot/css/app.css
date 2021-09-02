@@ -262,6 +262,22 @@ a {
     transform: translateY(-106%) scale(0.75);
 }
 
+.mdc-select {
+    max-width: 220px;
+    top: -5px;
+    margin-left: 20px;
+}
+
+.mdc-select__anchor {
+    background-color: white !important;
+}
+
+@media (max-width: 840px) {
+    .mdc-select {
+        margin-left: 0px;
+    }
+}
+
 .course-description {
     width: 300px !important;
     margin-left: 20px;

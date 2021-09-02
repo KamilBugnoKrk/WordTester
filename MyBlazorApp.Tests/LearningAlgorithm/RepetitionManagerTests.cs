@@ -13,6 +13,7 @@
 using FluentAssertions;
 using Moq;
 using MyBlazorApp.Server.Data;
+using MyBlazorApp.Server.Data.Audio;
 using MyBlazorApp.Server.LearningAlgorithm;
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
@@ -28,7 +29,7 @@ namespace MyBlazorApp.Tests.LearningAlgorithm
         public void RepetitionManager_OnlyOneRepetitionTypeRemains_ReturnsCorrectRepetitionData()
         {
             var repetitionManager = new RepetitionManager(new Mock<IUnitOfWork>().Object, 
-                new Mock<IWordGenerator>().Object);
+                new Mock<IWordGenerator>().Object, new Mock<IAudioService>().Object);
             
             var result = repetitionManager.CreateRepetitionData(new WordStats 
             { 

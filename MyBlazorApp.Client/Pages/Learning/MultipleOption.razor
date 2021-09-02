@@ -15,6 +15,9 @@
 
 <div class="multiple-option-container">
     <h2 class="@GetStyle(Question)">@Question</h2>
+    <audio id="audio" src="data:audio/wav;base64,@Audio" controls autoplay>
+        <source id="source" src="data:audio/wav;base64,@Audio" type="audio/wav" />
+    </audio>
     @if (!string.IsNullOrEmpty(Pronunciation))
     {
         <p>[@Pronunciation]</p>
@@ -28,9 +31,8 @@
         {
             var index = i;
             var response = Responses[i];
-            <div 
-              @onclick="async () => await SendResponse(index)" 
-              class="response-tile">
+            <div @onclick="async () => await SendResponse(index)"
+                 class="response-tile">
                 <span>@(i+1)</span>
                 <p class="@GetStyle(response)">@response</p>
             </div>
@@ -49,6 +51,8 @@
     public IList<string> Responses { get; set; }
     [Parameter]
     public EventCallback<string> OnClick { get; set; }
+    [Parameter]
+    public string Audio { get; set; }
 
     HotKeysContext HotKeysContext;
     private List<Keys> keyList = new List<Keys> { Keys.Num1, Keys.Num2, Keys.Num3, Keys.Num4,
@@ -73,6 +77,7 @@
 
     private async Task SendResponse(int i)
     {
+        StateHasChanged();
         await OnClick.InvokeAsync(Responses[i]);
     }
 

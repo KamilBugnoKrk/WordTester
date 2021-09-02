@@ -33,13 +33,14 @@ namespace MyBlazorApp.Client.Services.Implementations
                 .GetJsonAsync<GetMyCoursesResponseModel>())
                 .Courses;
 
-        public async Task<int> PostCourse(string id, string name, string description) => 
+        public async Task<int> PostCourse(string id, string name, string description, string languageName) => 
             await $"{url}api/Course/PostCourse"
                 .PostJsonAsync(new
                 {
                     CourseId = id,
                     Name = name,
-                    Description = description
+                    Description = description,
+                    LanguageName = languageName
                 })
                .ReceiveJson<int>();
 

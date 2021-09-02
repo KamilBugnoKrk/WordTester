@@ -27,6 +27,9 @@ namespace MyBlazorApp.Shared
         public string Description { get; set; }
         public bool IsVisibleForEveryone { get; set; }
         public int NumberOfWords { get; set; }
+        [Required]
+        public string SelectedLanguageName { get; set; }
+        public List<string> LanguageOptions { get; set; }
         public int NumberOfKnownWords { get; set; }
         public Dictionary<long, int> Stats { get; set; }
         public Dictionary<DateTime, int> NumberOfCorrectRepetitions { get; set; }

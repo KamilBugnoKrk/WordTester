@@ -17,6 +17,7 @@ using MyBlazorApp.Shared.RequestModels;
 using MyBlazorApp.Shared.ResponseModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -100,6 +101,19 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         {
             course.Name = request.Name;
             course.Description = request.Description;
+            int? newValueOfLanguage = request.LanguageName != "None" && !string.IsNullOrEmpty(request.LanguageName)
+                ? _unitOfWork.Languages.Find(l => l.Name == request.LanguageName).First().Id
+                : null;
+
+            if (course.LanguageId != newValueOfLanguage)
+            {
+                foreach (var word in course.Words)
+                {
+                    word.HasAudioGenerated = false;
+                }
+            }
+            course.LanguageId = newValueOfLanguage;
+
             _unitOfWork.Complete();
 
             return new PostCourseResponseModel

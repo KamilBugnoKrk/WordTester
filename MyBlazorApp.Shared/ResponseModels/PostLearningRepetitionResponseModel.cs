@@ -23,5 +23,6 @@ namespace MyBlazorApp.Shared.ResponseModels
         public bool IsCorrectAnswer { get; set; }
         public WordDto CorrectWord { get; set; }
         public string Error { get; set; }
+        public string Audio { get; set; }
     }
 }

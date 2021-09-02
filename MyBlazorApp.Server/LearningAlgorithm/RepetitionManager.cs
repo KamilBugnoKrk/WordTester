@@ -11,6 +11,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using MyBlazorApp.Server.Data;
+using MyBlazorApp.Server.Data.Audio;
 using MyBlazorApp.Server.Helpers;
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
@@ -28,8 +29,9 @@ namespace MyBlazorApp.Server.LearningAlgorithm
         private readonly IUnitOfWork _unitOfWork;
         private readonly Random _random;
         private readonly IWordGenerator _wordGenerator;
+        private readonly IAudioService _audioService;
 
-        public RepetitionManager(IUnitOfWork unitOfWork, IWordGenerator wordGenerator)
+        public RepetitionManager(IUnitOfWork unitOfWork, IWordGenerator wordGenerator, IAudioService audioService)
         {
             _allRepetitionTypes = Enum
                 .GetValues(typeof(RepetitionType))
@@ -38,11 +40,13 @@ namespace MyBlazorApp.Server.LearningAlgorithm
             _random = new Random();
             _unitOfWork = unitOfWork;
             _wordGenerator = wordGenerator;
+            _audioService = audioService;
         }
 
         public (string question,
             string pronunciation,
             IEnumerable<string> Responses,
+            string audio,
             RepetitionType repetitionType) CreateRepetitionData(WordStats wordStats)
         {
 
@@ -62,69 +66,80 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                     wordStats.Word.TranslatedWord,
                     null,
                     null,
+                    string.Empty,
                     RepetitionType.FromTranslatedToOriginalOpen
                 ),
                 RepetitionType.FromOriginalToTranslatedOpen => (
                     wordStats.Word.OriginalWord,
                     wordStats.Word.Pronunciation,
                     null,
+                    _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord),
                     RepetitionType.FromOriginalToTranslatedOpen
                 ),
                 RepetitionType.FromExampleToTranslatedOpen => (
                     Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                     wordStats.Word.Pronunciation,
-                    null, 
+                    null,
+                    _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse),
                     RepetitionType.FromExampleToTranslatedOpen
                 ),
                 RepetitionType.FromDefinitionToOriginalOpen => (
                     wordStats.Word.Definition,
                     null,
                     null,
+                    string.Empty,
                     RepetitionType.FromDefinitionToOriginalOpen
                 ),
                 RepetitionType.FromOriginalToTranslatedClose => (
                     wordStats.Word.OriginalWord,
                     wordStats.Word.Pronunciation,
                     GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
+                    _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord),
                     RepetitionType.FromOriginalToTranslatedClose
                 ),
                 RepetitionType.FromTranslatedToOriginalClose => (
                     wordStats.Word.TranslatedWord,
                     null,
                     GetOtherOriginalWords(wordStats.Word.OriginalWord),
+                    string.Empty,
                     RepetitionType.FromTranslatedToOriginalClose
                 ),
                 RepetitionType.FromDefinitionToOriginalClose => (
                     wordStats.Word.Definition,  
                     null,
                     GetOtherOriginalWords(wordStats.Word.OriginalWord),
+                    string.Empty,
                     RepetitionType.FromDefinitionToOriginalClose
                 ),
                 RepetitionType.FromExampleToTranslatedClose => (
                     Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                     wordStats.Word.Pronunciation,
                     GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
+                    _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse),
                     RepetitionType.FromExampleToTranslatedClose
                 ),
                 RepetitionType.FromOriginalToDefinitionClose => (
                    wordStats.Word.OriginalWord,
                    wordStats.Word.Pronunciation,
                    GetOtherDefinitions(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.Definition),
+                   _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord),
                    RepetitionType.FromOriginalToDefinitionClose
                ),
                 RepetitionType.FromExampleToDefinitionClose => (
                    Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                    wordStats.Word.Pronunciation,
                    GetOtherDefinitions(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.Definition),
+                   _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse),
                    RepetitionType.FromExampleToDefinitionClose
                ),
                 RepetitionType.FromExampleToOriginalClose => (
                  Helper.HideOriginal(wordStats.Word.ExampleUse),
                  null,
                  GetOtherOriginalWords(Helper.GetOriginalFromExample(wordStats.Word.ExampleUse)),
+                 _audioService.RetrieveAudio(wordStats.WordId, WordType.BlankExampleUse),
                  RepetitionType.FromExampleToOriginalClose
              ),
-                _ => (null, null, null, RepetitionType.None),
+                _ => (null, null, null, string.Empty, RepetitionType.None),
             };
         }
 

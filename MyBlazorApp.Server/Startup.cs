@@ -27,6 +27,8 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 using MyBlazorApp.Server.Authorization;
 using MyBlazorApp.Server.LearningAlgorithm;
+using MyBlazorApp.Server.BackgroundServices;
+using MyBlazorApp.Server.Data.Audio;
 
 namespace MyBlazorApp.Server
 {
@@ -105,6 +107,7 @@ namespace MyBlazorApp.Server
             services.AddTransient<IRepetitionManager, RepetitionManager>();
             services.AddTransient<IWordGenerator, WordGenerator>();
             services.AddTransient<IReCaptcha, ReCaptcha>();
+            services.AddTransient<IAudioService, AudioService>();
 
             services.AddSwaggerGen(c =>
             {
