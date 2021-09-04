@@ -60,6 +60,8 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                 availableTypes[_random.Next(availableTypes.Count)] :
                 _allRepetitionTypes.ToList()[_random.Next(_allRepetitionTypes.Count())];
 
+            var hasAudio = wordStats.Word.HasAudioGenerated;
+
             return chosenType switch
             {
                 RepetitionType.FromTranslatedToOriginalOpen => (
@@ -73,14 +75,14 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                     wordStats.Word.OriginalWord,
                     wordStats.Word.Pronunciation,
                     null,
-                    _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord),
+                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord) : string.Empty,
                     RepetitionType.FromOriginalToTranslatedOpen
                 ),
                 RepetitionType.FromExampleToTranslatedOpen => (
                     Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                     wordStats.Word.Pronunciation,
                     null,
-                    _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse),
+                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse): string.Empty,
                     RepetitionType.FromExampleToTranslatedOpen
                 ),
                 RepetitionType.FromDefinitionToOriginalOpen => (
@@ -94,7 +96,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                     wordStats.Word.OriginalWord,
                     wordStats.Word.Pronunciation,
                     GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
-                    _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord),
+                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord): string.Empty,
                     RepetitionType.FromOriginalToTranslatedClose
                 ),
                 RepetitionType.FromTranslatedToOriginalClose => (
@@ -115,28 +117,28 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                     Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                     wordStats.Word.Pronunciation,
                     GetOtherTranslatedWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.TranslatedWord),
-                    _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse),
+                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse) : string.Empty,
                     RepetitionType.FromExampleToTranslatedClose
                 ),
                 RepetitionType.FromOriginalToDefinitionClose => (
                    wordStats.Word.OriginalWord,
                    wordStats.Word.Pronunciation,
                    GetOtherDefinitions(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.Definition),
-                   _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord),
+                   hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord) : string.Empty,
                    RepetitionType.FromOriginalToDefinitionClose
                ),
                 RepetitionType.FromExampleToDefinitionClose => (
                    Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                    wordStats.Word.Pronunciation,
                    GetOtherDefinitions(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.Definition),
-                   _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse),
+                   hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse) : string.Empty,
                    RepetitionType.FromExampleToDefinitionClose
                ),
                 RepetitionType.FromExampleToOriginalClose => (
                  Helper.HideOriginal(wordStats.Word.ExampleUse),
                  null,
                  GetOtherOriginalWords(Helper.GetOriginalFromExample(wordStats.Word.ExampleUse)),
-                 _audioService.RetrieveAudio(wordStats.WordId, WordType.BlankExampleUse),
+                 hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.BlankExampleUse) : string.Empty,
                  RepetitionType.FromExampleToOriginalClose
              ),
                 _ => (null, null, null, string.Empty, RepetitionType.None),

@@ -43,6 +43,7 @@ There are several tools for learning foreign words using flashcards and spaced r
 
 * [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 * [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
+* [Azure Text to Speech](https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/)
 
 ## Getting Started
 
