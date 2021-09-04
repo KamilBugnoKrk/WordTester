@@ -40,7 +40,7 @@
                     <p class="description @(ShouldBeSmaller(course.Description) ? "smaller" : "")">@course.Description</p>
                     <div class="actions">
                         <div>
-                            <span>@course.NumberOfKnownWords/@course.NumberOfWords</span>
+                            <span>#@course.NumberOfWords</span>
                         </div>
                         <button class="btn" @onclick=@(() => Learn(course.Id))>Learn</button>
                     </div>

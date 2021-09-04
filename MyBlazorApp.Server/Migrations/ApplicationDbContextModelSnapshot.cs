@@ -148,6 +148,24 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MyBlazorApp.Server.Data.AudioStats", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("NumberOfCharacters")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AudioStats");
+                });
+
             modelBuilder.Entity("MyBlazorApp.Server.Data.Language", b =>
                 {
                     b.Property<int>("Id")

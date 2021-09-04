@@ -23,6 +23,7 @@ using System;
 using FluentAssertions;
 using System.Collections.Generic;
 using MyBlazorApp.Tests.Utils;
+using System.Linq;
 
 namespace MyBlazorApp.Tests
 {
@@ -32,12 +33,15 @@ namespace MyBlazorApp.Tests
         public async void PostCourseCommandHandler_AddNewCourse_CourseAdded()
         {
             using var context = TestHelper.CreateInMemoryContext("PostCourseCommandHandler_AddNewCourse_CourseAdded");
+            context.Languages.Add(new Language { Name = "None", VoiceName = "None"});
+            context.SaveChanges();
             var handler = new PostCourseCommandHandler(new UnitOfWork(context));
             var request = new PostCourseRequestModel
             {
                 Name = "name",
                 Description = "desc",
-                UserId = Guid.NewGuid().ToString()
+                UserId = Guid.NewGuid().ToString(),
+                LanguageName = "None"
             };
 
             var response = await handler.Handle(request, CancellationToken.None);
@@ -54,7 +58,7 @@ namespace MyBlazorApp.Tests
         {
             var userGuid = Guid.NewGuid();
             using var context = TestHelper.CreateInMemoryContext("PostCourseCommandHandler_UpdateCourse_CourseUpdated");
-            AddCourseToDatabase(userGuid, context);
+            SeedDatabase(userGuid, context);
             var oldCourse = await context.Courses.FirstAsync();
             var handler = new PostCourseCommandHandler(new UnitOfWork(context));
             var request = new PostCourseRequestModel
@@ -62,22 +66,61 @@ namespace MyBlazorApp.Tests
                 CourseId = oldCourse.Id.ToString(),
                 Name = "new name",
                 Description = "new description",
+                LanguageName = "old language",
                 UserId = userGuid.ToString()
             };
 
             var response = await handler.Handle(request, CancellationToken.None);
 
-            var updatedCourse = await context.Courses.FirstAsync();
             (await context.Courses.CountAsync()).Should().Be(1);
             response.CourseId.Should().Be(oldCourse.Id);
+            var updatedCourse = await context.Courses.FirstAsync();
             updatedCourse.Name.Should().Be("new name");
             updatedCourse.Description.Should().Be("new description");
+            var word = updatedCourse.Words.First();
+            word.HasAudioGenerated.Should().BeTrue();
         }
 
-        private static void AddCourseToDatabase(Guid userGuid, ApplicationDbContext context)
+        [Fact]
+        public async void PostCourseCommandHandler_UpdateCourseAndChangeTheLanguage_CourseAndWordsUpdated()
         {
+            var userGuid = Guid.NewGuid();
+            using var context = TestHelper.CreateInMemoryContext(
+                "PostCourseCommandHandler_UpdateCourseAndChangeTheLanguage_CourseAndWordsUpdated");
+            SeedDatabase(userGuid, context);
+            var oldCourse = await context.Courses.FirstAsync();
+            var handler = new PostCourseCommandHandler(new UnitOfWork(context));
+            var request = new PostCourseRequestModel
+            {
+                CourseId = oldCourse.Id.ToString(),
+                Name = "new name",
+                Description = "new description",
+                UserId = userGuid.ToString(),
+                LanguageName = "new language"
+            };
+
+            var response = await handler.Handle(request, CancellationToken.None);
+
+            (await context.Courses.CountAsync()).Should().Be(1);
+            response.CourseId.Should().Be(oldCourse.Id);
+            var updatedCourse = await context.Courses.FirstAsync();
+            updatedCourse.Name.Should().Be("new name");
+            updatedCourse.Description.Should().Be("new description");
+            var word = updatedCourse.Words.First();
+            word.HasAudioGenerated.Should().BeFalse();
+        }
+
+        private static void SeedDatabase(Guid userGuid, ApplicationDbContext context)
+        {
+            context.Languages.Add(new Language
+            {
+                Id = 11,
+                Name = "new language",
+                VoiceName = "voice"
+            });
             context.Courses.Add(new Course
             {
+                Id = 10,
                 Name = "old name",
                 Description = "old description",
                 IsVisibleForEveryone = false,
@@ -87,6 +130,23 @@ namespace MyBlazorApp.Tests
                     {
                         UserId = userGuid
                     }
+                },
+                Language = new Language
+                {
+                    Id = 10,
+                    Name = "old language",
+                    VoiceName = "voice"
+                },
+                Words = new List<Word> { 
+                    new Word 
+                    { 
+                        CourseId = 10, 
+                        OriginalWord = "OriginalWord",
+                        TranslatedWord = "TranslatedWord",
+                        ExampleUse = "ExampleUse",
+                        Definition = "Definition",
+                        HasAudioGenerated = true
+                    } 
                 }
             });
             context.SaveChanges();

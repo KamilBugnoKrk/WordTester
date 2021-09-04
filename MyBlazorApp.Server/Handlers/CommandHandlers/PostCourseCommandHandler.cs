@@ -64,10 +64,11 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                                 UserId = new Guid(request.UserId)
                             }
                         },
+                        LanguageId = _unitOfWork.Languages.Find(l => l.Name == request.LanguageName).First().Id,
                         Words = new List<Word>
                         {
                             new Word
-                            { 
+                            {
                                 OriginalWord = "example",
                                 Pronunciation = "ɪɡˈzɑːmpl̩",
                                 TranslatedWord = "Here should be the translated word",

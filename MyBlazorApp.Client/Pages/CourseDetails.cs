@@ -35,6 +35,7 @@ namespace MyBlazorApp.Client.Pages
         private IEnumerable<WordDto> allWords;
         private string searchTerm;
         private Timer timer;
+        private IEnumerable<string> languages = new List<string>();
 
         async void ShowEditWord(WordDto word)
         {            
@@ -68,10 +69,12 @@ namespace MyBlazorApp.Client.Pages
             if (!string.IsNullOrEmpty(CourseId))
             {
                 await GetCourseDetails();
+                languages = course.LanguageOptions;
             }
             else
             {
                 course = new CourseDto();
+                languages = await languageApi.GetAllLanguages();
             }
         }
 

@@ -27,10 +27,6 @@ namespace MyBlazorApp.Server
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(loggerFactory => {
-                    loggerFactory.ClearProviders();
-                    loggerFactory.AddConsole();
-                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

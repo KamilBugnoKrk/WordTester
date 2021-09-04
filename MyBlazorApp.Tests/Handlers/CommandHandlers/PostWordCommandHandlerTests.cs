@@ -49,6 +49,8 @@ namespace MyBlazorApp.Tests
 
             response.IsSucceed.Should().BeTrue();
             (await context.Words.CountAsync()).Should().Be(4);
+            (await context.Words.FirstAsync(w => w.OriginalWord == "MyOriginalWord"))
+                .HasAudioGenerated.Should().BeFalse();
         }
 
         [Fact]
@@ -129,6 +131,7 @@ namespace MyBlazorApp.Tests
             modifiedWord.Definition.Should().Be("NewDefinition");
             modifiedWord.ExampleUse.Should().Be("NewExampleUse");
             modifiedWord.Pronunciation.Should().Be("NewPronunciation");
+            modifiedWord.HasAudioGenerated.Should().BeFalse();
         }
 
         [Fact]
@@ -170,6 +173,7 @@ namespace MyBlazorApp.Tests
                 Definition = "Definition",
                 ExampleUse = "ExampleUse",
                 Pronunciation = "Pronunciation",
+                HasAudioGenerated = true,
                 Course = new Course
                 {
                     Id = 10,

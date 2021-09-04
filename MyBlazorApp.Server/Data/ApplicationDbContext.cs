@@ -292,6 +292,6 @@ namespace MyBlazorApp.Server.Data
         public virtual DbSet<WordStats> WordStats { get; set; }
         public virtual DbSet<UsedRepetitionType> UsedRepetitionTypes { get; set; }
         public virtual DbSet<Language> Languages {get; set; }
-
+        public virtual DbSet<AudioStats> AudioStats { get; set; }
     }
 }

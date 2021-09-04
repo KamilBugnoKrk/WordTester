@@ -24,14 +24,15 @@ namespace MyBlazorApp.Server.Controllers
     public class CourseController : Controller
     {
         private readonly IMediator _mediator;
-        
+
         public CourseController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetMyCourses() {
+        public async Task<IActionResult> GetMyCourses()
+        {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var response = await _mediator.Send(new GetMyCoursesRequestModel { UserId = userId });
             return Ok(response);
@@ -48,7 +49,7 @@ namespace MyBlazorApp.Server.Controllers
                 Name = request.Name,
                 LanguageName = request.LanguageName
             };
-            
+
             var response = await _mediator.Send(requestModel);
             return response.IsSucceed ?
               Ok(response.CourseId) :
@@ -63,12 +64,12 @@ namespace MyBlazorApp.Server.Controllers
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 CourseId = courseId
             };
-            
+
             var response = await _mediator.Send(requestModel);
-            
-            return response.Course == null ? 
-                NotFound() : 
-                Ok(response);           
+
+            return response.Course == null ?
+                NotFound() :
+                Ok(response);
         }
     }
 }

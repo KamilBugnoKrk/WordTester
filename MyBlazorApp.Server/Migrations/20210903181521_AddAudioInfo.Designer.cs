@@ -10,8 +10,8 @@ using MyBlazorApp.Server.Data;
 namespace MyBlazorApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210901183425_SeedAudioData")]
-    partial class SeedAudioData
+    [Migration("20210903181521_AddAudioInfo")]
+    partial class AddAudioInfo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,6 +150,24 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MyBlazorApp.Server.Data.AudioStats", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("NumberOfCharacters")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AudioStats");
+                });
+
             modelBuilder.Entity("MyBlazorApp.Server.Data.Language", b =>
                 {
                     b.Property<int>("Id")
@@ -171,49 +189,49 @@ namespace MyBlazorApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Croatian (Croatia)",
+                            Name = "Croatian",
                             VoiceName = "hr-HR-GabrijelaNeural"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Czech (Czech)",
+                            Name = "Czech",
                             VoiceName = "cs-CZ-AntoninNeural"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Danish (Denmark)",
+                            Name = "Danish",
                             VoiceName = "da-DK-ChristelNeural"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "English (United Kingdom)",
+                            Name = "English - UK",
                             VoiceName = "en-GB-RyanNeural"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "English (United States)",
+                            Name = "English - US",
                             VoiceName = "en-US-BrandonNeural"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "German (Germany)",
+                            Name = "German",
                             VoiceName = "de-DE-ConradNeural"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Spanish (Spain)",
+                            Name = "Spanish",
                             VoiceName = "es-ES-ElviraNeural"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Italian (Italy)",
+                            Name = "Italian",
                             VoiceName = "it-IT-ElsaNeural"
                         });
                 });

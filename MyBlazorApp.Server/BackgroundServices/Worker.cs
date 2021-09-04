@@ -16,18 +16,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using MyBlazorApp.Server.Data;
 using MyBlazorApp.Server.Data.Audio;
-using MyBlazorApp.Server.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,70 +29,103 @@ namespace MyBlazorApp.Server.BackgroundServices
     public class Worker : BackgroundService
     {
         private readonly ApplicationDbContext _applicationDbContext;
-        private readonly IConfiguration _configuration;
+        private readonly string _serviceKey;
         private readonly IAudioService _audioService;
+        private const int _numberOfTriesToGenerateAudio = 5;
+        private const int _numberOfHoursInDay = 24;
+
+        //We need to verify how many characters are sent to 
+        //Azure Text-to-Speech API, because we have only
+        //0.5M of free usage, and we don't want to run over it. 
+        private const long _numberOfCharactersPerDay = 5000;
         public Worker(IServiceProvider serviceProvider, IConfiguration configuration, IAudioService audioService)
         {
             _applicationDbContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            _configuration = configuration;
+            _serviceKey = configuration.GetSection("SpeechServiceKey").Value;
             _audioService = audioService;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var config = SpeechConfig.FromSubscription(_serviceKey, "eastus");
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
-                    var words = _applicationDbContext
-                        .Words
-                        .Include(w => w.Course)
-                        .Where(w => !w.HasAudioGenerated )
-                        .Select(s => new { 
-                            WordId = s.Id, 
-                            ExampleUse = s.ExampleUse, 
-                            OriginalWord = s.OriginalWord, 
-                            LanguageName = s.Course.Language.VoiceName 
-                        });
+                    var languages = _applicationDbContext.Languages.Select(l => l).ToList();
 
-                    var serviceKey = _configuration.GetSection("SpeechServiceKey").Value;
-                    var config = SpeechConfig.FromSubscription(serviceKey, "eastus");
-                    config.SpeechSynthesisVoiceName = "en-GB-LibbyNeural";
-
-                    foreach (var word in words.ToList())
-                    {
-                        try
-                        {
-                            var texts = ExtractTextToAutio(word.WordId, word.ExampleUse, word.OriginalWord);
-
-                            foreach (var item in texts)
-                            {
-                                await GenerateAudioToTmp(config, item.Value);
-                                _audioService.UploadAudio(word.WordId, item.Key);
-
-                                var toUpdate = _applicationDbContext
-                                    .Words
-                                    .FirstOrDefault(w => w.Id == word.WordId);
-
-                                if (toUpdate != null)
-                                {
-                                    toUpdate.HasAudioGenerated = true;                                   
-                                }                                
-                            }
-                            _applicationDbContext.SaveChanges();
-                        }
-                        catch (Exception e)
-                        {
-
-                        }                       
+                    foreach (var language in languages)
+                    {  
+                        config.SpeechSynthesisVoiceName = language.VoiceName;
+                        await GenerateAudioForThisLanguage(config, language);
                     }
-                    await Task.Delay(100000, stoppingToken);
                 }
                 catch (OperationCanceledException)
                 {
                     return;
                 }
+                await Task.Delay(10000, stoppingToken);
             }
         }
+
+        private async Task GenerateAudioForThisLanguage(SpeechConfig config, Language language)
+        {
+            var words = RetrieveAllWords(language);
+            foreach (var word in words.ToList())
+            {
+                try
+                {
+                    await GenerateAudioForThisWord(config, word);
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        private async Task GenerateAudioForThisWord(SpeechConfig config, (int WordId, string ExampleUse, string OriginalWord, string VoiceName) word)
+        {
+            var texts = ExtractTextToAutio(word.WordId, word.ExampleUse, word.OriginalWord);
+
+            foreach (var text in texts)
+            {
+                var isOk = await GenerateAudioToTmp(config, text.Value);
+                if (!isOk)
+                {
+                    throw new Exception();
+                }
+                _audioService.UploadAudio(word.WordId, text.Key);
+            }
+            SaveAudioGeneratedAsTrue(word);
+        }
+
+        private void SaveAudioGeneratedAsTrue((int WordId, string ExampleUse, string OriginalWord, string VoiceName) word)
+        {
+            var toUpdate = _applicationDbContext
+                    .Words
+                    .FirstOrDefault(w => w.Id == word.WordId);
+
+            if (toUpdate != null)
+            {
+                toUpdate.HasAudioGenerated = true;
+                _applicationDbContext.SaveChanges();
+            }            
+        }
+
+        private IEnumerable<(int WordId, string ExampleUse, string OriginalWord, string VoiceName)> RetrieveAllWords(Language language) =>
+            _applicationDbContext
+                .Words
+                .Include(w => w.Course)
+                .Where(w => !w.HasAudioGenerated && w.Course.LanguageId == language.Id).ToList()
+                .Select(s => 
+                (
+                    s.Id,
+                    s.ExampleUse,
+                    s.OriginalWord,
+                    s.Course.Language.VoiceName
+                ));
+        
 
         private static Dictionary<WordType, string> ExtractTextToAutio(int wordId, string exampleUse, string originalWord)
         {
@@ -118,22 +144,64 @@ namespace MyBlazorApp.Server.BackgroundServices
             return dict;
         }
 
-        private static async Task GenerateAudioToTmp(SpeechConfig config, string toAudio)
+        private async Task<bool> GenerateAudioToTmp(SpeechConfig config, string toAudio)
         {
-            ResultReason result = ResultReason.NoMatch;
             var i = 0;
+            ResultReason result;
             do
             {
-                using var audioConfigBlankExampleUse = AudioConfig.FromWavFileOutput("./tmp.wav");
-                using var synthesizerBlankExampleUse = new SpeechSynthesizer(config, audioConfigBlankExampleUse);
-                result = (await synthesizerBlankExampleUse.SpeakTextAsync(toAudio)).Reason;
-
-                await Task.Delay(1000);
-                audioConfigBlankExampleUse.Dispose();
-                synthesizerBlankExampleUse.Dispose();
+                result = await TryToGenerateAudio(config, toAudio);
                 i++;
+            } while (result != ResultReason.SynthesizingAudioCompleted & i < _numberOfTriesToGenerateAudio);
 
-            } while (result != ResultReason.SynthesizingAudioCompleted & i < 5);
+            return result == ResultReason.SynthesizingAudioCompleted;
+        }
+
+        private async Task<ResultReason> TryToGenerateAudio(SpeechConfig config, string toAudio)
+        {
+            AudioConfig audioConfigBlankExampleUse;
+            SpeechSynthesizer synthesizerBlankExampleUse;
+            var audioStats = _applicationDbContext.AudioStats.FirstOrDefault(a => a.Date.Date == DateTime.UtcNow.Date);
+            var isNewEntry = false;
+
+            if (audioStats == null)
+            {
+                audioStats = new AudioStats();
+                isNewEntry = true;
+            }
+
+            if (audioStats.NumberOfCharacters + toAudio.Length > _numberOfCharactersPerDay)
+            {
+                await Task.Delay(TimeSpan.FromHours(_numberOfHoursInDay - DateTime.UtcNow.Hour));
+                return ResultReason.Canceled;
+            }
+
+            audioStats.Date = DateTime.UtcNow.Date;
+            audioStats.NumberOfCharacters += toAudio.Length;
+
+            AddOrUpdateAudioStats(audioStats, isNewEntry);
+
+            audioConfigBlankExampleUse = AudioConfig.FromWavFileOutput("./tmp.wav");
+            synthesizerBlankExampleUse = new SpeechSynthesizer(config, audioConfigBlankExampleUse);
+            var result = (await synthesizerBlankExampleUse.SpeakTextAsync(toAudio)).Reason;
+
+            await Task.Delay(1000);
+            audioConfigBlankExampleUse.Dispose();
+            synthesizerBlankExampleUse.Dispose();
+            return result;
+        }
+
+        private void AddOrUpdateAudioStats(AudioStats audioStats, bool isNewEntry)
+        {
+            if (isNewEntry)
+            {
+                _applicationDbContext.AudioStats.Add(audioStats);
+            }
+            else
+            {
+                _applicationDbContext.AudioStats.Update(audioStats);
+            }
+            _applicationDbContext.SaveChanges();
         }
     }
 

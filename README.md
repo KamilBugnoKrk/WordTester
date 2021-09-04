@@ -46,7 +46,7 @@ There are several tools for learning foreign words using flashcards and spaced r
 
 ## Getting Started
 
-This section contains instructions on setting up the project locally. To get a local copy up and running follow these simple example steps.
+This section contains instructions on setting up the project locally. 
 
 ### Prerequisites
 

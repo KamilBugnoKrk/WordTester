@@ -14,42 +14,43 @@
 @page "/details"
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 @inject ICourseApi courseApi
+@inject ILanguageApi languageApi
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
 <div class="course-grid-container">
     <div class="course-details">
         @if (course != null)
         {
-        <EditForm Model="course" OnValidSubmit="@OnSubmit">
-            @if (string.IsNullOrEmpty(CourseId))
-            {
-                <h4 class="font-weight-normal">Create a new course </h4>
-            }
-            else
-            {
-                <h4 class="font-weight-normal">Modify your course </h4>
-            }
+            <EditForm Model="course" OnValidSubmit="@OnSubmit">
+                @if (string.IsNullOrEmpty(CourseId))
+                {
+                    <h4 class="font-weight-normal">Create a new course </h4>
+                }
+                else
+                {
+                    <h4 class="font-weight-normal">Modify your course </h4>
+                }
 
-        <div class="course-form">
-            <DataAnnotationsValidator />
-            <MatTextField @bind-Value="course.Name" Label="Title" />
-            <ValidationMessage For="@(() => course.Name)" />
+                <div class="course-form">
+                    <DataAnnotationsValidator />
+                    <MatTextField @bind-Value="course.Name" Label="Title" />
+                    <ValidationMessage For="@(() => course.Name)" />
 
-            <MatSelect class="select" Label="Language of audio" FullWidth="true" @bind-Value="course.SelectedLanguageName">
-                <MatOptionString Value="None">No audio</MatOptionString>
-                @foreach (var language in course.LanguageOptions)
-                    {
-                    <MatOptionString Value="@language">@language</MatOptionString>
-                    }
-            </MatSelect>
-            <ValidationMessage For="@(() => course.SelectedLanguageName)" />
+                    <MatSelect class="select" Label="Language of audio" FullWidth="true" @bind-Value="course.SelectedLanguageName">
+                        <MatOptionString Value="None">No audio</MatOptionString>
+                        @foreach (var language in languages)
+                        {
+                            <MatOptionString Value="@language">@language</MatOptionString>
+                        }
+                    </MatSelect>
+                    <ValidationMessage For="@(() => course.SelectedLanguageName)" />
 
-            <MatTextField Class="course-description" @bind-Value="course.Description" Label="Description" />
-            <ValidationMessage For="@(() => course.Description)" />
+                    <MatTextField Class="course-description" @bind-Value="course.Description" Label="Description" />
+                    <ValidationMessage For="@(() => course.Description)" />
 
-            <button class="btn" type="submit">Save</button>
-        </div>
-        </EditForm>
+                    <button class="btn" type="submit">Save</button>
+                </div>
+            </EditForm>
         }
     </div>
     <div class="course-main">
@@ -57,11 +58,10 @@
         {
             <div class="panel">
                 <h4 class="font-weight-normal">Your words</h4>
-                <MatTextField
-                    @bind-Value="searchTerm" 
-                    Label="Search"
-                    OnKeyUp="@HandleKeyUp" 
-                    OnInput="@OnInputHandler"/>
+                <MatTextField @bind-Value="searchTerm"
+                              Label="Search"
+                              OnKeyUp="@HandleKeyUp"
+                              OnInput="@OnInputHandler" />
             </div>
             <div class="course-words">
                 <div class="course-word" @onclick="@(() => ShowEditWord(null))"><i class="fas fa-plus"></i> Add</div>
