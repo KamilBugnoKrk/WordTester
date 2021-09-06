@@ -93,7 +93,6 @@
 
     private async Task RetrieveData()
     {
-        randomNumber = random.Next(3);
         if (int.TryParse(CourseId, out int courseIdNumber))
         {
             learningModel = await learningApi.GetLearningData(courseIdNumber);
@@ -102,8 +101,7 @@
         userResponse = string.Empty;
         correctWord = null;
         numberOfRepetition++;
-        StateHasChanged();
-
+        randomNumber = random.Next(3);
     }
 
     private async Task SendResponse(string response)

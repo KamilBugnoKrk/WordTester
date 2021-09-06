@@ -8,6 +8,11 @@
   .open-container #audio {
     visibility: hidden;
     height: 0px; }
+  .open-container i {
+    font-size: 25px;
+    color: black;
+    margin-left: 10px;
+    cursor: pointer; }
   .open-container h2 {
     margin: 0 10px 0 10px; }
   .open-container .small {

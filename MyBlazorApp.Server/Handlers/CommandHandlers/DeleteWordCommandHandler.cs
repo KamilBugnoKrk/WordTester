@@ -11,10 +11,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using MediatR;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MyBlazorApp.Server.Data;
-using MyBlazorApp.Server.Models;
-using MyBlazorApp.Shared;
+using MyBlazorApp.Server.Data.Audio;
 using MyBlazorApp.Shared.RequestModels;
 using MyBlazorApp.Shared.ResponseModels;
 using System.Linq;
@@ -26,10 +24,12 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
     public class DeleteWordCommandHandler : IRequestHandler<DeleteWordRequestModel, DeleteWordResponseModel>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAudioService _audioService;
 
-        public DeleteWordCommandHandler(IUnitOfWork unitOfWork)
+        public DeleteWordCommandHandler(IUnitOfWork unitOfWork, IAudioService audioService)
         {
             _unitOfWork = unitOfWork;
+            _audioService = audioService;
         }
         public async Task<DeleteWordResponseModel> Handle(DeleteWordRequestModel request, CancellationToken cancellationToken)
         {
@@ -41,6 +41,10 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 };
 
             var word = _unitOfWork.Words.Find(w => w.Id.ToString() == request.WordId).First();
+            if (word.HasAudioGenerated)
+            {
+                _audioService.DeleteAudio(word.Id);
+            }
             _unitOfWork.Words.Remove(word);
             _unitOfWork.Complete();
 

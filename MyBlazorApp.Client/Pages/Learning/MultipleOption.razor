@@ -14,7 +14,15 @@
 @inject HotKeys HotKeys
 
 <div class="multiple-option-container">
-    <h2 class="@GetStyle(Question)">@Question</h2>
+    <div @onclick="Rerender">
+        <h2 class="@GetStyle(Question)">
+            @Question
+            @if (!string.IsNullOrEmpty(Audio))
+            {
+                <i class="far fa-play-circle"></i>
+            }
+        </h2>
+    </div>
     <audio id="audio" src="data:audio/wav;base64,@Audio" controls autoplay>
         <source id="source" src="data:audio/wav;base64,@Audio" type="audio/wav" />
     </audio>
@@ -75,9 +83,13 @@
         return string.Empty;
     }
 
+    private void Rerender()
+    {
+        Audio = Audio + " ";
+    }
+
     private async Task SendResponse(int i)
     {
-        StateHasChanged();
         await OnClick.InvokeAsync(Responses[i]);
     }
 

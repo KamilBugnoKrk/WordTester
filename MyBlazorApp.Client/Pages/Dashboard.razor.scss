@@ -190,16 +190,16 @@
     .main {
         .course-tile {
             width: 90vw;
-            height: 250px;
+            height: 290px;
             margin: 10px;
         }
 
         .course-tile-content {
-            grid-template-rows: 30px 35px 120px 50px;
+            grid-template-rows: 30px 55px 140px 50px;
         }
 
         .add-new {
-            grid-template-rows: 170px 50px;
+            grid-template-rows: 210px 50px;
         }
     }
 }

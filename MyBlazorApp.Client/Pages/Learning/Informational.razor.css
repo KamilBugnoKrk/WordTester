@@ -7,6 +7,12 @@
   .informational-container #audio {
     visibility: hidden;
     height: 0px; }
+  .informational-container i {
+    font-size: 25px;
+    color: black;
+    margin-left: 10px;
+    margin-top: 15px;
+    cursor: pointer; }
   .informational-container h2 {
     color: #4D3AFF; }
   .informational-container h4, .informational-container h2 {

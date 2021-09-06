@@ -11,7 +11,15 @@
     along with this program.  If not, see https://www.gnu.org/licenses/.*@
 
 <div class="informational-container">
-    <h2>@WordDto.OriginalWord</h2>
+    <div @onclick="Rerender" style="display: flex;">
+        <h2>
+            @WordDto.OriginalWord
+        </h2>
+        @if (!string.IsNullOrEmpty(Audio))
+        {
+            <i class="far fa-play-circle"></i>
+        }
+    </div>
     @if (!string.IsNullOrEmpty(WordDto.Pronunciation))
     {
         <p>[@WordDto.Pronunciation]</p>
@@ -23,6 +31,7 @@
     <audio id="audio" src="data:audio/wav;base64,@Audio" controls autoplay>
         <source id="source" src="data:audio/wav;base64,@Audio" type="audio/wav" />
     </audio>
+
     <h4>@WordDto.TranslatedWord</h4>
     <p>Translated word</p>
     <h4>@WordDto.Definition</h4>
@@ -48,21 +57,25 @@
 </div>
 
 @code {
-    [Parameter]
-    public string Audio { get; set; }
-    [Parameter]
-    public WordDto WordDto { get; set; }
-    [Parameter]
-    public EventCallback<string> OnClick { get; set; }
-    [Parameter]
-    public string IncorrectResponse { get; set; }
+        [Parameter]
+        public string Audio { get; set; }
+        [Parameter]
+        public WordDto WordDto { get; set; }
+        [Parameter]
+        public EventCallback<string> OnClick { get; set; }
+        [Parameter]
+        public string IncorrectResponse { get; set; }
 
     private string writtenWord = string.Empty;
+    private bool shouldRender = true;
 
+    private void Rerender()
+    {
+        Audio = Audio + " ";
+    }
 
     private async Task SendResponse()
     {
-        StateHasChanged();
         await OnClick.InvokeAsync(writtenWord);
         writtenWord = string.Empty;
         Audio = string.Empty;

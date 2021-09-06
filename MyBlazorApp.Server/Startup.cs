@@ -148,6 +148,14 @@ namespace MyBlazorApp.Server
                 }
             });
 
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                context.Response.Headers.Add("server","none");
+                await next();
+            });
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

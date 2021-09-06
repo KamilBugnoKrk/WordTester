@@ -8,6 +8,11 @@
   .multiple-option-container #audio {
     visibility: hidden;
     height: 0px; }
+  .multiple-option-container i {
+    font-size: 25px;
+    color: black;
+    margin-left: 10px;
+    cursor: pointer; }
   .multiple-option-container h2 {
     margin: 0 10px 0 10px; }
   .multiple-option-container .small {

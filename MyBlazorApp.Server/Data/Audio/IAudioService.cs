@@ -16,5 +16,6 @@ namespace MyBlazorApp.Server.Data.Audio
     {
         string RetrieveAudio(int wordId, WordType wordType);
         void UploadAudio(int wordId, WordType wordType);
+        void DeleteAudio(int wordId);
     }
 }

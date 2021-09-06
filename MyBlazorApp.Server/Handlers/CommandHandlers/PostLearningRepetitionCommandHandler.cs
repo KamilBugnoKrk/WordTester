@@ -184,7 +184,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     request.RepetitionType == RepetitionType.FromTranslatedToOriginalClose ||
                     request.RepetitionType == RepetitionType.FromTranslatedToOriginalOpen ||
                     request.RepetitionType == RepetitionType.FromExampleToOriginalClose
-                    ) && request.UserResponse.ToLower() == originalWord.ToLower();
+                    ) && request.UserResponse.ToLower().Trim() == originalWord.ToLower().Trim();
         }
 
         private static bool IsTranslatedWordCorrect(PostLearningRepetitionRequestModel request, string translatedWord)
@@ -193,14 +193,14 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     request.RepetitionType == RepetitionType.FromExampleToTranslatedOpen ||
                     request.RepetitionType == RepetitionType.FromOriginalToTranslatedClose ||
                     request.RepetitionType == RepetitionType.FromOriginalToTranslatedOpen
-                    ) && request.UserResponse.ToLower() == translatedWord.ToLower();
+                    ) && request.UserResponse.ToLower().Trim() == translatedWord.ToLower().Trim();
         }
 
         private static bool IsDefinitionCorrect(PostLearningRepetitionRequestModel request, string definition)
         {
             return (request.RepetitionType == RepetitionType.FromOriginalToDefinitionClose ||
                     request.RepetitionType == RepetitionType.FromExampleToDefinitionClose 
-                    ) && request.UserResponse.ToLower() == definition.ToLower();
+                    ) && request.UserResponse.ToLower().Trim() == definition.ToLower().Trim();
         }
     }
 }

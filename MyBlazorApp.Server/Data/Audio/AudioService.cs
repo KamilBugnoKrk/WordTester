@@ -49,5 +49,24 @@ namespace MyBlazorApp.Server.Data.Audio
 
             client.Dispose();
         }
+
+        public void DeleteAudio(int wordId)
+        {
+            RemoveFromFTP(wordId, WordType.FullExampleUse);
+            RemoveFromFTP(wordId, WordType.OriginalWord);
+            RemoveFromFTP(wordId, WordType.BlankExampleUse);
+        }
+
+        private void RemoveFromFTP(int wordId, WordType wordType)
+        {
+            FtpWebRequest request = (FtpWebRequest)WebRequest
+                            .Create($"{_configuration.GetSection("FTPURL").Value}{wordId}-{wordType}.wav");
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+            request.Credentials = new NetworkCredential(
+                _configuration.GetSection("FTPName").Value, 
+                _configuration.GetSection("FTPPassword").Value);
+
+            using FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+        }
     }
 }
