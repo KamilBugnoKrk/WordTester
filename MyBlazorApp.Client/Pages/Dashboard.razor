@@ -17,11 +17,18 @@
 <div class="grid-container">
     <div class="details">
         <div class="info">
-            <h2>Hi @userName!</h2>
-            <h5>We have stats for you:</h5>
             @if (!isLoading)
             {
-                <Stats Courses="@courses"/>
+                <h2>Hi @userName!</h2>
+                <h5>We have stats for you:</h5>
+                <Stats Courses="@courses" />
+            }
+            else
+            {
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="200px" Height="50px" />
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="70%" Height="30px" />
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="80%" Height="150px" />
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="80%" Height="150px" />
             }
         </div>
     </div>
@@ -53,9 +60,12 @@
         }
         else
         {
-            <div class="course-tile add-new" )>
-                <p>Loading...</p>
-            </div>
+        <div class="course-tile course-tile-content">
+            <h2><MudSkeleton Class="skeleton" /></h2>
+            <p class="description">
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="90%" Height="60px" />
+            </p>
+        </div>
         }
     </div>
 </div>

@@ -84,6 +84,7 @@ It would not be possible to start developing this project without the great free
 * [BlazorWithIdentity](https://github.com/stavroskasidis/BlazorWithIdentity) - project template
 * [bUnit](https://github.com/egil/bunit) - testing library
 * [MatBlazor](https://github.com/SamProf/MatBlazor) - material design components
+* [MudBlazor](https://github.com/Garderoben/MudBlazor) - component library based on Material design
 * [Blazored Modal](https://github.com/Blazored/Modal) - modal implementation 
 * [Toolbelt.Blazor.HotKeys](https://github.com/jsakamoto/Toolbelt.Blazor.HotKeys) - keyboard shortcuts
 * [Blazor-UseGoogleReCAPTCHA](https://github.com/sample-by-jsakamoto/Blazor-UseGoogleReCAPTCHA) - example usage of reCaptcha
