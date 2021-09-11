@@ -10,18 +10,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using MyBlazorApp.Server.Models;
-using System;
+using System.Collections.Generic;
 
-namespace MyBlazorApp.Server.Data
+namespace MyBlazorApp.Shared.ResponseModels
 {
-    public interface IUnitOfWork : IDisposable
+    public class GetCourseUserStatsResponseModel
     {
-        ICourseRepository Courses { get; }
-        IWordRepository Words { get; }
-        ILearningRepetitionRepository WordStats { get; }
-        IRepository<Language> Languages { get; }
-        IRepository<UserCourseStats> UserCourseStats { get; }
-        int Complete();
+        public Dictionary<int, StatsForThisCourse> StatsForCourses { get; set; }
+        public string Error { get; set; }
+    }
+
+
+    public record StatsForThisCourse
+    {
+        public Dictionary<string, int> MonthStats { get; set; }
+        public string Name { get; set; }
+        public string VoiceName { get; set; }
     }
 }

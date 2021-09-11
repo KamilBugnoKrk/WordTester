@@ -10,13 +10,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using AutoMapper;
 using MediatR;
 using MyBlazorApp.Server.Data;
-using MyBlazorApp.Shared;
 using MyBlazorApp.Shared.RequestModels;
 using MyBlazorApp.Shared.ResponseModels;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,11 +22,9 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 {
     public class GetAllLanguagesQueryHandler : IRequestHandler<GetAllLanguagesRequestModel, GetAllLanguagesResponseModel>
     {
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public GetAllLanguagesQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+        public GetAllLanguagesQueryHandler(IUnitOfWork unitOfWork)
         {           
-            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
         public Task<GetAllLanguagesResponseModel> Handle(GetAllLanguagesRequestModel request, CancellationToken cancellationToken)

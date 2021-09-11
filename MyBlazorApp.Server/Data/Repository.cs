@@ -33,6 +33,11 @@ namespace MyBlazorApp.Server.Data
             return _entities.Add(entity);
         }
 
+        public EntityEntry<T> Update(T entity)
+        {
+            return _entities.Update(entity);
+        }
+
         public EntityEntry<T> Remove(T entity)
         {
             return _entities.Remove(entity);

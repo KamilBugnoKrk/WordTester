@@ -15,13 +15,15 @@ using System;
 
 namespace MyBlazorApp.Server.Data
 {
-    public interface IUnitOfWork : IDisposable
+    public class UserCourseStats
     {
-        ICourseRepository Courses { get; }
-        IWordRepository Words { get; }
-        ILearningRepetitionRepository WordStats { get; }
-        IRepository<Language> Languages { get; }
-        IRepository<UserCourseStats> UserCourseStats { get; }
-        int Complete();
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public Guid UserId { get; set; }
+        public ApplicationUser User { get; set; }
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
+        public long NumberOfCorrectResponses { get; set; }
+        public long NumberOfIncorrectResponses { get; set; }
     }
 }

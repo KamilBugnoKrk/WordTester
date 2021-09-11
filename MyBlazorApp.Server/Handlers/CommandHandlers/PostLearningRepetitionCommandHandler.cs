@@ -57,8 +57,8 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             stats.UsedRepetitionTypes = UpdateRepetitionTypes(request.RepetitionType, stats.UsedRepetitionTypes);
 
             return IsCorrectAnswer(request, word) ?
-                HandleCorrectAnswer(stats) :
-                HandleIncorrectAnswer(word, stats);
+                HandleCorrectAnswer(stats, Guid.Parse(request.UserId)) :
+                HandleIncorrectAnswer(word, stats, Guid.Parse(request.UserId));
         }
 
         private (Word word, WordStats stats) GetLearningData(PostLearningRepetitionRequestModel request)
@@ -70,12 +70,30 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             return (word, stats);
         }
 
-        private Task<PostLearningRepetitionResponseModel> HandleIncorrectAnswer(Word word, WordStats stats)
+        private Task<PostLearningRepetitionResponseModel> HandleIncorrectAnswer(Word word, WordStats stats, Guid userId)
         {
             stats.RevisionFactor = 0;
             stats.NextRevisionTicks = _thirtySecondsInTicks;
             stats.NextRevisionTime = DateTime.Now.AddTicks(stats.NextRevisionTicks);
-            stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0); 
+            stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0);
+            var userCourseStats = RetrieveUserCourseStats(stats, userId);
+            if (userCourseStats == null)
+            {
+                _unitOfWork.UserCourseStats
+                    .Add(new UserCourseStats
+                    {
+                        Date = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0),
+                        CourseId = word.CourseId,
+                        UserId = userId,
+                        NumberOfIncorrectResponses = 1
+                    });
+            }
+            else
+            {
+                userCourseStats.NumberOfIncorrectResponses += 1;
+                _unitOfWork.UserCourseStats
+                    .Update(userCourseStats);
+            }
             _unitOfWork.Complete();
 
             string audio = string.Empty;
@@ -95,18 +113,47 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     OriginalWord = word.OriginalWord,
                     TranslatedWord = word.TranslatedWord,
                     ExampleUse = Helper.ApplyStyleToText(word.ExampleUse),
-                    Pronunciation = word.Pronunciation                    
+                    Pronunciation = word.Pronunciation
                 },
                 Audio = audio
             });
         }
 
-        private Task<PostLearningRepetitionResponseModel> HandleCorrectAnswer(WordStats stats)
+        private UserCourseStats RetrieveUserCourseStats(WordStats stats, Guid userId)
+        { 
+            var today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
+            return _unitOfWork.UserCourseStats
+                .Find(ucs =>
+                    ucs.CourseId == stats.Word.CourseId &&
+                    ucs.UserId == userId &&
+                    ucs.Date == today)
+                .FirstOrDefault();
+        }
+
+        private Task<PostLearningRepetitionResponseModel> HandleCorrectAnswer(WordStats stats, Guid userId)
         {
             stats.RevisionFactor += 1;
             stats.NextRevisionTicks *= 2;
             stats.NextRevisionTime = DateTime.Now.AddTicks(stats.NextRevisionTicks);
             stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0);
+            var userCourseStats = RetrieveUserCourseStats(stats, userId);
+            if (userCourseStats == null)
+            {
+                _unitOfWork.UserCourseStats
+                    .Add(new UserCourseStats
+                    {
+                        Date = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0),
+                        CourseId = stats.Word.CourseId,
+                        UserId = userId,
+                        NumberOfCorrectResponses = 1
+                    });
+            }
+            else
+            {
+                userCourseStats.NumberOfCorrectResponses += 1;
+                _unitOfWork.UserCourseStats
+                    .Update(userCourseStats);
+            }
             _unitOfWork.Complete();
 
             return Task.FromResult(new PostLearningRepetitionResponseModel

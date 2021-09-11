@@ -25,6 +25,7 @@ namespace MyBlazorApp.Server.Data
             Words = new WordRepository(_context);
             WordStats = new LearningRepetitionRepository(_context);
             Languages = new Repository<Language>(_context);
+            UserCourseStats = new Repository<UserCourseStats>(_context);
         }
 
         public ICourseRepository Courses { get; }
@@ -32,6 +33,7 @@ namespace MyBlazorApp.Server.Data
         public IWordRepository Words { get; }
         public ILearningRepetitionRepository WordStats { get; }
         public IRepository<Language> Languages { get; set; }
+        public IRepository<UserCourseStats> UserCourseStats { get; set; }
 
         public int Complete()
         {
