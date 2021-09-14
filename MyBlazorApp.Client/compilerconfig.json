@@ -90,5 +90,9 @@
   {
     "outputFile": "Pages/Stats.razor.css",
     "inputFile": "Pages/Stats.razor.scss"
+  },
+  {
+    "outputFile": "Pages/MoreStats.razor.css",
+    "inputFile": "Pages/MoreStats.razor.scss"
   }
 ]

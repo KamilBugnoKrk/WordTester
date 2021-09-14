@@ -10,22 +10,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using MyBlazorApp.Client.Services.Contracts;
+using System.Threading.Tasks;
+using MyBlazorApp.Shared.ResponseModels;
+using Flurl.Http;
 
-namespace MyBlazorApp.Shared.ResponseModels
+namespace MyBlazorApp.Client.Services.Implementations
 {
-    public class GetCourseUserStatsResponseModel
+    public class CourseUserStatsApi : ICourseUserStatsApi
     {
-        public Dictionary<string, StatsForThisCourse> StatsForCourses { get; set; }
-    }
+        private string url;
 
-    public record StatsForThisCourse
-    {
-        public Dictionary<string, int> MonthStats { get; set; }
-        public string FirstRepetitionDate { get; set; }
-        public int AllRepetitions { get; set; }
-        public (long NumberOfCorrectResponses, long NumberOfIncorrectResponses) LastThreeDays { get; set; }
-        public Dictionary<int, int> RepetitionStats { get; set; }
-        public int NewWords { get; set; }
+        public CourseUserStatsApi (UrlHelper urlHelper)
+        {
+            url = urlHelper.BaseUrl;
+        }
+
+        public async Task<GetCourseUserStatsResponseModel> GetCourseUserStats() =>
+            await $"{url}api/CourseUserStats/GetMyStats"
+                .GetJsonAsync<GetCourseUserStatsResponseModel>();
     }
 }

@@ -1,0 +1,215 @@
+﻿@* Copyright (C) 2021  Kamil Bugno
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.*@
+
+@page "/stats"
+@inject ICourseUserStatsApi courseUserStatsApi
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@using ChartJs.Blazor.LineChart
+<div class="grid-container">
+    <div class="details"> <img src="/assets/stats.svg" /></div>
+    <div class="main">
+        @if (stats != null)
+        {
+            @if (_configCharts.Count == 0)
+            {
+                <div>
+                    <p>It seems that you haven't learnt anything yet.</p>
+                    <button class="btn" @onclick=@(() => GoToDashboard())>Return to dashboard</button>
+                </div>
+            }
+            foreach (var chart in _configCharts)
+            {
+                <div>
+                    <h3>Course "@chart.Key"</h3>
+                    @if (stats.StatsForCourses[chart.Key] == null)
+                    {
+                        <p>No data.</p>
+                    }
+                    else
+                    {
+                        <p>
+                            You started learning from this course on <span>@stats.StatsForCourses[chart.Key].FirstRepetitionDate</span>
+                            and you have done <span>@stats.StatsForCourses[chart.Key].AllRepetitions</span> repetitions since then.
+                        </p>
+                        <p>
+                            You did
+                            <span>
+                                @(stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfCorrectResponses +
+                                                stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfIncorrectResponses)
+                            </span>
+                            repetitions in the last three days (correct responses: @stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfCorrectResponses, incorrect responses:
+                            @stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfIncorrectResponses).
+                        </p>
+                        <div class="charts">
+                            <div class="chart"><Chart Config="chart.Value[0]"></Chart></div>
+                            <div class="chart"><Chart Config="chart.Value[1]"></Chart></div>
+                        </div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div>
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="90%" Height="50px" />
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="90%" Height="80px" />
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="90%" Height="80px" />
+                <MudSkeleton Class="skeleton" SkeletonType="SkeletonType.Rectangle" Width="80%" Height="150px" />
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    private GetCourseUserStatsResponseModel stats = null;
+    private IDictionary<string, List<LineConfig>> _configCharts = new Dictionary<string, List<LineConfig>>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        stats = await courseUserStatsApi.GetCourseUserStats();
+
+        foreach (var courseStats in stats.StatsForCourses)
+        {
+            if (courseStats.Value == null) continue;
+
+            var firstConfig = PrepareFirstChart(courseStats);
+            var secondConfig = PrepareSecondChart(courseStats);
+            _configCharts.Add(courseStats.Key, new List<LineConfig> { firstConfig, secondConfig });
+        }
+    }
+
+    LineConfig PrepareFirstChart(KeyValuePair<string, StatsForThisCourse> courseStats)
+    {
+        var config = CreateConfig();
+        var datasetForFirstChart = new LineDataset<int>(courseStats.Value.MonthStats.Values.Reverse())
+        {
+            Label = "Number of repeated words",
+            BackgroundColor = "#4D3AFF",
+            Fill = FillingMode.Start
+        };
+
+        foreach (var month in courseStats.Value.MonthStats.Keys.Reverse())
+        {
+            config.Data.Labels.Add(month);
+        }
+        config.Data.Datasets.Add(datasetForFirstChart);
+        return config;
+    }
+
+    LineConfig PrepareSecondChart(KeyValuePair<string, StatsForThisCourse> courseStats)
+    {
+        var config = CreateConfig();
+
+        var datasetForSecondChart = new LineDataset<int>(DetermineStatsForSecondChart(courseStats.Value))
+        {
+            Label = "Number of words",
+            BackgroundColor = "#4D3AFF",
+            Fill = FillingMode.Start
+        };
+
+        config.Data.Labels.Add("new");
+        config.Data.Labels.Add("repeated 1-5 times");
+        config.Data.Labels.Add("repeated 6-10 times");
+        config.Data.Labels.Add("repeated 11-15 times");
+        config.Data.Labels.Add("repeated 16+ times");
+        config.Data.Datasets.Add(datasetForSecondChart);
+
+        return config;
+    }
+
+    void GoToDashboard()
+    {
+        navigationManager.NavigateTo("/");
+    }
+
+    IEnumerable<int> DetermineStatsForSecondChart(StatsForThisCourse statsForThisCourse)
+    {
+        var statsToShow = new List<int> { 0, 0, 0, 0, 0 };
+        statsToShow[0] = statsForThisCourse.NewWords;
+        foreach (var stat in statsForThisCourse.RepetitionStats)
+        {
+            if (stat.Key > 0 && stat.Key <= 5)
+            {
+                statsToShow[1] += stat.Value;
+            }
+            if (stat.Key > 5 && stat.Key <= 10)
+            {
+                statsToShow[2] += stat.Value;
+            }
+            if (stat.Key > 10 && stat.Key <= 15)
+            {
+                statsToShow[3] += stat.Value;
+            }
+            if (stat.Key > 15)
+            {
+                statsToShow[4] += stat.Value;
+            }
+        }
+        return statsToShow;
+    }
+
+    LineConfig CreateConfig()
+    {
+        return new LineConfig
+        {
+            Options = new LineOptions
+            {
+                Responsive = true,
+                Title = new OptionsTitle
+                {
+                    Display = false,
+                },
+                Tooltips = new Tooltips
+                {
+                    Mode = InteractionMode.Nearest,
+                    Intersect = true
+                },
+                Hover = new Hover
+                {
+                    Mode = InteractionMode.Nearest,
+                    Intersect = true
+                },
+                Scales = new Scales
+                {
+                    XAxes = new List<CartesianAxis>
+                    {
+                        new CategoryAxis
+                        {
+                            ScaleLabel = new ScaleLabel
+                            {
+                                LabelString = "Value"
+                            }
+                        }
+                    },
+                    YAxes = new List<CartesianAxis>
+                    {
+                        new LinearCartesianAxis
+                        {
+                            ScaleLabel = new ScaleLabel
+                            {
+                                LabelString = "Value"
+                            },
+                            Ticks = new LinearCartesianTicks()
+                            {
+                                BeginAtZero = true,
+                                StepSize = 1,
+                                MaxTicksLimit = 5
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+}

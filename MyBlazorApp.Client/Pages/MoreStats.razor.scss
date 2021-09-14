@@ -1,0 +1,114 @@
+// Copyright (C) 2021  Kamil Bugno
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+@import "../Variables.scss";
+
+p {
+    span {
+        color: $blue;
+    }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    background-color: white;
+    top: 56px;
+    min-height: calc(100vh - 101px);
+    padding: 0 100px 0 0;
+}
+
+.details {
+    grid-row: 1;
+    grid-column: 1;
+    margin: 20px 10px 20px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    img {
+        max-width: 90%;
+    }
+}
+
+.main {
+    grid-row: 1;
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    > div {
+        padding: 10px 10px 10px 20px;
+        width: 100%;
+        margin-top: 10px;
+        background: #F2F2F2;
+        margin: 10px;
+        border-radius: 25px;
+
+        .charts {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            .chart {
+                max-width: 350px;
+                margin: 0 10px;
+                min-width: auto;
+            }
+        }
+    }
+}
+
+@media (max-width: 1170px) {
+    .details {
+        grid-row: 2;
+        grid-column: 1;
+        margin: 20px 10px 20px 10px;
+
+        img {
+            max-width: 350px;
+        }
+    }
+
+    .main {
+        grid-row: 1;
+        grid-column: 1;
+        justify-content: center;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-template-columns: auto;
+        padding: 0;
+    }
+}
+
+@media (max-width: 570px) {
+    .details {
+       display: none;
+    }
+
+    .main {
+        > div {
+           .charts {
+                .chart {
+                    max-width: 350px;
+                    margin: 10px 0;
+                    min-width: auto;
+                }
+            }
+        }
+    }
+}

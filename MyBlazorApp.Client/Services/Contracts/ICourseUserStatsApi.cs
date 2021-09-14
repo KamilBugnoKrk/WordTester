@@ -10,22 +10,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using MyBlazorApp.Shared.ResponseModels;
+using System.Threading.Tasks;
 
-namespace MyBlazorApp.Shared.ResponseModels
+namespace MyBlazorApp.Client.Services.Contracts
 {
-    public class GetCourseUserStatsResponseModel
+    public interface ICourseUserStatsApi
     {
-        public Dictionary<string, StatsForThisCourse> StatsForCourses { get; set; }
-    }
-
-    public record StatsForThisCourse
-    {
-        public Dictionary<string, int> MonthStats { get; set; }
-        public string FirstRepetitionDate { get; set; }
-        public int AllRepetitions { get; set; }
-        public (long NumberOfCorrectResponses, long NumberOfIncorrectResponses) LastThreeDays { get; set; }
-        public Dictionary<int, int> RepetitionStats { get; set; }
-        public int NewWords { get; set; }
+        Task<GetCourseUserStatsResponseModel> GetCourseUserStats();
     }
 }

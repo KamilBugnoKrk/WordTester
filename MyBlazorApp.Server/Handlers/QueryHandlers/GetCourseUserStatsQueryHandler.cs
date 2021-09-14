@@ -17,6 +17,7 @@ using MyBlazorApp.Shared.RequestModels;
 using MyBlazorApp.Shared.ResponseModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         }
         public Task<GetCourseUserStatsResponseModel> Handle(GetCourseUserStatsRequestModel request, CancellationToken cancellationToken)
         {
-            Dictionary<int, StatsForThisCourse> statsForCourses = RetrieveStatsForAllUserCourses(request);
+            Dictionary<string, StatsForThisCourse> statsForCourses = RetrieveStatsForAllUserCourses(request);
 
             return Task.FromResult(new GetCourseUserStatsResponseModel
             {
@@ -40,17 +41,55 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             });
         }
 
-        private Dictionary<int, StatsForThisCourse> RetrieveStatsForAllUserCourses(GetCourseUserStatsRequestModel request)
+        private Dictionary<string, StatsForThisCourse> RetrieveStatsForAllUserCourses(GetCourseUserStatsRequestModel request)
         {
-            var courseIds = _unitOfWork.Courses.GetMyCoursesWithWords(request.UserId.ToString()).Select(c => c.Id).ToList();
-            var data = new Dictionary<int, StatsForThisCourse>();
-            foreach (var courseId in courseIds)
+            var courseInfos = _unitOfWork.Courses.GetMyCoursesWithWords(request.UserId.ToString()).Select(c => new { c.Name, c.Id }).ToList();
+            var data = new Dictionary<string, StatsForThisCourse>();
+            CultureInfo cultureInfo = new("en-US");
+            foreach (var course in courseInfos)
             {
                 var stats = _unitOfWork.UserCourseStats
-                    .Find(ucs => ucs.UserId == request.UserId && ucs.CourseId == courseId);
+                    .Find(ucs => ucs.UserId == request.UserId && ucs.CourseId == course.Id);
+                if(!stats.Any())
+                {
+                    data.Add(course.Name, null);
+                    continue;
+                }
                 var monthStats = GetMonthStats(stats);
+                var firstRepetitionDate = stats.Min(s => s.Date).ToString("dddd, dd MMMM yyyy", cultureInfo);
+                var allRepetitions = stats.Sum(s => s.NumberOfCorrectResponses + s.NumberOfIncorrectResponses);
+                var threeDaysIncorrectResponses = stats.Where(s => s.Date >= DateTime.UtcNow.AddDays(-3)).Sum(s => s.NumberOfIncorrectResponses);
+                var threeDaysCorrectResponses = stats.Where(s => s.Date >= DateTime.UtcNow.AddDays(-3)).Sum(s => s.NumberOfCorrectResponses);
 
-                data.Add(courseId, new StatsForThisCourse { MonthStats = monthStats });
+                var repetitionStats = _unitOfWork.Words.Find(w => w.CourseId == course.Id)
+                    .SelectMany(w => w.WordStats)
+                    .Where(ws => ws.UserId == request.UserId)
+                    .GroupBy(ws => ws.RevisionFactor).Select(group => new
+                    {
+                        a = (int)group.Key,
+                        b = group.Count()
+                    }).ToDictionary(o => o.a, o => o.b);
+
+                var allWords = _unitOfWork
+                    .Words
+                    .Find(w => w.CourseId == course.Id)
+                    .Count();
+
+                var repeatedWords = _unitOfWork
+                    .Words
+                    .Find(w => w.CourseId == course.Id)
+                    .Where(w => w.WordStats.Any(ws => ws.UserId == request.UserId))
+                    .Count();
+
+                data.Add(course.Name, new StatsForThisCourse 
+                { 
+                    MonthStats = monthStats, 
+                    FirstRepetitionDate = firstRepetitionDate, 
+                    AllRepetitions = (int)allRepetitions, 
+                    LastThreeDays = (threeDaysCorrectResponses, threeDaysIncorrectResponses),
+                    RepetitionStats = repetitionStats,
+                    NewWords = allWords - repeatedWords
+                });
             }
 
             return data;
