@@ -23,6 +23,7 @@ $assemblyVer = $version.assemblyVersion
 $branch = git branch --show-current
 Write-Host "branch is $branch"
 
+dotnet tool install dotnet-sonarscanner --version 5.3.1
 dotnet tool run dotnet-sonarscanner begin /k:"KamilBugnoKrk_WordTester" /v:"$assemblyVer" /o:"kamilbugnokrk" /d:sonar.login="$sonarSecret" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.coverage.exclusions="**Test*.cs" /d:sonar.branch.name="$branch"
 
 dotnet restore
