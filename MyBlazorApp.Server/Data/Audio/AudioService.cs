@@ -33,7 +33,6 @@ namespace MyBlazorApp.Server.Data.Audio
                _configuration.GetSection("FTPPassword").Value);
             var bytes = client.DownloadData($"{_configuration.GetSection("FTPURL").Value}{wordId}-{wordType}.wav");
             string base64String = Convert.ToBase64String(bytes);
-            client.Dispose(); 
             
             return base64String;
         }
@@ -46,8 +45,6 @@ namespace MyBlazorApp.Server.Data.Audio
                 _configuration.GetSection("FTPPassword").Value);
             client.UploadFile($"{_configuration.GetSection("FTPURL").Value}{wordId}-{wordType}.wav",
                 WebRequestMethods.Ftp.UploadFile, "./tmp.wav");
-
-            client.Dispose();
         }
 
         public void DeleteAudio(int wordId)

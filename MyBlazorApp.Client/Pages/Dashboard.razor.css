@@ -94,7 +94,8 @@
 @media (max-width: 1170px) {
   .details {
     grid-row: 2;
-    grid-column: 1; }
+    grid-column: 1;
+    margin: 20px 10px 20px 10px; }
     .details .info {
       display: flex;
       flex-direction: column;
@@ -111,9 +112,7 @@
     display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: auto;
-    padding: 0; }
-  .details {
-    margin: 20px 10px 20px 10px; } }
+    padding: 0; } }
 
 @media (max-width: 450px) {
   .main .course-tile {

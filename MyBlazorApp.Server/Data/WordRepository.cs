@@ -35,8 +35,7 @@ namespace MyBlazorApp.Server.Data
                 .Include(w => w.Course.UserCourses)
                 .FirstOrDefault(w => !w.Course.IsVisibleForEveryone &&
                         w.Course.UserCourses
-                            .Where(uc => uc.UserId.ToString() == userId)
-                            .Any() &&
+                            .Any(uc => uc.UserId.ToString() == userId) &&
                         w.Id.ToString() == wordId.ToString());
         }
 
@@ -48,8 +47,8 @@ namespace MyBlazorApp.Server.Data
                  .Include(w => w.Course.UserCourses)
                  .Where(w => (w.Course.IsVisibleForEveryone ||
                          w.Course.UserCourses
-                             .Where(uc => uc.UserId.ToString() == userId)
-                             .Any()) && w.Id.ToString() == wordId)
+                             .Any(uc => uc.UserId.ToString() == userId)) &&
+                             w.Id.ToString() == wordId)
                  .Any();
         }
 

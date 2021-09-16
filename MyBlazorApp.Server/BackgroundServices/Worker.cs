@@ -79,14 +79,14 @@ namespace MyBlazorApp.Server.BackgroundServices
                 }
                 catch
                 {
-
+                    //It can be ignored
                 }
             }
         }
 
         private async Task GenerateAudioForThisWord(SpeechConfig config, (int WordId, string ExampleUse, string OriginalWord, string VoiceName) word)
         {
-            var texts = ExtractTextToAutio(word.WordId, word.ExampleUse, word.OriginalWord);
+            var texts = ExtractTextToAutio(word.ExampleUse, word.OriginalWord);
 
             foreach (var text in texts)
             {
@@ -127,7 +127,7 @@ namespace MyBlazorApp.Server.BackgroundServices
                 ));
         
 
-        private static Dictionary<WordType, string> ExtractTextToAutio(int wordId, string exampleUse, string originalWord)
+        private static Dictionary<WordType, string> ExtractTextToAutio(string exampleUse, string originalWord)
         {
             var dict = new Dictionary<WordType, string>();
             
@@ -152,7 +152,7 @@ namespace MyBlazorApp.Server.BackgroundServices
             {
                 result = await TryToGenerateAudio(config, toAudio);
                 i++;
-            } while (result != ResultReason.SynthesizingAudioCompleted & i < _numberOfTriesToGenerateAudio);
+            } while (result != ResultReason.SynthesizingAudioCompleted && i < _numberOfTriesToGenerateAudio);
 
             return result == ResultReason.SynthesizingAudioCompleted;
         }

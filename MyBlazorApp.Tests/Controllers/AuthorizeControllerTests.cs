@@ -14,23 +14,18 @@ using Xunit;
 using MyBlazorApp.Server.Controllers;
 using Moq;
 using MyBlazorApp.Shared;
-using Microsoft.AspNetCore.Identity;
 using MyBlazorApp.Server.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;
 using MyBlazorApp.Server.Authorization;
-using System.Net.Http;
-using System.Collections.Generic;
-using Flurl.Http.Testing;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace MyBlazorApp.Tests
 {
     public class AuthorizeControllerTest
     {
         [Fact]
-        public async void Login_UserNotExists_ReturnsBadRequest()
+        public async Task Login_UserNotExists_ReturnsBadRequest()
         {
             var authorizatorMock = new Mock<IAuthorizator>().Object;
             var reCaptcha = new Mock<IReCaptcha>().Object;
@@ -42,7 +37,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void Login_BadPassword_ReturnsBadRequest()
+        public async Task Login_BadPassword_ReturnsBadRequest()
         {
             var controller = CreateDependenciesForLogin(false);
 
@@ -52,7 +47,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void Login_CorrectPassword_ReturnsOk()
+        public async Task Login_CorrectPassword_ReturnsOk()
         {
             var controller = CreateDependenciesForLogin(true);
 
@@ -62,7 +57,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void Register_ErrorDuringCreation_ReturnsBadRequest()
+        public async Task Register_ErrorDuringCreation_ReturnsBadRequest()
         {
             var controller = CreateDependenciesForRegister(false, "MyErrorDescription");
 
@@ -72,7 +67,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void Register_CorrectCreation_ReturnsOk()
+        public async Task Register_CorrectCreation_ReturnsOk()
         {
             var controller = CreateDependenciesForRegister(true, string.Empty);
 
@@ -82,7 +77,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void Logout_CorrectLogout_ReturnsOk()
+        public async Task Logout_CorrectLogout_ReturnsOk()
         {
             var authorizatorMock = new Mock<IAuthorizator>().Object;
             var reCaptcha = new Mock<IReCaptcha>().Object;

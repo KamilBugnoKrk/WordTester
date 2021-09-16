@@ -55,7 +55,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 NumberOfKnownWords = course
                    .Words == null
                    ? 0
-                   : course.Words.Where(w => w.WordStats?.Any(ws => ws.UserId.ToString() == request.UserId) == true).Count(),
+                   : course.Words.Count(w => w.WordStats?.Any(ws => ws.UserId.ToString() == request.UserId) == true),
                 SelectedLanguageName = course.Language != null ? course.Language.Name : "None",
                 LanguageOptions = _unitOfWork.Languages.GetAll().Select(l => l.Name).ToList()
             };

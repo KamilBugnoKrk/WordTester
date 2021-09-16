@@ -26,13 +26,14 @@ using MyBlazorApp.Server;
 using AutoMapper;
 using MyBlazorApp.Tests.Utils;
 using MyBlazorApp.Server.Handlers.QueryHandlers;
+using System.Threading.Tasks;
 
 namespace MyBlazorApp.Tests
 {
     public class GetCourseDetailsQueryHandlerTests
     {
         [Fact]
-        public async void GetCourseDetailsQueryHandler_NoMyCourses_ReturnNull()
+        public async Task GetCourseDetailsQueryHandler_NoMyCourses_ReturnNull()
         {
             using var context = TestHelper.CreateInMemoryContext("GetCourseDetailsQueryHandler_NoMyCourses_ReturnNull");
             var profile = new MappingProfile();

@@ -33,8 +33,7 @@ namespace MyBlazorApp.Server.Data
                 .Include(ws => ws.Word.Course.UserCourses)
                 .Where(ws => (ws.Word.Course.IsVisibleForEveryone ||
                         ws.Word.Course.UserCourses
-                            .Where(uc => uc.UserId.ToString() == userId)
-                            .Any()) &&
+                            .Any(uc => uc.UserId.ToString() == userId)) &&
                         ws.UserId.ToString() == userId && 
                         ws.Word.Course.Id.ToString() == courseId.ToString());
         }

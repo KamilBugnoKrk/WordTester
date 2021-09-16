@@ -154,6 +154,7 @@
     .details {
         grid-row: 2;
         grid-column: 1;
+        margin: 20px 10px 20px 10px;
 
         .info {
             display: flex;
@@ -179,10 +180,6 @@
         grid-template-rows: auto auto;
         grid-template-columns: auto;
         padding: 0;
-    }
-
-    .details {
-        margin: 20px 10px 20px 10px;
     }
 }
 

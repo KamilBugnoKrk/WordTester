@@ -13,8 +13,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyBlazorApp.Server.Data;
 using Xunit;
-using Microsoft.EntityFrameworkCore.InMemory;
-using MyBlazorApp.Server.Controllers;
 using MyBlazorApp.Server.Handlers.QueryHandlers;
 using System.Threading;
 using MyBlazorApp.Server.Models;
@@ -24,13 +22,14 @@ using FluentAssertions;
 using System.Collections.Generic;
 using MyBlazorApp.Tests.Utils;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyBlazorApp.Tests
 {
     public class PostCourseCommandHandlerTests
     {
         [Fact]
-        public async void PostCourseCommandHandler_AddNewCourse_CourseAdded()
+        public async Task PostCourseCommandHandler_AddNewCourse_CourseAdded()
         {
             using var context = TestHelper.CreateInMemoryContext("PostCourseCommandHandler_AddNewCourse_CourseAdded");
             context.Languages.Add(new Language { Name = "None", VoiceName = "None"});
@@ -54,7 +53,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostCourseCommandHandler_UpdateCourse_CourseUpdated()
+        public async Task PostCourseCommandHandler_UpdateCourse_CourseUpdated()
         {
             var userGuid = Guid.NewGuid();
             using var context = TestHelper.CreateInMemoryContext("PostCourseCommandHandler_UpdateCourse_CourseUpdated");
@@ -82,7 +81,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostCourseCommandHandler_UpdateCourseAndChangeTheLanguage_CourseAndWordsUpdated()
+        public async Task PostCourseCommandHandler_UpdateCourseAndChangeTheLanguage_CourseAndWordsUpdated()
         {
             var userGuid = Guid.NewGuid();
             using var context = TestHelper.CreateInMemoryContext(

@@ -21,7 +21,7 @@ namespace MyBlazorApp.Client.Services.Implementations
 {
     public class LanguageApi : ILanguageApi
     {
-        private string url;
+        private readonly string url;
 
         public LanguageApi(UrlHelper urlHelper)
         {

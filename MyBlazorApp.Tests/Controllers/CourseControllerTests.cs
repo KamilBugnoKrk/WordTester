@@ -24,13 +24,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
 using MyBlazorApp.Shared;
+using System.Threading.Tasks;
 
 namespace MyBlazorApp.Tests
 {
     public class CourseControllerTests
     {
         [Fact]
-        public async void GetMyCourses_NoMyCourses_ReturnNull()
+        public async Task GetMyCourses_NoMyCourses_ReturnNull()
         {
             var mediatorMock = new Mock<IMediator>();
             mediatorMock
@@ -48,7 +49,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostCourse_PostCorrectCourse_ReturnId()
+        public async Task PostCourse_PostCorrectCourse_ReturnId()
         {
             var mediatorMock = new Mock<IMediator>();
             mediatorMock
@@ -66,7 +67,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void GetCourseDetails_CorrectCourse_ReturnCourse()
+        public async Task GetCourseDetails_CorrectCourse_ReturnCourse()
         {
             var mediatorMock = new Mock<IMediator>();
             mediatorMock
@@ -85,7 +86,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void GetCourseDetails_NoCourse_ReturnNoFound()
+        public async Task GetCourseDetails_NoCourse_ReturnNoFound()
         {
             var mediatorMock = new Mock<IMediator>();
             mediatorMock

@@ -146,7 +146,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             return Task.FromResult(response);
         }
 
-        private Task<GetLearningRepetitionResponseModel> CreateNothingToLearnResponse()
+        private static Task<GetLearningRepetitionResponseModel> CreateNothingToLearnResponse()
         {
             var response = new GetLearningRepetitionResponseModel
             {

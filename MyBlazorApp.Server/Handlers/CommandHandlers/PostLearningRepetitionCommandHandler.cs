@@ -65,8 +65,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         {
             var word = _unitOfWork.Words.GetWordWithStatsById(request.WordId);
             var stats = word.WordStats
-                .Where(ws => ws.UserId.ToString() == request.UserId)
-                .FirstOrDefault();
+                .FirstOrDefault(ws => ws.UserId.ToString() == request.UserId);
             return (word, stats);
         }
 
@@ -240,7 +239,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     request.RepetitionType == RepetitionType.FromExampleToTranslatedOpen ||
                     request.RepetitionType == RepetitionType.FromOriginalToTranslatedClose ||
                     request.RepetitionType == RepetitionType.FromOriginalToTranslatedOpen
-                    ) && request.UserResponse.ToLower().Trim() == translatedWord.ToLower().Trim();
+                    ) && Helper.IsCorrectTranslation(translatedWord, request.UserResponse);
         }
 
         private static bool IsDefinitionCorrect(PostLearningRepetitionRequestModel request, string definition)

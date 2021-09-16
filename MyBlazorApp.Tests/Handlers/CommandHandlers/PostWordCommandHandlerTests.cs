@@ -13,8 +13,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyBlazorApp.Server.Data;
 using Xunit;
-using Microsoft.EntityFrameworkCore.InMemory;
-using MyBlazorApp.Server.Controllers;
 using MyBlazorApp.Server.Handlers.QueryHandlers;
 using System.Threading;
 using MyBlazorApp.Server.Models;
@@ -23,13 +21,14 @@ using System;
 using FluentAssertions;
 using System.Collections.Generic;
 using MyBlazorApp.Tests.Utils;
+using System.Threading.Tasks;
 
 namespace MyBlazorApp.Tests
 {
     public class PostWordCommandHandlerTests
     {
         [Fact]
-        public async void PostWordCommandHandler_AddNewWord_WordAdded()
+        public async Task PostWordCommandHandler_AddNewWord_WordAdded()
         {
             using var context = TestHelper.CreateInMemoryContext("PostWordCommandHandler_AddNewWord_WordAdded");
             var userId = Guid.NewGuid();
@@ -54,7 +53,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostWordCommandHandler_AddNewWordForDefaultCourse_ReturnError()
+        public async Task PostWordCommandHandler_AddNewWordForDefaultCourse_ReturnError()
         {
             using var context = TestHelper.CreateInMemoryContext("PostWordCommandHandler_AddNewWordForDefaultCourse_ReturnError");
             var userId = Guid.NewGuid();
@@ -77,7 +76,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostWordCommandHandler_AddNewWordForAnotherUserCourse_ReturnError()
+        public async Task PostWordCommandHandler_AddNewWordForAnotherUserCourse_ReturnError()
         {
             using var context = TestHelper.CreateInMemoryContext("PostWordCommandHandler_AddNewWordForAnotherUserCourse_ReturnError");
             var userId = Guid.NewGuid();
@@ -100,7 +99,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostWordCommandHandler_ModifyWord_WordModified()
+        public async Task PostWordCommandHandler_ModifyWord_WordModified()
         {
             using var context = TestHelper.CreateInMemoryContext("PostWordCommandHandler_ModifyWord_WordModified");
             var userId = Guid.NewGuid();
@@ -135,7 +134,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostWordCommandHandler_ModifyAnotherUserWord_WordModified()
+        public async Task PostWordCommandHandler_ModifyAnotherUserWord_WordModified()
         {
             using var context = TestHelper.CreateInMemoryContext("PostWordCommandHandler_ModifyAnotherUserWord_WordModified");
             var userId = Guid.NewGuid();

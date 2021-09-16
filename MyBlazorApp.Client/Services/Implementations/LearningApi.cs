@@ -21,7 +21,7 @@ namespace MyBlazorApp.Client.Services.Implementations
 {
     public class LearningApi : ILearningApi
     {
-        private string url;
+        private readonly string url;
         public LearningApi(UrlHelper urlHelper)
         {
             url = urlHelper.BaseUrl;

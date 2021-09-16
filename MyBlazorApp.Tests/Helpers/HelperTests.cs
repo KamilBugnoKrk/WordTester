@@ -57,5 +57,21 @@ namespace MyBlazorApp.UiTests
             var result = Helper.HideOriginal(example);
             result.Should().Be(expectedResult);
         }
+
+        [Theory]
+        [InlineData("big, great, huge", "big, great, huge", true)]
+        [InlineData("big, great, huge", " big, great, huge ", true)]
+        [InlineData("big, great, huge", "big", true)]
+        [InlineData("big, great, huge", " big ", true)]
+        [InlineData("big, great, huge", "great", true)]
+        [InlineData("big, great, huge", " great ", true)]
+        [InlineData("big, great, huge", "huge", true)]
+        [InlineData("  big  ,  great  ,  huge  ", " huge ", true)]
+        [InlineData("big, great, huge", "other", false)]
+        public void IsCorrectTranslation_Verify(string translation, string userAnswer, bool expectedResult)
+        {
+            var result = Helper.IsCorrectTranslation(translation, userAnswer);
+            result.Should().Be(expectedResult);
+        }
     }
 }

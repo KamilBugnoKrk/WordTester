@@ -78,8 +78,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 var repeatedWords = _unitOfWork
                     .Words
                     .Find(w => w.CourseId == course.Id)
-                    .Where(w => w.WordStats.Any(ws => ws.UserId == request.UserId))
-                    .Count();
+                    .Count(w => w.WordStats.Any(ws => ws.UserId == request.UserId));
 
                 data.Add(course.Name, new StatsForThisCourse 
                 { 

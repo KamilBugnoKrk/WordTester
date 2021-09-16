@@ -10,6 +10,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Linq;
+
 namespace MyBlazorApp.Server.Helpers
 {
     public static class Helper
@@ -51,6 +53,20 @@ namespace MyBlazorApp.Server.Helpers
                 return originalWord;
             }
             return string.Empty;
+        }
+
+
+        public static bool IsCorrectTranslation(string translation, string userAnswer)
+        {
+            if(translation.Trim() == userAnswer.Trim())
+            {
+                return true;
+            }
+            else
+            {
+                var splitted = translation.Split(',').Select(s => s.Trim()).ToList();
+                return splitted.Contains(userAnswer.Trim());
+            }
         }
     }
 }

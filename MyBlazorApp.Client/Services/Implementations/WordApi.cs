@@ -12,7 +12,6 @@
 
 using MyBlazorApp.Client.Services.Contracts;
 using MyBlazorApp.Shared;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyBlazorApp.Shared.ResponseModels;
 using Flurl.Http;
@@ -22,7 +21,7 @@ namespace MyBlazorApp.Client.Services.Implementations
 {
     public class WordApi : IWordApi
     {
-        private string url;
+        private readonly string url;
         public WordApi(UrlHelper urlHelper)
         {
             url = urlHelper.BaseUrl;

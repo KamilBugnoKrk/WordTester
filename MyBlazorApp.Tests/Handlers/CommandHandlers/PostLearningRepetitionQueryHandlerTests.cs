@@ -26,13 +26,14 @@ using MyBlazorApp.Tests.Utils;
 using MyBlazorApp.Shared;
 using MyBlazorApp.Server.Data.Audio;
 using Moq;
+using System.Threading.Tasks;
 
 namespace MyBlazorApp.Tests
 {
     public class PostLearningRepetitionQueryHandlerTests
     {
         [Fact]
-        public async void PostLearningRepetitionQueryHandler_FirstCorrectRepetition_WordStatsCreated()
+        public async Task PostLearningRepetitionQueryHandler_FirstCorrectRepetition_WordStatsCreated()
         {
             using var context = TestHelper.CreateInMemoryContext("PostLearningRepetitionQueryHandler_FirstCorrectRepetition_WordStatsCreated");
             (var request, var handler) = SetupDependencies(context);
@@ -47,7 +48,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostLearningRepetitionQueryHandler_SecondCorrectRepetition_WordStatsUpdated()
+        public async Task PostLearningRepetitionQueryHandler_SecondCorrectRepetition_WordStatsUpdated()
         {
             using var context = TestHelper.CreateInMemoryContext("PostLearningRepetitionQueryHandler_SecondCorrectRepetition_WordStatsCreated");
             (var request, var handler) = SetupDependencies(context, true);
@@ -62,7 +63,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostLearningRepetitionQueryHandler_AllRepetitionTypesUsed_WordStatsUpdated()
+        public async Task PostLearningRepetitionQueryHandler_AllRepetitionTypesUsed_WordStatsUpdated()
         {
             using var context = TestHelper.CreateInMemoryContext("PostLearningRepetitionQueryHandler_AllRepetitionTypesUsed_WordStatsUpdated");
             (var request, var handler) = SetupDependencies(context, true, "[1,2,3,4,5,6,7,8]");
@@ -77,7 +78,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void PostLearningRepetitionQueryHandler_IncorrectResponse_WordStatsUpdated()
+        public async Task PostLearningRepetitionQueryHandler_IncorrectResponse_WordStatsUpdated()
         {
             using var context = TestHelper.CreateInMemoryContext("PostLearningRepetitionQueryHandler_IncorrectResponse_WordStatsUpdated");
             (var request, var handler) = SetupDependencies(context, true, "[1,2,3,4,5,8]", false);

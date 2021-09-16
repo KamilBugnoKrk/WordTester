@@ -26,13 +26,14 @@ using MyBlazorApp.Shared;
 using MyBlazorApp.Server.Models;
 using System.Collections.Generic;
 using MyBlazorApp.Server.Data.Audio;
+using System.Threading.Tasks;
 
 namespace MyBlazorApp.Tests
 {
     public class GetLearningRepetitionQueryHandlerTests
     {
         [Fact]
-        public async void GetLearningRepetitionQueryHandler_NoMyCourses_ReturnError()
+        public async Task GetLearningRepetitionQueryHandler_NoMyCourses_ReturnError()
         {
             using var context = TestHelper.CreateInMemoryContext("GetLearningRepetitionQueryHandler_NoMyCourses_ReturnError");
             var (handler, request) = CreateDependencies(context, Guid.NewGuid(), 100);
@@ -43,7 +44,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void GetLearningRepetitionQueryHandler_NoWordLearned_ReturnWordInformation()
+        public async Task GetLearningRepetitionQueryHandler_NoWordLearned_ReturnWordInformation()
         {
             using var context = TestHelper.CreateInMemoryContext("GetLearningRepetitionQueryHandler_NoWordLearned_ReturnWordInformation");
             var userId = Guid.NewGuid();
@@ -62,7 +63,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void GetLearningRepetitionQueryHandler_WordLearned_ReturnWordRepetition()
+        public async Task GetLearningRepetitionQueryHandler_WordLearned_ReturnWordRepetition()
         {
             using var context = TestHelper.CreateInMemoryContext("GetLearningRepetitionQueryHandler_WordLearned_ReturnWordRepetition");
             var userId = Guid.NewGuid();
@@ -78,7 +79,7 @@ namespace MyBlazorApp.Tests
         }
 
         [Fact]
-        public async void GetLearningRepetitionQueryHandler_AllWordLearned_ReturnNothingToLearn()
+        public async Task GetLearningRepetitionQueryHandler_AllWordLearned_ReturnNothingToLearn()
         {
             using var context = TestHelper.CreateInMemoryContext("GetLearningRepetitionQueryHandler_AllWordLearned_ReturnNothingToLearn");
             var userId = Guid.NewGuid();

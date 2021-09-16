@@ -26,11 +26,9 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
     public class GetMyCoursesQueryHandler : IRequestHandler<GetMyCoursesRequestModel, GetMyCoursesResponseModel>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        public GetMyCoursesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetMyCoursesQueryHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
         public Task<GetMyCoursesResponseModel> Handle(GetMyCoursesRequestModel request, CancellationToken cancellationToken)
         {
@@ -50,8 +48,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                 NumberOfWords = c.Words.Count(),
                 NumberOfKnownWords = c
                     .Words
-                    .Where(w => w.WordStats.Any(ws => ws.UserId.ToString() == request.UserId))
-                    .Count(),
+                    .Count(w => w.WordStats.Any(ws => ws.UserId.ToString() == request.UserId)),
                 Stats = c.Words
                     .SelectMany(w => w.WordStats)
                     .Where(ws => ws.UserId.ToString() == request.UserId)

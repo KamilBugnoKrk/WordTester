@@ -52,10 +52,10 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 
             return IsModificationValid(oldWord, request.CourseId) ?
                 ModifyWordInDatabase(request.Word, oldWord) :
-                ReturnError(oldWord);
+                ReturnError();
         }
 
-        private PostWordResponseModel ReturnError(Word oldWord)
+        private static PostWordResponseModel ReturnError()
         {           
             return new PostWordResponseModel
             {

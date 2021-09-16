@@ -71,7 +71,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
             foreach (var match in matched.ToList())
             {
                 otherWords.Add(originalWord.Replace(match.Value, match.Value[0].ToString()));
-            };
+            }
 
             return otherWords;
         }
