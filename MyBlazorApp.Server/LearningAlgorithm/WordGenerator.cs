@@ -40,6 +40,32 @@ namespace MyBlazorApp.Server.LearningAlgorithm
             return otherWords;
         }
 
+        public IEnumerable<string> GenerateWordsWithDifferentPrepositions(string originalWord)
+        {
+            var otherWords = new HashSet<string>();
+
+            AddWordWithDifferentPrepositions(originalWord, otherWords, new List<string> { "onto", "on", "into", "in", "off", "up", "out", "for", "from", "of", "at" });
+            AddWordWithDifferentPrepositions(originalWord, otherWords, new List<string> { "around", "among", "along", "against", "across", "above" });
+            AddWordWithDifferentPrepositions(originalWord, otherWords, new List<string> { "to", "with", "towards", "through", "throughout" });
+            AddWordWithDifferentPrepositions(originalWord, otherWords, new List<string> { "beyond", "behind", "between", "before"});
+
+            return otherWords;
+        }
+
+        private void AddWordWithDifferentPrepositions(string originalWord, HashSet<string> otherWords, List<string> newPrepositions)
+        {
+            var variations = new Variations<string>(newPrepositions, 2, GenerateOption.WithoutRepetition);
+            foreach (var variation in variations)
+            {
+                if (originalWord.Contains($" {variation[0]} ") || originalWord.EndsWith($" {variation[0]}"))
+                {
+                    string pattern = $@"\b{variation[0]}\b";
+                    string result = Regex.Replace(originalWord, pattern, variation[1]);
+                    otherWords.Add(result);
+                }
+            }
+        }
+
         private void AddWordVariations(string originalWord, HashSet<string> otherWords, List<string> letters)
         {
             var variations = new Variations<string>(letters, 2, GenerateOption.WithoutRepetition);

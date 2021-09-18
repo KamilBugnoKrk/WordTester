@@ -165,6 +165,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
         {
             var otherWords = new HashSet<string>();
 
+            otherWords.UnionWith(_wordGenerator.GenerateWordsWithDifferentPrepositions(originalWord));
             otherWords.UnionWith(_wordGenerator.GenerateWordsWithoutDoubledLetters(originalWord));
             otherWords.UnionWith(_wordGenerator.GenerateWordsWithSwappedLetters(originalWord));
             

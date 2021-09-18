@@ -18,5 +18,6 @@ namespace MyBlazorApp.Server.LearningAlgorithm
     {
         IEnumerable<string> GenerateWordsWithSwappedLetters(string originalWord);
         IEnumerable<string> GenerateWordsWithoutDoubledLetters(string originalWord);
+        IEnumerable<string> GenerateWordsWithDifferentPrepositions(string originalWord);
     }
 }

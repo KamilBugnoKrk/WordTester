@@ -54,6 +54,17 @@ namespace MyBlazorApp.Tests.LearningAlgorithm
         }
 
         [Fact]
+        public void GenerateWordsWithDifferentPrepositions_WordContainOneOccurences_ReturnsModifiedWords()
+        {
+            var randomMock = new Mock<Random>();
+            randomMock.Setup(r => r.Next(It.IsAny<int>())).Returns(0);
+            var generator = new WordGenerator(randomMock.Object);
+
+            var result = generator.GenerateWordsWithDifferentPrepositions("income up");
+            result.Should().BeEquivalentTo("income for", "income from", "income of", "income at", "income onto", "income on", "income into", "income in", "income off", "income out");
+        }
+
+        [Fact]
         public void GenerateWordsWithSwappedLetters_WordContainOneOccurences_ReturnsModifiedWords()
         {
             var randomMock = new Mock<Random>();
