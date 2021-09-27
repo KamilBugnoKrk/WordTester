@@ -18,7 +18,6 @@ using MyBlazorApp.Server.LearningAlgorithm;
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace MyBlazorApp.Tests.LearningAlgorithm
@@ -30,8 +29,8 @@ namespace MyBlazorApp.Tests.LearningAlgorithm
         {
             var repetitionManager = new RepetitionManager(new Mock<IUnitOfWork>().Object, 
                 new Mock<IWordGenerator>().Object, new Mock<IAudioService>().Object);
-            
-            var result = repetitionManager.CreateRepetitionData(new WordStats 
+                            
+            var (question, _, responses, _, repetitionType) = repetitionManager.CreateRepetitionData(new WordStats 
             { 
                 Word = new Word
                 {
@@ -41,9 +40,48 @@ namespace MyBlazorApp.Tests.LearningAlgorithm
                 UsedRepetitionTypes = "[1,3,4,5,6,7,8,9,10,11]"
             });
             
-            result.question.Should().Be("TranslatedWord");
-            result.Responses.Should().BeNull();
-            result.repetitionType.Should().Be(RepetitionType.FromTranslatedToOriginalOpen);
+            question.Should().Be("TranslatedWord");
+            responses.Should().BeNull();
+            repetitionType.Should().Be(RepetitionType.FromTranslatedToOriginalOpen);
+        }
+
+        [Theory]
+        [InlineData(0, "OriginalWord", false)]
+        [InlineData(1, "TranslatedWord", false)]
+        [InlineData(2, "Definition", false)]
+        [InlineData(3, "ExampleUse", false)]
+        [InlineData(5, "TranslatedWord", true)]
+        [InlineData(6, "Definition", true)]
+        [InlineData(10, "ExampleUse", true)]
+        public void RepetitionManager_AllRepetitionTypeRemains_ReturnsCorrectRepetitionData(int type, string expectedQuestion, bool hasResponses)
+        {
+            var randomMock = new Mock<Random>();
+            randomMock.Setup(r => r.Next(It.IsAny<int>())).Returns(type);
+            var repetitionManager = new RepetitionManager(new Mock<IUnitOfWork>().Object,
+                new Mock<IWordGenerator>().Object, new Mock<IAudioService>().Object, randomMock.Object);
+
+            var (question, _, responses, _, repetitionType) = repetitionManager.CreateRepetitionData(new WordStats
+            {
+                Word = new Word
+                {
+                    TranslatedWord = "TranslatedWord",
+                    OriginalWord = "OriginalWord",
+                    Definition = "Definition",
+                    ExampleUse = "ExampleUse"                    
+                },
+                UsedRepetitionTypes = string.Empty
+            });
+
+            if (hasResponses)
+            {
+                responses.Should().NotBeEmpty();
+            }
+            else
+            {
+                responses.Should().BeNullOrEmpty();
+            }
+            question.Should().Be(expectedQuestion);
+            ((int)repetitionType).Should().Be(type + 1);
         }
     }
 }

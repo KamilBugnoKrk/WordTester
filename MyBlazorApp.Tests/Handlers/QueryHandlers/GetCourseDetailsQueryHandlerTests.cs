@@ -10,18 +10,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using Microsoft.EntityFrameworkCore;
 using MyBlazorApp.Server.Data;
 using Xunit;
-using Microsoft.EntityFrameworkCore.InMemory;
-using MyBlazorApp.Server.Controllers;
-using MyBlazorApp.Server.Handlers;
 using System.Threading;
-using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared.RequestModels;
 using System;
 using FluentAssertions;
-using System.Collections.Generic;
 using MyBlazorApp.Server;
 using AutoMapper;
 using MyBlazorApp.Tests.Utils;

@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using AutoMapper;
 using MediatR;
 using MyBlazorApp.Server.Data;
 using MyBlazorApp.Shared.RequestModels;
@@ -96,13 +95,14 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 
         private static Dictionary<string, int> GetMonthStats(IEnumerable<UserCourseStats> stats)
         {
+            CultureInfo cultureInfo = new("en-US");
             Dictionary<string, int> monthStats = new();
             for (int i = 0; i > -4; i--)
             {
                 var thisMonthResponses = stats
                 .Where(s => s.Date.Year == DateTime.UtcNow.AddMonths(i).Year && s.Date.Month == DateTime.UtcNow.AddMonths(i).Month)
                 .Sum(s => s.NumberOfCorrectResponses + s.NumberOfIncorrectResponses);
-                monthStats.Add(DateTime.UtcNow.AddMonths(i).ToString("MMMM"), (int)thisMonthResponses);
+                monthStats.Add(DateTime.UtcNow.AddMonths(i).ToString("MMMM", cultureInfo), (int)thisMonthResponses);
             }
             return monthStats;
         }

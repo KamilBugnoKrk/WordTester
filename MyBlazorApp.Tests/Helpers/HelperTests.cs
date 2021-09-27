@@ -17,7 +17,7 @@ using Xunit;
 
 namespace MyBlazorApp.UiTests
 {
-    public class HeperTests
+    public class HelperTests
     {
         [Theory]
         [InlineData("","")]
@@ -47,7 +47,7 @@ namespace MyBlazorApp.UiTests
 
         [Theory]
         [InlineData("", "")]
-        [InlineData("This cat is really fun", "")]
+        [InlineData("This cat is really fun", "This cat is really fun")]
         [InlineData("This *cat* is really fun", "This _____ is really fun")]
         [InlineData("*This* cat is really fun", "_____ cat is really fun")]
         [InlineData("This cat is really *fun*", "This cat is really _____")]
@@ -60,6 +60,8 @@ namespace MyBlazorApp.UiTests
 
         [Theory]
         [InlineData("big, great, huge", "big, great, huge", true)]
+        [InlineData("big (sth)", "big (sth)", true)]
+        [InlineData("big (sth)", "big", true)]
         [InlineData("big, great, huge", " big, great, huge ", true)]
         [InlineData("big, great, huge", "big", true)]
         [InlineData("big, great, huge", " big ", true)]
@@ -67,6 +69,9 @@ namespace MyBlazorApp.UiTests
         [InlineData("big, great, huge", " great ", true)]
         [InlineData("big, great, huge", "huge", true)]
         [InlineData("  big  ,  great  ,  huge  ", " huge ", true)]
+        [InlineData("  big  ,  great  ,  huge  ", " Huge ", true)]
+        [InlineData("  big  ,  great (anything)  ,  huge  ", " great ", true)]
+        [InlineData("  big  ,  great (anything)  ,  huge  ", " great (anything) ", true)]
         [InlineData("big, great, huge", "other", false)]
         public void IsCorrectTranslation_Verify(string translation, string userAnswer, bool expectedResult)
         {

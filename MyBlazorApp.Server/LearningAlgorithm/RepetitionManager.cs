@@ -31,13 +31,13 @@ namespace MyBlazorApp.Server.LearningAlgorithm
         private readonly IWordGenerator _wordGenerator;
         private readonly IAudioService _audioService;
 
-        public RepetitionManager(IUnitOfWork unitOfWork, IWordGenerator wordGenerator, IAudioService audioService)
+        public RepetitionManager(IUnitOfWork unitOfWork, IWordGenerator wordGenerator, IAudioService audioService, Random random = null)
         {
             _allRepetitionTypes = Enum
                 .GetValues(typeof(RepetitionType))
                 .Cast<RepetitionType>()
                 .Where(rt => rt != RepetitionType.None);
-            _random = new Random();
+            _random = random ?? new Random();
             _unitOfWork = unitOfWork;
             _wordGenerator = wordGenerator;
             _audioService = audioService;

@@ -10,7 +10,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MyBlazorApp.Server.Helpers
 {
@@ -40,7 +42,7 @@ namespace MyBlazorApp.Server.Helpers
                     + "_____"
                     + exampleUse.Substring(end + 1);
             }
-            return string.Empty;
+            return exampleUse;
         }
 
         public static string GetOriginalFromExample(string exampleUse)
@@ -58,14 +60,25 @@ namespace MyBlazorApp.Server.Helpers
 
         public static bool IsCorrectTranslation(string translation, string userAnswer)
         {
-            if(translation.Trim() == userAnswer.Trim())
+            if(translation.ToLower().Trim() == userAnswer.ToLower().Trim())
             {
                 return true;
             }
             else
             {
-                var splitted = translation.Split(',').Select(s => s.Trim()).ToList();
-                return splitted.Contains(userAnswer.Trim());
+                var splitted = translation.Split(',').Select(s => s.ToLower().Trim()).ToList();
+                var allWords = new List<string>();
+                foreach (var word in splitted)
+                {
+                    allWords.Add(word);
+                    if(word.Contains("(") && word.Contains(")"))
+                    {
+                        var withoutBrackets = Regex.Replace(word, @" ?\(.*?\)", string.Empty);
+                        allWords.Add(withoutBrackets);
+                    }
+                }
+                
+                return allWords.Contains(userAnswer.ToLower().Trim());
             }
         }
     }
