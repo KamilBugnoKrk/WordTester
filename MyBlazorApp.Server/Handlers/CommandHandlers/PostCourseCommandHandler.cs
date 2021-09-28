@@ -64,7 +64,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                                 UserId = new Guid(request.UserId)
                             }
                         },
-                        LanguageId = _unitOfWork.Languages.Find(l => l.Name == request.LanguageName).First().Id,
+                        LanguageId = request.LanguageName == "None" ? null : _unitOfWork.Languages.Find(l => l.Name == request.LanguageName).First().Id,
                         Words = new List<Word>
                         {
                             new Word

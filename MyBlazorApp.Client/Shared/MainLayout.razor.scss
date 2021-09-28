@@ -31,11 +31,11 @@
         margin: 10px;
     }
 
-    a:first-of-type {
+    a:last-of-type {
         color: $grey !important;
     }
 
-    a:last-of-type {
+    a:first-of-type {
         color: $blue;
     }
 

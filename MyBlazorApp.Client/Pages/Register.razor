@@ -1,4 +1,4 @@
-@page "/register"
+﻿@page "/register"
 @layout LoginLayout
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
@@ -20,21 +20,49 @@
                 <ValidationMessage For="@(() => registerParameters.UserName)" />
 
                 <label for="inputPassword" class="sr-only">Password</label>
-                <MatTextField Type="password" id="inputPassword" Label="Password" @bind-Value="@registerParameters.Password" />
+                <MatTextField Type="password" id="inputPassword" Label="Password" @bind-Value="@registerParameters.Password" OnInput="@(e => registerParameters.Password = e.Value.ToString())" />
                 <ValidationMessage For="@(() => registerParameters.Password)" />
 
+                <p style="font-size: 11px; margin-bottom: 5px;">
+                    Requirements:
+                    <ul style="margin-bottom: 0">
+                        <li>
+                            @if (HasSixChars())
+                            {
+                                <span>✅</span>
+                            }
+                            else
+                            {
+                                <span>❌</span>
+                            }
+                            Password should have at least six characters
+                        </li>
+                        <li>
+                            @if (HasUppercase())
+                            {
+                                <span>✅</span>
+                            }
+                            else
+                            {
+                                <span>❌</span>
+                            }
+                            Password should include at least one uppercase
+                        </li>
+                    </ul>
+                </p>
+
                 <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-                <MatTextField Type="password" id="inputPasswordConfirm" Label="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm" />
+                <MatTextField Type="password" id="inputPasswordConfirm" Label="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm"/>
                 <ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
 
                 <div style="margin-bottom: 5px; transform: scale(0.94); -webkit-transform: scale(0.94); transform-origin: 0 0; -webkit-transform-origin: 0 0;">
                     <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LfAwsUaAAAAAA0WXVyqnvFLAG7TMeHPSWyXDZ4Q" OnSuccess="OnSuccess" OnExpired="OnExpired" isError="isError" />
                 </div>
 
-                <button class="btn" type="submit">Create account</button>
+                <button class="btn" type="submit" disabled="@IsSumbitDisabled()">Create account</button>
 
                 <label class="text-danger">@error</label>
-                    <h6 style="font-size: 17px;" class="font-weight-normal text-center">Already have an account? <a href="login">Login here</a></h6>
+                <h6 style="font-size: 17px;" class="font-weight-normal text-center">Already have an account? <a href="login">Login here</a></h6>
             </EditForm>
         </div>
         <div class="login-image">
@@ -49,9 +77,18 @@
     string error { get; set; }
     private ReCAPTCHA reCAPTCHAComponent;
     private bool ValidReCAPTCHA = false;
-    private bool ServerVerificating = false;
-    private bool DisablePostButton => !ValidReCAPTCHA || ServerVerificating;
     private bool isError = false;
+
+    private bool IsSumbitDisabled() {
+        return !(ValidReCAPTCHA && HasSixChars() && HasUppercase());
+    }
+
+    private bool HasSixChars() {
+        return registerParameters.Password != null && registerParameters.Password.Count() > 6;
+    }
+    private bool HasUppercase() {
+        return registerParameters.Password != null && registerParameters.Password.Any(char.IsUpper);
+    }
 
     private void OnSuccess()
     {
@@ -74,7 +111,6 @@
             var response = await reCAPTCHAComponent.GetResponseAsync();
             try
             {
-                ServerVerificating = true;
                 isError = false;
                 StateHasChanged();
                 registerParameters.CaptchaResponse = response;
@@ -84,14 +120,12 @@
             catch (Exception ex) when (!ex.Message.Contains("tools.ietf.org"))
             {
                 error = ex.Message;
-                ServerVerificating = false;
                 isError = true;
                 StateHasChanged();
             }
             catch (Exception ex) when (ex.Message.Contains("tools.ietf.org"))
             {
                 error = "You need to use reCAPTCHA";
-                ServerVerificating = false;
                 isError = true;
                 StateHasChanged();
             }

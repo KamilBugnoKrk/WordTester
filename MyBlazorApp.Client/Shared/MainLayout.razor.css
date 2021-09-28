@@ -11,9 +11,9 @@
   .top-panel img {
     cursor: pointer;
     margin: 10px; }
-  .top-panel a:first-of-type {
-    color: #828282 !important; }
   .top-panel a:last-of-type {
+    color: #828282 !important; }
+  .top-panel a:first-of-type {
     color: #4D3AFF; }
   .top-panel a {
     cursor: pointer;

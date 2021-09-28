@@ -18,10 +18,6 @@
                 <MatTextField Type="password" Label="Password" @bind-Value="loginParameters.Password" />
                 <ValidationMessage For="@(() => loginParameters.Password)" />
 
-                <div class="form-check m-3">
-                    <MatCheckbox id="inputRememberMe" Label="Remember Me" @bind-Value="@loginParameters.RememberMe" />
-                </div>
-
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
                 <label class="text-danger">@error</label>

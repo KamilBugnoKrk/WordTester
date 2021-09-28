@@ -44,7 +44,7 @@ namespace MyBlazorApp.Server.Controllers
             var isSuccess = await _authorizator.CheckPasswordSignInAsync(user, parameters.Password);
             if (!isSuccess) return BadRequest("Invalid password");
 
-            await _authorizator.SignInAsync(user, parameters.RememberMe);
+            await _authorizator.SignInAsync(user, true);
 
             return Ok();
         }
