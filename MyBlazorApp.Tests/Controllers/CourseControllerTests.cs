@@ -61,7 +61,7 @@ namespace MyBlazorApp.Tests
                 ControllerContext = MockControllerContext()
             };
 
-            var result = await controller.PostCourse(new PostCourseRequest("0", "Name", "Description", string.Empty));
+            var result = await controller.PostCourse(new PostCourseRequest("0", "Name", "Description", "None"));
 
             (result as OkObjectResult).Value.Should().Be(4);
         }

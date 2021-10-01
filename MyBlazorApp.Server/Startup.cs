@@ -27,7 +27,6 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 using MyBlazorApp.Server.Authorization;
 using MyBlazorApp.Server.LearningAlgorithm;
-using MyBlazorApp.Server.BackgroundServices;
 using MyBlazorApp.Server.Data.Audio;
 
 namespace MyBlazorApp.Server
