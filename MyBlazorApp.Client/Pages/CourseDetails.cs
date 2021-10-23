@@ -95,7 +95,7 @@ namespace MyBlazorApp.Client.Pages
             {
                 words = string.IsNullOrWhiteSpace(searchTerm) ? 
                     allWords : 
-                    allWords.Where(word => word.OriginalWord.Contains(searchTerm));
+                    allWords.Where(word => word.OriginalWord.ToLower().Contains(searchTerm.ToLower()));
                 StateHasChanged();
             });
         }

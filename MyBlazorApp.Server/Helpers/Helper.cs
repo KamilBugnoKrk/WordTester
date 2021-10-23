@@ -73,8 +73,10 @@ namespace MyBlazorApp.Server.Helpers
                     allWords.Add(word);
                     if(word.Contains("(") && word.Contains(")"))
                     {
-                        var withoutBrackets = Regex.Replace(word, @" ?\(.*?\)", string.Empty);
-                        allWords.Add(withoutBrackets);
+                        var withoutTextInBrackets = Regex.Replace(word, @" ?\(.*?\)", string.Empty);
+                        var withoutBrackets = word.Replace("(", string.Empty).Replace(")", string.Empty);
+                        allWords.Add(withoutTextInBrackets.ToLower().Trim());
+                        allWords.Add(withoutBrackets.ToLower().Trim());
                     }
                 }
                 
