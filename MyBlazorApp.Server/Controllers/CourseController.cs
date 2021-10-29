@@ -16,6 +16,8 @@ using System.Security.Claims;
 using MediatR;
 using System.Threading.Tasks;
 using MyBlazorApp.Shared.RequestModels;
+using System.Text;
+using System;
 
 namespace MyBlazorApp.Server.Controllers
 {
@@ -70,6 +72,25 @@ namespace MyBlazorApp.Server.Controllers
             return response.Course == null ?
                 NotFound() :
                 Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> ExportCourseData(string courseId)
+        {
+            var requestModel = new ExportCourseDataRequestModel
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                CourseId = courseId
+            };
+
+            var response = await _mediator.Send(requestModel);
+
+            if (string.IsNullOrEmpty(response.Words))
+                return NotFound();
+
+            return File(Encoding.UTF8.GetBytes(response.Words),
+                "text/json",
+                $"CourseData-{DateTime.Now.ToString("MM/dd/yyyy")}.json");
         }
     }
 }
