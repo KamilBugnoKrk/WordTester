@@ -49,6 +49,7 @@
                     <ValidationMessage For="@(() => course.Description)" />
 
                     <button class="btn" type="submit">Save</button>
+                    <a target="_blank" href="@(navigationManager.ToAbsoluteUri("api/course/ExportCourseData").AbsolutePath + "?courseId=" + course.Id)">Export</a>
                 </div>
             </EditForm>
         }
