@@ -229,7 +229,9 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     request.RepetitionType == RepetitionType.FromDefinitionToOriginalOpen ||
                     request.RepetitionType == RepetitionType.FromTranslatedToOriginalClose ||
                     request.RepetitionType == RepetitionType.FromTranslatedToOriginalOpen ||
-                    request.RepetitionType == RepetitionType.FromExampleToOriginalClose
+                    request.RepetitionType == RepetitionType.FromExampleToOriginalClose ||
+                    request.RepetitionType == RepetitionType.FromTranslatedToOriginalDifferentClose ||
+                    request.RepetitionType == RepetitionType.FromDefinitionToOriginalDifferentClose
                     ) && request.UserResponse.ToLower().Trim() == originalWord.ToLower().Trim();
         }
 

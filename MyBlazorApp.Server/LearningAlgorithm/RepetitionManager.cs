@@ -127,21 +127,35 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord) : string.Empty,
                    RepetitionType.FromOriginalToDefinitionClose
                ),
-                RepetitionType.FromExampleToDefinitionClose => (
+               RepetitionType.FromExampleToDefinitionClose => (
                    Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
                    wordStats.Word.Pronunciation,
                    GetOtherDefinitions(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.Definition),
                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse) : string.Empty,
                    RepetitionType.FromExampleToDefinitionClose
                ),
-                RepetitionType.FromExampleToOriginalClose => (
-                 Helper.HideOriginal(wordStats.Word.ExampleUse),
-                 null,
-                 GetOtherOriginalWords(Helper.GetOriginalFromExample(wordStats.Word.ExampleUse)),
-                 hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.BlankExampleUse) : string.Empty,
-                 RepetitionType.FromExampleToOriginalClose
-             ),
-                _ => (null, null, null, string.Empty, RepetitionType.None),
+               RepetitionType.FromExampleToOriginalClose => (
+                   Helper.HideOriginal(wordStats.Word.ExampleUse),
+                   null,
+                   GetOtherOriginalWords(Helper.GetOriginalFromExample(wordStats.Word.ExampleUse)),
+                   hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.BlankExampleUse) : string.Empty,
+                   RepetitionType.FromExampleToOriginalClose
+               ),
+               RepetitionType.FromTranslatedToOriginalDifferentClose => (
+                   wordStats.Word.TranslatedWord,
+                   null,
+                   GetDifferentOriginalWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.OriginalWord),
+                   string.Empty,
+                   RepetitionType.FromTranslatedToOriginalDifferentClose
+               ),
+               RepetitionType.FromDefinitionToOriginalDifferentClose => (
+                   wordStats.Word.Definition,
+                   null,
+                   GetDifferentOriginalWords(wordStats.Word.Id, wordStats.Word.CourseId, wordStats.Word.OriginalWord),
+                   string.Empty,
+                   RepetitionType.FromDefinitionToOriginalDifferentClose
+               ),
+               _ => (null, null, null, string.Empty, RepetitionType.None),
             };
         }
 
@@ -158,6 +172,22 @@ namespace MyBlazorApp.Server.LearningAlgorithm
               .ToList();
 
             newList.Add(definition);
+            return newList.Shuffle();
+        }
+
+        private IEnumerable<string> GetDifferentOriginalWords(int wordId, int courseId, string originalWord)
+        {
+            var newList = _unitOfWork
+              .Words
+              .GetAll()
+              .Where(w => w.CourseId == courseId && w.Id != wordId)
+              .ToList()
+              .Shuffle()
+              .Take(_numberOfIncorrectWords)
+              .Select(w => w.OriginalWord)
+              .ToList();
+
+            newList.Add(originalWord);
             return newList.Shuffle();
         }
 

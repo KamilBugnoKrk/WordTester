@@ -26,5 +26,7 @@ namespace MyBlazorApp.Shared
         FromOriginalToDefinitionClose,
         FromExampleToDefinitionClose,
         FromExampleToOriginalClose,
+        FromTranslatedToOriginalDifferentClose,
+        FromDefinitionToOriginalDifferentClose
     }
 }
