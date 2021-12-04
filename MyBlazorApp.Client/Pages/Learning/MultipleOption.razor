@@ -17,7 +17,7 @@
     <div @onclick="Rerender">
         <h2 class="@GetStyle(Question)">
             @Question
-            @if (!string.IsNullOrEmpty(Audio))
+            @if (!string.IsNullOrWhiteSpace(Audio))
             {
                 <i class="far fa-play-circle"></i>
             }
@@ -40,7 +40,7 @@
             var index = i;
             var response = Responses[i];
             <div @onclick="async () => await SendResponse(index)"
-                 class="response-tile">
+                 class="@TileStyle(index)">
                 <span>@(i+1)</span>
                 <p class="@GetStyle(response)">@response</p>
             </div>
@@ -62,17 +62,22 @@
     [Parameter]
     public string Audio { get; set; }
 
+    List<bool> IsTileClicked;
     HotKeysContext HotKeysContext;
+
     private List<Keys> keyList = new List<Keys> { Keys.Num1, Keys.Num2, Keys.Num3, Keys.Num4,
         Keys.Num5, Keys.Num6, Keys.Num7, Keys.Num8, Keys.Num9};
 
     protected override void OnInitialized()
     {
         this.HotKeysContext = this.HotKeys.CreateContext();
+        this.IsTileClicked = new List<bool>();
         for (var i = 0; i < Responses.Count(); i++)
         {
             var index = i;
-            this.HotKeysContext.Add(ModKeys.None, keyList[i], async () => { await SendResponse(index); });
+            this.IsTileClicked.Add(false);
+            this.HotKeysContext.Add(ModKeys.None, keyList[i], 
+                async () => { await OnClick.InvokeAsync(Responses[index]); });
         }
     }
 
@@ -83,6 +88,13 @@
         return string.Empty;
     }
 
+    private string TileStyle(int input)
+    {
+        return IsTileClicked[input] ?
+            "response-tile on-click" :
+            "response-tile";
+    }
+
     private void Rerender()
     {
         Audio = Audio + " ";
@@ -90,7 +102,9 @@
 
     private async Task SendResponse(int i)
     {
+        this.IsTileClicked[i] = true;
         await OnClick.InvokeAsync(Responses[i]);
+        this.IsTileClicked[i] = false;
     }
 
     public void Dispose()
