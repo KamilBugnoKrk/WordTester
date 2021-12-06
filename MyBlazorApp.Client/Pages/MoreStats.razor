@@ -13,7 +13,9 @@
 @page "/stats"
 @inject ICourseUserStatsApi courseUserStatsApi
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IdentityAuthenticationStateProvider authStateProvider
 @using ChartJs.Blazor.LineChart
+
 <div class="grid-container">
     <div class="details"> <img src="/assets/stats.svg" /></div>
     <div class="main">
@@ -44,7 +46,7 @@
                             You did
                             <span>
                                 @(stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfCorrectResponses +
-                                                stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfIncorrectResponses)
+                                        stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfIncorrectResponses)
                             </span>
                             repetitions in the last three days (correct responses: @stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfCorrectResponses, incorrect responses:
                             @stats.StatsForCourses[chart.Key].LastThreeDays.NumberOfIncorrectResponses).
@@ -69,13 +71,19 @@
     </div>
 </div>
 
-
 @code {
     private GetCourseUserStatsResponseModel stats = null;
     private IDictionary<string, List<LineConfig>> _configCharts = new Dictionary<string, List<LineConfig>>();
 
     protected override async Task OnInitializedAsync()
     {
+        var user = (await authStateProvider.GetAuthenticationStateAsync()).User;
+        if (!user.Identity.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/login");
+            return;
+        }
+
         stats = await courseUserStatsApi.GetCourseUserStats();
 
         foreach (var courseStats in stats.StatsForCourses)
@@ -182,7 +190,7 @@
                 Scales = new Scales
                 {
                     XAxes = new List<CartesianAxis>
-                    {
+            {
                         new CategoryAxis
                         {
                             ScaleLabel = new ScaleLabel
@@ -192,7 +200,7 @@
                         }
                     },
                     YAxes = new List<CartesianAxis>
-                    {
+            {
                         new LinearCartesianAxis
                         {
                             ScaleLabel = new ScaleLabel

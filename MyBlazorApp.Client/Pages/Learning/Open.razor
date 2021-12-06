@@ -17,7 +17,7 @@
 <div class="open-container">
     <div @onclick="Rerender">
         <h2 class="@GetStyle(Question)">@Question
-        @if (!string.IsNullOrEmpty(Audio))
+        @if (!string.IsNullOrWhiteSpace(Audio))
         {
             <i class="far fa-play-circle"></i>
         }

@@ -76,7 +76,7 @@
         {
             var index = i;
             this.IsTileClicked.Add(false);
-            this.HotKeysContext.Add(ModKeys.None, keyList[i], 
+            this.HotKeysContext.Add(ModKeys.None, keyList[i],
                 async () => { await OnClick.InvokeAsync(Responses[index]); });
         }
     }
@@ -90,6 +90,9 @@
 
     private string TileStyle(int input)
     {
+        if (input >= IsTileClicked.Count) 
+            return "response-tile";
+
         return IsTileClicked[input] ?
             "response-tile on-click" :
             "response-tile";
