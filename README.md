@@ -60,8 +60,17 @@ This section contains instructions on setting up the project locally.
    ```sh
    git clone https://github.com/KamilBugnoKrk/WordTester.git
    ```
-2. Open in Visual Studio and click IIS Express to run.
-3. The application will be available on https://localhost:44370/, API on https://localhost:44370/swagger/index.html
+2. Open in Visual Studio
+3. Use your configuration data:
+  - appsettings.json:
+    - SpeechServiceKey - your Azure Speech Key
+    - FTPName - name of your FTP
+    - FTPPassword - password to your FTP
+    - FTPURL - URL to your FTP
+  - ReCaptcha.cs
+    - secret - secret to your reCaptcha
+4. Click IIS Express to run
+5. The application will be available on https://localhost:44370/, API on https://localhost:44370/swagger/index.html
 
 ## License
 
