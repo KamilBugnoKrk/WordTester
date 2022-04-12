@@ -31,27 +31,35 @@
                     <h4 class="font-weight-normal">Modify your course </h4>
                 }
 
-                <div class="course-form">
-                    <DataAnnotationsValidator />
+            <div class="course-form">
+                <DataAnnotationsValidator />
+                <div class="course-form-element-container">
                     <MatTextField @bind-Value="course.Name" Label="Title" />
                     <ValidationMessage For="@(() => course.Name)" />
-
+                </div>
+                <div class="course-form-element-container">
                     <MatSelect class="select" Label="Language of audio" FullWidth="true" @bind-Value="course.SelectedLanguageName">
                         <MatOptionString Value="None">No audio</MatOptionString>
                         @foreach (var language in languages)
-                        {
+                            {
                             <MatOptionString Value="@language">@language</MatOptionString>
-                        }
+                            }
                     </MatSelect>
                     <ValidationMessage For="@(() => course.SelectedLanguageName)" />
-
-                    <MatTextField Class="course-description" @bind-Value="course.Description" Label="Description" />
-                    <ValidationMessage For="@(() => course.Description)" />
-
-                    <button class="btn" type="submit">Save</button>
-                    <a target="_blank" href="@(navigationManager.ToAbsoluteUri("api/course/ExportCourseData").AbsolutePath + "?courseId=" + course.Id)">Export</a>
                 </div>
-            </EditForm>
+                <div class="course-form-element-container">
+                    <MatTextField Class="course-description" @bind-Value="course.Description" Label="Description" />
+                    <ValidationMessage For="@(() => course.Description)"/>
+                </div>
+
+                <button class="btn" type="submit">Save</button>
+                @if (!string.IsNullOrEmpty(CourseId))
+                {
+                    <a target="_blank" href="@(navigationManager.ToAbsoluteUri("api/course/ExportCourseData").AbsolutePath + "?courseId=" + course.Id)">Export</a>
+                }
+
+                </div>
+</EditForm>
         }
     </div>
     <div class="course-main">

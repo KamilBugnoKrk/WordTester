@@ -12,6 +12,11 @@
       display: flex;
       align-items: center;
       padding: 20px 20px 20px 0px; }
+      .course-grid-container .course-details .course-form .course-form-element-container {
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+        align-items: center; }
       .course-grid-container .course-details .course-form ::deep label {
         width: 220px; }
       .course-grid-container .course-details .course-form button {

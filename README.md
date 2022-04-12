@@ -105,6 +105,7 @@ It would not be possible to start developing this project without the great free
 * [Moq](https://github.com/moq/moq4) - mocking framework 
 * [MediatR](https://github.com/jbogard/MediatR) - mediator implementation
 * [combinatorics](https://github.com/eoincampbell/combinatorics) - combinatorics library
+* [NetArchTest](https://github.com/BenMorris/NetArchTest) - Fluent API for .Net that can enforce architectural rules in unit tests
 
 ### Related to images
 * [unDraw](https://undraw.co/) - open-source illustrations

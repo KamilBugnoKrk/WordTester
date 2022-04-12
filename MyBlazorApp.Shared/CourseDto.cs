@@ -19,15 +19,15 @@ namespace MyBlazorApp.Shared
     public class CourseDto
     {
         public int Id { get; set; }
-        [Required]
-        [MaxLength(30, ErrorMessage = "Name should be shorter")]
+        [Required(ErrorMessage = "Title is required")]
+        [MaxLength(30, ErrorMessage = "Title should be shorter")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Description is required")]
         [MaxLength(70, ErrorMessage = "Description should be shorter")]
         public string Description { get; set; }
         public bool IsVisibleForEveryone { get; set; }
         public int NumberOfWords { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Language name is required")]
         public string SelectedLanguageName { get; set; }
         public List<string> LanguageOptions { get; set; }
         public int NumberOfKnownWords { get; set; }
