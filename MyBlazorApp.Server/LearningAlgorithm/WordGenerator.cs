@@ -36,6 +36,9 @@ namespace MyBlazorApp.Server.LearningAlgorithm
             AddWordVariations(originalWord, otherWords, new List<string> { "q", "g" });
             AddWordVariations(originalWord, otherWords, new List<string> { "v", "w" });
             AddWordVariations(originalWord, otherWords, new List<string> { "l", "r" });
+            AddWordVariations(originalWord, otherWords, new List<string> { "п", "л", "д" });
+            AddWordVariations(originalWord, otherWords, new List<string> { "ь", "ъ", "ы", "б" });
+            AddWordVariations(originalWord, otherWords, new List<string> { "щ", "ш" });
 
             return otherWords;
         }

@@ -1,4 +1,4 @@
-// Copyright (C) 2022  Kamil Bugno
+﻿// Copyright (C) 2022  Kamil Bugno
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -78,10 +78,27 @@ namespace MyBlazorApp.UiTests
         [InlineData("  big  ,  great (anything)  ,  huge  ", " great ", true)]
         [InlineData("  big  ,  great (anything)  ,  huge  ", " great (anything) ", true)]
         [InlineData("big, great, huge", "other", false)]
+        [InlineData("собака", "собака", true)]
+        [InlineData("соьака", "собака", false)]
+        [InlineData("ążźćęóńÓĄĆŹŻŚĘŃŁ", "ążźćęóńÓĄĆŹŻŚĘŃŁ", true)]
         public void IsCorrectTranslation_Verify(string translation, string userAnswer, bool expectedResult)
         {
             var result = Helper.IsCorrectTranslation(translation, userAnswer);
             result.Should().Be(expectedResult);
+        }
+
+        [Theory]
+        [InlineData("a sth b", "a something b")]
+        [InlineData("a sth", "a something")]
+        [InlineData("a sthenic", "")]
+        [InlineData("a sb b", "a somebody b")]
+        [InlineData("a sb", "a somebody")]
+        [InlineData("a sbxyz", "")]
+        public void GetWithoutAbbreviations_Verify(string originalWord, string expectedResult)
+        {
+            var result = Helper.GetWithoutAbbreviations(originalWord);
+            result.Should().Be(expectedResult);
+
         }
     }
 }

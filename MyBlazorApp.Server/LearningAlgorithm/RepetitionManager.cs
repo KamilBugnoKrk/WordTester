@@ -60,6 +60,8 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                 availableTypes[_random.Next(availableTypes.Count)] :
                 _allRepetitionTypes.ToList()[_random.Next(_allRepetitionTypes.Count())];
 
+            var language = wordStats?.Word?.Course?.Language?.Name;
+
             var hasAudio = wordStats.Word.HasAudioGenerated;
 
             return chosenType switch
@@ -102,14 +104,14 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                 RepetitionType.FromTranslatedToOriginalClose => (
                     wordStats.Word.TranslatedWord,
                     null,
-                    GetOtherOriginalWords(wordStats.Word.OriginalWord),
+                    GetOtherOriginalWords(wordStats.Word.OriginalWord, language),
                     string.Empty,
                     RepetitionType.FromTranslatedToOriginalClose
                 ),
                 RepetitionType.FromDefinitionToOriginalClose => (
                     wordStats.Word.Definition,  
                     null,
-                    GetOtherOriginalWords(wordStats.Word.OriginalWord),
+                    GetOtherOriginalWords(wordStats.Word.OriginalWord, language),
                     string.Empty,
                     RepetitionType.FromDefinitionToOriginalClose
                 ),
@@ -137,7 +139,7 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                RepetitionType.FromExampleToOriginalClose => (
                    Helper.HideOriginal(wordStats.Word.ExampleUse),
                    null,
-                   GetOtherOriginalWords(Helper.GetOriginalFromExample(wordStats.Word.ExampleUse)),
+                   GetOtherOriginalWords(Helper.GetOriginalFromExample(wordStats.Word.ExampleUse), language),
                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.BlankExampleUse) : string.Empty,
                    RepetitionType.FromExampleToOriginalClose
                ),
@@ -191,11 +193,14 @@ namespace MyBlazorApp.Server.LearningAlgorithm
             return newList.Shuffle();
         }
 
-        private IEnumerable<string> GetOtherOriginalWords(string originalWord)
+        private IEnumerable<string> GetOtherOriginalWords(string originalWord, string language)
         {
             var otherWords = new HashSet<string>();
 
-            otherWords.UnionWith(_wordGenerator.GenerateWordsWithDifferentPrepositions(originalWord));
+            if(language == "English - US" || language == "English - UK")
+            {
+                otherWords.UnionWith(_wordGenerator.GenerateWordsWithDifferentPrepositions(originalWord));
+            }            
             otherWords.UnionWith(_wordGenerator.GenerateWordsWithoutDoubledLetters(originalWord));
             otherWords.UnionWith(_wordGenerator.GenerateWordsWithSwappedLetters(originalWord));
             

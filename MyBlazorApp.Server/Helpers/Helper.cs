@@ -71,7 +71,8 @@ namespace MyBlazorApp.Server.Helpers
                 foreach (var word in splitted)
                 {
                     allWords.Add(word);
-                    if(word.Contains("(") && word.Contains(")"))
+
+                    if (word.Contains("(") && word.Contains(")"))
                     {
                         var withoutTextInBrackets = Regex.Replace(word, @" ?\(.*?\)", string.Empty);
                         var withoutBrackets = word.Replace("(", string.Empty).Replace(")", string.Empty);
@@ -79,9 +80,30 @@ namespace MyBlazorApp.Server.Helpers
                         allWords.Add(withoutBrackets.ToLower().Trim());
                     }
                 }
-                
+
                 return allWords.Contains(userAnswer.ToLower().Trim());
             }
+        }
+
+        public static string GetWithoutAbbreviations(string word)
+        {
+            if (word.Contains(" sth "))
+            {
+                return word.Replace(" sth ", " something ");
+            }
+            if (word.Contains(" sb "))
+            {
+                return word.Replace(" sb ", " somebody ");
+            }
+            if (word.EndsWith(" sb"))
+            {
+                return word.Replace(" sb", " somebody");
+            }
+            if (word.EndsWith(" sth"))
+            {
+                return word.Replace(" sth", " something");
+            }
+            return string.Empty;
         }
     }
 }

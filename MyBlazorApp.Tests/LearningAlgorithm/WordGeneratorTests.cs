@@ -89,6 +89,18 @@ namespace MyBlazorApp.Tests.LearningAlgorithm
         }
 
         [Fact]
+        public void GenerateWordsWithSwappedLetters_WordContainCyrillic_ReturnsModifiedWords()
+        {
+            var randomMock = new Mock<Random>();
+            randomMock.Setup(r => r.Next(It.IsAny<int>())).Returns(0);
+            var generator = new WordGenerator(randomMock.Object);
+
+            var result = generator.GenerateWordsWithSwappedLetters("собака");
+
+            result.Should().BeEquivalentTo("соыака", "соъака", "соьака");
+        }
+
+        [Fact]
         public void GenerateWordsWithSwappedLetters_WordContainV_ReturnsModifiedWords()
         {
             var randomMock = new Mock<Random>();

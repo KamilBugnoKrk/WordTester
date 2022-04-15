@@ -232,7 +232,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
                     request.RepetitionType == RepetitionType.FromExampleToOriginalClose ||
                     request.RepetitionType == RepetitionType.FromTranslatedToOriginalDifferentClose ||
                     request.RepetitionType == RepetitionType.FromDefinitionToOriginalDifferentClose
-                    ) && request.UserResponse.ToLower().Trim() == originalWord.ToLower().Trim();
+                    ) && (request.UserResponse.ToLower().Trim() == originalWord.ToLower().Trim() || (Helper.GetWithoutAbbreviations(originalWord).ToLower().Trim() == request.UserResponse.ToLower().Trim() && request.UserResponse.Trim().Length > 0));
         }
 
         private static bool IsTranslatedWordCorrect(PostLearningRepetitionRequestModel request, string translatedWord)
