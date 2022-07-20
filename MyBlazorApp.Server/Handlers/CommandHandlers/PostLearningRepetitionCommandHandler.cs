@@ -29,7 +29,10 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 {
     public class PostLearningRepetitionCommandHandler : IRequestHandler<PostLearningRepetitionRequestModel, PostLearningRepetitionResponseModel>
     {
-        private const int _thirtySecondsInTicks = 30000000;
+        private const int _fiveSecondsInTicks = 50000000;
+        private const long _threeDaysInTicks = 2592000000000;
+        private const long _ninetyDaysInTicks = 77760000000000;
+        private const long _thirtyDaysInTicks = 25920000000000;
         private const int _numberOfRepetitionTypes = 8;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAudioService _audioService;
@@ -72,7 +75,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private Task<PostLearningRepetitionResponseModel> HandleIncorrectAnswer(Word word, WordStats stats, Guid userId)
         {
             stats.RevisionFactor = 0;
-            stats.NextRevisionTicks = _thirtySecondsInTicks;
+            stats.NextRevisionTicks = _fiveSecondsInTicks;
             stats.NextRevisionTime = DateTime.Now.AddTicks(stats.NextRevisionTicks);
             stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0);
             var userCourseStats = RetrieveUserCourseStats(stats, userId);
@@ -132,7 +135,24 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private Task<PostLearningRepetitionResponseModel> HandleCorrectAnswer(WordStats stats, Guid userId)
         {
             stats.RevisionFactor += 1;
-            stats.NextRevisionTicks *= 2;
+
+            if(stats.NextRevisionTicks > _ninetyDaysInTicks)
+            {
+                stats.NextRevisionTicks *= (long)1.2;
+            }
+            else if (stats.NextRevisionTicks > _thirtyDaysInTicks)
+            {
+                stats.NextRevisionTicks *= (long)1.4;
+            }
+            else if (stats.NextRevisionTicks > _threeDaysInTicks)
+            {
+                stats.NextRevisionTicks *= (long)1.6;
+            }
+            else
+            {
+                stats.NextRevisionTicks *= (long)2.2;
+            }
+            
             stats.NextRevisionTime = DateTime.Now.AddTicks(stats.NextRevisionTicks);
             stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0);
             var userCourseStats = RetrieveUserCourseStats(stats, userId);
@@ -166,12 +186,12 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             _unitOfWork.WordStats.Add(new WordStats
             {
                 RevisionFactor = 0,
-                NextRevisionTicks = _thirtySecondsInTicks,
-                NextRevisionTime = DateTime.Now.AddTicks(_thirtySecondsInTicks),
+                NextRevisionTicks = _fiveSecondsInTicks,
+                NextRevisionTime = DateTime.Now.AddTicks(_fiveSecondsInTicks),
                 WordId = request.WordId,
                 UserId = Guid.Parse(request.UserId),
                 UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0)
-        });
+            });
             _unitOfWork.Complete();
 
             return Task.FromResult(new PostLearningRepetitionResponseModel

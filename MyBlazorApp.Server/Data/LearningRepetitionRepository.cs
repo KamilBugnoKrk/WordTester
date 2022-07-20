@@ -30,6 +30,7 @@ namespace MyBlazorApp.Server.Data
                 .WordStats
                 .Include(ws => ws.Word)
                 .Include(ws => ws.Word.Course)
+                .ThenInclude(c => c.Language)
                 .Include(ws => ws.Word.Course.UserCourses)
                 .Where(ws => (ws.Word.Course.IsVisibleForEveryone ||
                         ws.Word.Course.UserCourses

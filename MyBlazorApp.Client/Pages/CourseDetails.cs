@@ -42,6 +42,7 @@ namespace MyBlazorApp.Client.Pages
             var parameters = new ModalParameters();
             parameters.Add(nameof(EditWord.Word), word);
             parameters.Add("CourseId", course.Id);
+            searchTerm = string.Empty;
             var modal = Modal.Show<EditWord>(word == null ? "Add Word" : "Edit Word", parameters);
             var result = await modal.Result;
             if (!result.Cancelled && (bool)result.Data)

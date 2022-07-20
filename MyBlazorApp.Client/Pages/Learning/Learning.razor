@@ -15,10 +15,10 @@
 @inject NavigationManager navigationManager
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
-<div class="learning-container">
+<div class="@style">
     @if (learningModel != null)
     {
-        if (numberOfRepetition % 10 == 0)
+        if (numberOfRepetition % 15 == 0)
         {
             if (randomNumber == 0)
             {
@@ -79,6 +79,7 @@
 
     private GetLearningRepetitionResponseModel learningModel = null;
     private string userResponse = string.Empty;
+    private string style = "learning-container";
     private bool isResponseSent = false;
     private WordDto correctWord;
     private int numberOfRepetition = 1;
@@ -110,11 +111,13 @@
         var result = await learningApi.PostLearningRepetition(learningModel.WordId, userResponse, learningModel.RepetitionType);
         if (result.IsCorrectAnswer)
         {
+            style = "learning-container";
             await RetrieveData();
             audioForIncorrectResponse = string.Empty;
             return;
         }
 
+        style = "learning-container-incorrect-answer";
         correctWord = result.CorrectWord;
         isResponseSent = true;
         audioForIncorrectResponse = result.Audio;

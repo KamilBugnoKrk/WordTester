@@ -13,3 +13,10 @@
 .learning-container {
     min-height: calc(100vh - 71px);
 }
+
+.learning-container-incorrect-answer {
+    min-height: calc(100vh - 71px);
+    border-width: 7px;
+    border-style: solid;
+    border-image: linear-gradient( to bottom, red, rgba(0, 0, 0, 0) ) 1;
+}
