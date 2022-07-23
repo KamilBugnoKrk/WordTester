@@ -108,15 +108,16 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 
         private PostWordResponseModel ModifyWordInDatabase(WordDto newWord, Word word)
         {
+            if (word.ExampleUse != newWord.ExampleUse || word.OriginalWord != newWord.OriginalWord)
+            {
+                word.HasAudioGenerated = false;
+            }
             word.OriginalWord = newWord.OriginalWord;
             word.TranslatedWord = newWord.TranslatedWord;
             word.ExampleUse = newWord.ExampleUse;
             word.Definition = newWord.Definition;
             word.Pronunciation = newWord.Pronunciation;
-            if(word.ExampleUse != newWord.ExampleUse || word.OriginalWord != newWord.OriginalWord)
-            {
-                word.HasAudioGenerated = false;
-            }
+         
             _unitOfWork.Complete();
 
             return new PostWordResponseModel

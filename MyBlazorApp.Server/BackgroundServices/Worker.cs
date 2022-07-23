@@ -64,7 +64,7 @@ namespace MyBlazorApp.Server.BackgroundServices
                 {
                     return;
                 }
-                await Task.Delay(10000, stoppingToken);
+                await Task.Delay(60_000, stoppingToken);
             }
         }
 
@@ -80,6 +80,7 @@ namespace MyBlazorApp.Server.BackgroundServices
                 catch
                 {
                     //It can be ignored
+                    await Task.Delay(240_000);
                 }
             }
         }
@@ -159,8 +160,8 @@ namespace MyBlazorApp.Server.BackgroundServices
 
         private async Task<ResultReason> TryToGenerateAudio(SpeechConfig config, string toAudio)
         {
-            AudioConfig audioConfigBlankExampleUse;
-            SpeechSynthesizer synthesizerBlankExampleUse;
+            AudioConfig audioConfig;
+            SpeechSynthesizer synthesizer;
             var audioStats = _applicationDbContext.AudioStats.FirstOrDefault(a => a.Date.Date == DateTime.UtcNow.Date);
             var isNewEntry = false;
 
@@ -181,13 +182,13 @@ namespace MyBlazorApp.Server.BackgroundServices
 
             AddOrUpdateAudioStats(audioStats, isNewEntry);
 
-            audioConfigBlankExampleUse = AudioConfig.FromWavFileOutput("./tmp.wav");
-            synthesizerBlankExampleUse = new SpeechSynthesizer(config, audioConfigBlankExampleUse);
-            var result = (await synthesizerBlankExampleUse.SpeakTextAsync(toAudio)).Reason;
+            audioConfig = AudioConfig.FromWavFileOutput("./tmp.wav");
+            synthesizer = new SpeechSynthesizer(config, audioConfig);
+            var result = (await synthesizer.SpeakTextAsync(toAudio)).Reason;
 
-            await Task.Delay(1000);
-            audioConfigBlankExampleUse.Dispose();
-            synthesizerBlankExampleUse.Dispose();
+            await Task.Delay(10000);
+            audioConfig.Dispose();
+            synthesizer.Dispose();
             return result;
         }
 
