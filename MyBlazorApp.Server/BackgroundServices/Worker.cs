@@ -60,11 +60,12 @@ namespace MyBlazorApp.Server.BackgroundServices
                         await GenerateAudioForThisLanguage(config, language);
                     }
                 }
-                catch (OperationCanceledException)
+                catch
                 {
+                    await Task.Delay(86_400_000);
                     return;
                 }
-                await Task.Delay(60_000, stoppingToken);
+                await Task.Delay(300_000, stoppingToken);
             }
         }
 
@@ -73,15 +74,7 @@ namespace MyBlazorApp.Server.BackgroundServices
             var words = RetrieveAllWords(language);
             foreach (var word in words.ToList())
             {
-                try
-                {
-                    await GenerateAudioForThisWord(config, word);
-                }
-                catch
-                {
-                    //It can be ignored
-                    await Task.Delay(240_000);
-                }
+                await GenerateAudioForThisWord(config, word);
             }
         }
 
@@ -186,7 +179,7 @@ namespace MyBlazorApp.Server.BackgroundServices
             synthesizer = new SpeechSynthesizer(config, audioConfig);
             var result = (await synthesizer.SpeakTextAsync(toAudio)).Reason;
 
-            await Task.Delay(10000);
+            await Task.Delay(100_000);
             audioConfig.Dispose();
             synthesizer.Dispose();
             return result;
