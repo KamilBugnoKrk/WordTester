@@ -1,8 +1,8 @@
 ﻿.learning-container {
-  min-height: calc(100vh - 71px); }
+  min-height: calc(100vh - 128px); }
 
 .learning-container-incorrect-answer {
-  min-height: calc(100vh - 71px);
+  min-height: calc(100vh - 128px);
   border-width: 7px;
   border-style: solid;
   border-image: linear-gradient(to bottom, red, transparent) 1; }
