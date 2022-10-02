@@ -10,6 +10,16 @@ h4{
     margin-top: 20px;
 }
 
+#terms {
+    display: flex;
+    font-size: 16px;
+
+    p {
+        margin-top: 4px;
+        margin-bottom: 0;
+    }
+}
+
 .form-container {
     display: flex;
     justify-content: center;

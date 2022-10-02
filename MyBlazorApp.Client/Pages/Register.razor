@@ -7,7 +7,7 @@
     <div class="header">
         <h4 class="text-center">Create Account</h4>
         <p style="font-size: 17px; margin: 0px 20px 0px 20px;">
-            It is free and open source. By creating an account, you agree to the <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a>.
+            It is free and open source.
         </p>
     </div>
     <div class="form-container">
@@ -52,8 +52,13 @@
                 </p>
 
                 <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-                <MatTextField Type="password" id="inputPasswordConfirm" Label="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm"/>
+                <MatTextField Type="password" id="inputPasswordConfirm" Label="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm" />
                 <ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
+
+                <div id="terms">
+                    <MatCheckbox id="termsConfirmation" @bind-Value="areTermsAccepted" />
+                    <p>I agree to the <a href="/terms" target="_blank">Terms</a> & <a href="/privacy" target="_blank">Privacy</a>.</p>
+                </div>
 
                 <div style="margin-bottom: 5px; transform: scale(0.94); -webkit-transform: scale(0.94); transform-origin: 0 0; -webkit-transform-origin: 0 0;">
                     <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LfAwsUaAAAAAA0WXVyqnvFLAG7TMeHPSWyXDZ4Q" OnSuccess="OnSuccess" OnExpired="OnExpired" isError="isError" />
@@ -78,9 +83,10 @@
     private ReCAPTCHA reCAPTCHAComponent;
     private bool ValidReCAPTCHA = false;
     private bool isError = false;
+    private bool areTermsAccepted = false;
 
     private bool IsSumbitDisabled() {
-        return !(ValidReCAPTCHA && HasSixChars() && HasUppercase());
+        return !(ValidReCAPTCHA && HasSixChars() && HasUppercase() && areTermsAccepted);
     }
 
     private bool HasSixChars() {
