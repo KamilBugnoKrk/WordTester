@@ -30,6 +30,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
     public class PostLearningRepetitionCommandHandler : IRequestHandler<PostLearningRepetitionRequestModel, PostLearningRepetitionResponseModel>
     {
         private const int _fiveSecondsInTicks = 50000000;
+        private const long _thirtyMinutesInTicks = 18000000000;
         private const long _threeDaysInTicks = 2592000000000;
         private const long _ninetyDaysInTicks = 77760000000000;
         private const long _thirtyDaysInTicks = 25920000000000;
@@ -135,24 +136,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private Task<PostLearningRepetitionResponseModel> HandleCorrectAnswer(WordStats stats, Guid userId)
         {
             stats.RevisionFactor += 1;
-
-            if(stats.NextRevisionTicks > _ninetyDaysInTicks)
-            {
-                stats.NextRevisionTicks *= (long)1.2;
-            }
-            else if (stats.NextRevisionTicks > _thirtyDaysInTicks)
-            {
-                stats.NextRevisionTicks *= (long)1.4;
-            }
-            else if (stats.NextRevisionTicks > _threeDaysInTicks)
-            {
-                stats.NextRevisionTicks *= (long)1.6;
-            }
-            else
-            {
-                stats.NextRevisionTicks *= (long)2.2;
-            }
-            
+            stats.NextRevisionTicks = GetNextRevisionTicks(stats.NextRevisionTicks);
             stats.NextRevisionTime = DateTime.Now.AddTicks(stats.NextRevisionTicks);
             stats.UpdatedTime = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0);
             var userCourseStats = RetrieveUserCourseStats(stats, userId);
@@ -179,6 +163,30 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
             {
                 IsCorrectAnswer = true
             });
+        }
+
+        private static long GetNextRevisionTicks(long currentRevisionTicks)
+        {
+            if (currentRevisionTicks > _ninetyDaysInTicks)
+            {
+                return currentRevisionTicks * (long)1.3;
+            }
+            else if (currentRevisionTicks > _thirtyDaysInTicks)
+            {
+                return currentRevisionTicks * (long)1.6;
+            }
+            else if (currentRevisionTicks > _threeDaysInTicks)
+            {
+                return currentRevisionTicks * (long)1.8;
+            }
+            else if (currentRevisionTicks > _thirtyMinutesInTicks)
+            {
+                return currentRevisionTicks * (long)4.5;
+            }
+            else
+            {
+                return currentRevisionTicks * (long)2.5;
+            }
         }
 
         private Task<PostLearningRepetitionResponseModel> AddNewWordStats(PostLearningRepetitionRequestModel request)
