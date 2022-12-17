@@ -73,20 +73,6 @@ namespace MyBlazorApp.Server.LearningAlgorithm
                     string.Empty,
                     RepetitionType.FromTranslatedToOriginalOpen
                 ),
-                RepetitionType.FromOriginalToTranslatedOpen => (
-                    wordStats.Word.OriginalWord,
-                    wordStats.Word.Pronunciation,
-                    null,
-                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.OriginalWord) : string.Empty,
-                    RepetitionType.FromOriginalToTranslatedOpen
-                ),
-                RepetitionType.FromExampleToTranslatedOpen => (
-                    Helper.ApplyStyleToText(wordStats.Word.ExampleUse),
-                    wordStats.Word.Pronunciation,
-                    null,
-                    hasAudio ? _audioService.RetrieveAudio(wordStats.WordId, WordType.FullExampleUse): string.Empty,
-                    RepetitionType.FromExampleToTranslatedOpen
-                ),
                 RepetitionType.FromDefinitionToOriginalOpen => (
                     wordStats.Word.Definition,
                     null,

@@ -73,7 +73,7 @@ namespace MyBlazorApp.Tests
             var response = await handler.Handle(request, CancellationToken.None);
 
             response.ResponseType.Should().Be(ResponseType.PracticeResponse);
-            response.RepetitionType.Should().Be(RepetitionType.FromExampleToTranslatedOpen);
+            response.RepetitionType.Should().Be(RepetitionType.FromDefinitionToOriginalClose);
             response.Question.Should().Be("Question");
             response.Responses.Should().BeNull();
         }
@@ -103,7 +103,7 @@ namespace MyBlazorApp.Tests
             var repetitionManagerMock = new Mock<IRepetitionManager>();
             repetitionManagerMock
                 .Setup(rm => rm.CreateRepetitionData(It.Is<WordStats>(ws => ws.Id == 30)))
-                .Returns(("Question",null, null, null, RepetitionType.FromExampleToTranslatedOpen));
+                .Returns(("Question",null, null, null, RepetitionType.FromDefinitionToOriginalClose));
 
             var handler = new GetLearningRepetitionQueryHandler(new UnitOfWork(context),
                 mapper, repetitionManagerMock.Object, new Mock<IAudioService>().Object);

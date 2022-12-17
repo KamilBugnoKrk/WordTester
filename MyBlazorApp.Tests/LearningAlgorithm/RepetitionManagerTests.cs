@@ -35,9 +35,9 @@ namespace MyBlazorApp.Tests.LearningAlgorithm
                 Word = new Word
                 {
                     TranslatedWord = "TranslatedWord",
-                    OriginalWord = "OriginalWord"
+                    OriginalWord = "OriginalWord",
                 },
-                UsedRepetitionTypes = "[1,3,4,5,6,7,8,9,10,11,12,13]"
+                UsedRepetitionTypes = "[2,3,4,5,6,7,8,9,10,11]"
             });
             
             question.Should().Be("TranslatedWord");
@@ -46,13 +46,11 @@ namespace MyBlazorApp.Tests.LearningAlgorithm
         }
 
         [Theory]
-        [InlineData(0, "OriginalWord", false)]
-        [InlineData(1, "TranslatedWord", false)]
-        [InlineData(2, "Definition", false)]
-        [InlineData(3, "ExampleUse", false)]
-        [InlineData(5, "TranslatedWord", true)]
-        [InlineData(6, "Definition", true)]
-        [InlineData(10, "ExampleUse", true)]
+        [InlineData(0, "TranslatedWord", false)]
+        [InlineData(1, "Definition", false)]
+        [InlineData(3, "TranslatedWord", true)]
+        [InlineData(4, "Definition", true)]
+        [InlineData(8, "ExampleUse", true)]
         public void RepetitionManager_AllRepetitionTypeRemains_ReturnsCorrectRepetitionData(int type, string expectedQuestion, bool hasResponses)
         {
             var randomMock = new Mock<Random>();

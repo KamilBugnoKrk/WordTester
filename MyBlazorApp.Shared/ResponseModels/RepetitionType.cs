@@ -15,10 +15,8 @@ namespace MyBlazorApp.Shared
     public enum RepetitionType
     {
         None,
-        FromOriginalToTranslatedOpen,
         FromTranslatedToOriginalOpen,
         FromDefinitionToOriginalOpen,
-        FromExampleToTranslatedOpen,
         FromOriginalToTranslatedClose,
         FromTranslatedToOriginalClose,
         FromDefinitionToOriginalClose,

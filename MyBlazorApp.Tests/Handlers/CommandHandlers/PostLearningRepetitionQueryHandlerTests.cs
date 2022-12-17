@@ -59,7 +59,7 @@ namespace MyBlazorApp.Tests
             (await context.WordStats.CountAsync()).Should().Be(1);
             var wordStats = await context.WordStats.FirstOrDefaultAsync();
             wordStats.RevisionFactor.Should().Be(1);
-            wordStats.UsedRepetitionTypes.Should().Be("[7]");
+            wordStats.UsedRepetitionTypes.Should().Be("[5]");
         }
 
         [Fact]
@@ -74,14 +74,14 @@ namespace MyBlazorApp.Tests
             (await context.WordStats.CountAsync()).Should().Be(1);
             var wordStats = await context.WordStats.FirstOrDefaultAsync();
             wordStats.RevisionFactor.Should().Be(2);
-            wordStats.UsedRepetitionTypes.Should().Be("[7]");
+            wordStats.UsedRepetitionTypes.Should().Be("[5]");
         }
 
         [Fact]
         public async Task PostLearningRepetitionQueryHandler_IncorrectResponse_WordStatsUpdated()
         {
             using var context = TestHelper.CreateInMemoryContext("PostLearningRepetitionQueryHandler_IncorrectResponse_WordStatsUpdated");
-            (var request, var handler) = SetupDependencies(context, true, "[1,2,3,4,5,8]", false);
+            (var request, var handler) = SetupDependencies(context, true, "[1,2,3,4]", false);
 
             var response = await handler.Handle(request, CancellationToken.None);
 
@@ -89,7 +89,7 @@ namespace MyBlazorApp.Tests
             (await context.WordStats.CountAsync()).Should().Be(1);
             var wordStats = await context.WordStats.FirstOrDefaultAsync();
             wordStats.RevisionFactor.Should().Be(0);
-            wordStats.UsedRepetitionTypes.Should().Be("[1,2,3,4,5,8,7]");
+            wordStats.UsedRepetitionTypes.Should().Be("[1,2,3,4,5]");
         }
 
         private static (PostLearningRepetitionRequestModel request, PostLearningRepetitionCommandHandler handler)

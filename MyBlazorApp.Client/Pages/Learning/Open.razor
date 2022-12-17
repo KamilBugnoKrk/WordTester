@@ -84,12 +84,7 @@
 
     private string GetPlaceholder()
     {
-        if (RepetitionType == RepetitionType.FromOriginalToTranslatedOpen ||
-           RepetitionType == RepetitionType.FromExampleToTranslatedOpen)
-        {
-            return "Translated word";
-        }
-        else if (RepetitionType == RepetitionType.FromDefinitionToOriginalOpen ||
+        if (RepetitionType == RepetitionType.FromDefinitionToOriginalOpen ||
             RepetitionType == RepetitionType.FromTranslatedToOriginalOpen)
         {
             return "Original word";

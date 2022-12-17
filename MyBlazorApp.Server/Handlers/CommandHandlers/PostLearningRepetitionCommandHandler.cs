@@ -266,9 +266,7 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
         private static bool IsTranslatedWordCorrect(PostLearningRepetitionRequestModel request, string translatedWord)
         {
             return (request.RepetitionType == RepetitionType.FromExampleToTranslatedClose ||
-                    request.RepetitionType == RepetitionType.FromExampleToTranslatedOpen ||
-                    request.RepetitionType == RepetitionType.FromOriginalToTranslatedClose ||
-                    request.RepetitionType == RepetitionType.FromOriginalToTranslatedOpen
+                    request.RepetitionType == RepetitionType.FromOriginalToTranslatedClose
                     ) && Helper.IsCorrectTranslation(translatedWord, request.UserResponse);
         }
 
