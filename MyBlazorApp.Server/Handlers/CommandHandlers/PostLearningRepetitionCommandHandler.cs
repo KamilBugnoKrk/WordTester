@@ -167,25 +167,28 @@ namespace MyBlazorApp.Server.Handlers.QueryHandlers
 
         private static long GetNextRevisionTicks(long currentRevisionTicks)
         {
+            Random random = new Random();
+            var betweenZeroAndOne = random.NextDouble();
+
             if (currentRevisionTicks > _ninetyDaysInTicks)
             {
-                return currentRevisionTicks * (long)1.3;
+                return currentRevisionTicks * (long)(0.9 + betweenZeroAndOne);
             }
             else if (currentRevisionTicks > _thirtyDaysInTicks)
             {
-                return currentRevisionTicks * (long)1.6;
+                return currentRevisionTicks * (long)(1 + betweenZeroAndOne);
             }
             else if (currentRevisionTicks > _threeDaysInTicks)
             {
-                return currentRevisionTicks * (long)1.8;
+                return currentRevisionTicks * (long)(1.2 + betweenZeroAndOne);
             }
             else if (currentRevisionTicks > _thirtyMinutesInTicks)
             {
-                return currentRevisionTicks * (long)4.5;
+                return currentRevisionTicks * (long)(4.2 + betweenZeroAndOne);
             }
             else
             {
-                return currentRevisionTicks * (long)2.5;
+                return currentRevisionTicks * (long)(2.2 + betweenZeroAndOne);
             }
         }
 
